@@ -135,15 +135,12 @@ function header(c) {
   return `<header class="site-header">
     <div class="wrap header-inner">
       <a class="logo" href="${c.link("home")}">${logoImg(c)}</a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></button>
       <nav class="nav" id="site-nav" aria-label="Main">
           ${links}
           <a class="btn btn-yellow nav-cta" href="${c.link("inquiry")}"${cur("inquiry")}>Catering Inquiries</a>
+          <a class="nav-phone" href="tel:${SITE.tel}">${SITE.phone}</a>
       </nav>
-      <div class="quick" aria-label="Main">
-        <a href="${c.link("takeout")}"${cur("takeout")}>Take Out Menu</a>
-        <a href="${c.link("inquiry")}"${cur("inquiry")}>Catering Inquiries</a>
-      </div>
     </div>
   </header>`;
 }
@@ -286,11 +283,11 @@ const PHOTO = {
   brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w, ${c.asset("img/brisket-1800.webp")} 1800w" sizes="(min-width: 900px) 46vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
   wedding: (c, sizes = "100vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-832.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w" sizes="${sizes}" width="1200" height="799" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
   rotisserie: (c, attrs = ' loading="lazy" decoding="async"') => `<img${attrs} src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w, ${c.asset("img/rotisserie-2000.webp")} 2000w" sizes="(min-width: 700px) 50vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">`,
-  grazing: (c, sizes = "(min-width: 900px) 25vw, 60vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="${sizes}" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">`,
+  grazing: (c, sizes = "(min-width: 900px) 25vw, 60vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-800.webp")} 800w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="${sizes}" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">`,
   salmon: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/salmon-platter-640.webp")}" srcset="${c.asset("img/salmon-platter-640.webp")} 640w, ${c.asset("img/salmon-platter-1200.webp")} 1200w, ${c.asset("img/salmon-platter-1536.webp")} 1536w" sizes="(min-width: 900px) 250px, 100vw" width="1200" height="1600" alt="Smoked salmon platter on a ring of sliced cucumber">`,
   taste: (c) => `<div class="photos">
           <img class="p-wide" loading="lazy" decoding="async" src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="(min-width: 900px) 66vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">
-          <img class="p-tall" loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="(min-width: 900px) 33vw, 50vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">
+          <img class="p-tall" loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-800.webp")} 800w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="(min-width: 900px) 33vw, 50vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">
           <img class="p-tall" loading="lazy" decoding="async" src="${c.asset("img/salmon-platter-640.webp")}" srcset="${c.asset("img/salmon-platter-640.webp")} 640w, ${c.asset("img/salmon-platter-1200.webp")} 1200w" sizes="(min-width: 900px) 33vw, 50vw" width="1200" height="1600" alt="Smoked salmon platter on a ring of sliced cucumber">
         </div>`,
 };

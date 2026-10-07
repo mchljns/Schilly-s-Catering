@@ -128,7 +128,7 @@ const slop = [
   [/eyebrow|kicker/i, "hero eyebrow", ["build.mjs", "assets/styles.css"]],
   [/Oswald|Anton|Roboto|Lato|Inter\b|Poppins|Montserrat|Space Grotesk|Fraunces|Instrument|Playfair|DM Sans|Manrope|Outfit/, "retired or AI-overused typeface", ["build.mjs", "assets/styles.css"]],
   // World 1: capitals belong to the display face (the sign) and to the nav and badge. Tracked small-caps labels stay banned.
-  [/^(?!.*(var\(--display\)|\.nav a|\.quick a|\.badge|h1, h2, h3)).*text-transform:\s*uppercase/, "tracked-capitals label (brand/06-hierarchy.md)", ["assets/styles.css"]],
+  [/^(?!.*(var\(--display\)|\.nav a|\.badge|h1, h2, h3)).*text-transform:\s*uppercase/, "tracked-capitals label (brand/06-hierarchy.md)", ["assets/styles.css"]],
   [/letter-spacing:\s*\.(0[3-9]|[1-9])/, "letter-spacing over 0.02em", ["assets/styles.css"]],
   [/<figcaption/, "photo caption", ["build.mjs"]],
   [/—/, "em dash in our own labels", ["brand/source/ui-labels.txt", "assets/app.js"]],

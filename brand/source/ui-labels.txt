@@ -38,3 +38,5 @@ Check this number
 Check this date
 Check this entry
 Fill in the marked fields
+Open menu
+Close menu

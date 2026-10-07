@@ -192,3 +192,9 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Accessibility: type never sits on a photo; white on navy 15:1, yellow on navy 11:1, mist on navy 10.3:1, navy on cream 13:1; focus rings yellow on navy and red on cream; hover only where hover exists; touch-action on controls; reduced motion scoped. From the Mantine review: aria-invalid and aria-describedby set only when an error exists, the required asterisk hidden from screen readers, the submit button uses aria-disabled instead of disabled so focus is kept, the error summary becomes role=alert, "No matches" is a status, arrow keys move through the section chips.
 - Gates passed at six widths. Detector: its remaining contrast findings assume a white page (it does not read the navy body) and the uppercase nav; both verified in the browser.
 - Screenshot catches: the required asterisk broke onto its own line in grid labels; the phone header pill wrapped in capitals.
+
+## Loop 26: hamburger navigation
+
+Under 1100 px the header is now the logo and a round hamburger (three bars that fold into an X). The Menu pill and the two quick-link pills are gone. The drawer drops down under the sticky header over a scrim: Take Out Menu, Catering Menu, Weddings, Lobster Bakes, Pig Roasts as 52 px rows, the yellow Catering Inquiries pill, the store phone. Escape, a tap outside and growing past 1100 px close it. Without script the same list renders in the page flow.
+
+Gate changes: the two-tap price check opens the hamburger first (home, under 1100 px); the inquiry-in-header check counts the link once the drawer is open. A grazing-table-800 rendition keeps the 768 px first load under the 600 KB budget (the drawer removed 52 px of header, which pulled the events photo inside Chrome's lazy-load distance).

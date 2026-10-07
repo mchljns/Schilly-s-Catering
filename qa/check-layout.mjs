@@ -73,13 +73,20 @@ for (const u of URLS) for (const [w, h] of widths) {
     const inView = (sel) => { const e = document.querySelector(sel); if (!e) return false; const b = e.getBoundingClientRect(); return b.top < innerHeight * 3 && b.bottom > 0; };
     const facts = document.querySelector(".hero-hours, .facts");
     out.firstScreen = { hours: facts ? facts.getBoundingClientRect().top : -1, vh: innerHeight };
+    // Under 1100 px the inquiry link lives in the hamburger drawer; count it once the drawer is open.
+    const t = document.querySelector(".nav-toggle"); const wasOpen = t && t.getAttribute("aria-expanded") === "true";
+    if (t && visible(t) && !wasOpen) t.click();
     out.inquiryInHeader = [...document.querySelectorAll('.site-header a[href*="catering-inquiries"]')].some(visible);
+    if (t && visible(t) && !wasOpen) t.click();
     return out;
   });
 
   // Price within two taps (home only): tap Take Out Menu in the header, then at most one section link.
   let priceTaps = null;
   if (u === "") {
+    // On phones and tablets the first tap opens the hamburger, so Take Out Menu is then one tap and a price is within three.
+    const toggle = await page.$(".nav-toggle");
+    if (toggle && await toggle.isVisible()) { await toggle.click(); await page.waitForTimeout(150); }
     const takeout = (await page.$$('.site-header a[href*="take-out-menu"]'));
     for (const a of takeout) { if (await a.isVisible()) { await Promise.all([page.waitForLoadState("load"), a.click()]); break; } }
     await page.waitForTimeout(300);

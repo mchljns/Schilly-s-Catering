@@ -10,17 +10,22 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* Phone and tablet navigation: the menu opens in the page flow, not over it. */
+  /* Phone and tablet navigation: hamburger opens a drawer under the header; Escape or a tap outside closes it. */
   var toggle = $(".nav-toggle"), nav = $("#site-nav");
   if (toggle && nav) {
-    toggle.addEventListener("click", function () {
-      var open = toggle.getAttribute("aria-expanded") !== "true";
+    var setNav = function (open) {
       toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       document.body.classList.toggle("nav-open", open);
-    });
+    };
+    toggle.addEventListener("click", function () { setNav(toggle.getAttribute("aria-expanded") !== "true"); });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") { toggle.click(); toggle.focus(); }
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") { setNav(false); toggle.focus(); }
     });
+    document.addEventListener("click", function (e) {
+      if (toggle.getAttribute("aria-expanded") === "true" && !e.target.closest(".site-header")) setNav(false);
+    });
+    window.matchMedia("(min-width: 1100px)").addEventListener("change", function (m) { if (m.matches) setNav(false); });
   }
 
   /* Open or closed, in Maine time */
