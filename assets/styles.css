@@ -122,8 +122,6 @@ p { margin: 0 0 1em; }
 .page-head { padding: 36px 0 8px; }
 .page-head h1 { font-size: var(--t-title); margin: 0 0 8px; }
 .page-head .lead { margin: 0; max-width: 62ch; }
-.crumbs { font-size: var(--t-small); color: var(--slate); margin-bottom: 10px; }
-.crumbs a { color: var(--slate); display: inline-flex; align-items: center; min-height: 44px; }
 .page-head + .menus { padding-top: 24px; }
 
 /* Hero: headline, services line, then the three facts as rows (DoorDash store info) */
@@ -327,7 +325,7 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
   .item { padding: 3pt 0; break-inside: avoid; }
   .menu-sec { padding-top: 10pt; break-inside: avoid; }
   .menu-sec h2 { font-size: 14pt; padding: 6pt 0 4pt; }
-  .page-head { padding: 0; } .page-head .crumbs { display: none; } .page-head h1 { font-size: 18pt; text-align: center; } .page-head .lead { text-align: center; max-width: none; font-size: 10pt; }
+  .page-head { padding: 0; } .page-head h1 { font-size: 18pt; text-align: center; } .page-head .lead { text-align: center; max-width: none; font-size: 10pt; }
   .sec-notes { font-size: 9.5pt; }
   .item-detail { font-size: 9pt; }
   .item-price { font-size: 11pt; }

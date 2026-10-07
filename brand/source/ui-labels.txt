@@ -35,5 +35,4 @@ Home
 Menu
 Main
 Footer
-Breadcrumb
 Page not found

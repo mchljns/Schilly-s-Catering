@@ -106,11 +106,6 @@ function header(c) {
   </header>`;
 }
 
-function crumbs(c) {
-  if (c.page.key === "home") return "";
-  return `<nav class="crumbs" aria-label="Breadcrumb"><a href="${c.link("home")}">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">${c.page.label}</span></nav>`;
-}
-
 const facts = (c, opts = {}) => `<dl class="facts${opts.compact ? " facts-compact" : ""}">
             <div class="fact">
               <dt>Business Hours</dt>
@@ -148,7 +143,6 @@ function footer(c) {
           <p><a href="tel:${SITE.tel}">${SITE.phone}</a></p>
         </div>
         <nav class="footer-nav" aria-label="Footer">
-          <a href="${c.link("home")}">Home</a>
           ${NAV.map((k) => `<a href="${c.link(k)}">${byKey[k].label}</a>`).join("\n          ")}
           <a href="${c.link("inquiry")}">Catering Inquiries</a>
           <a href="${SITE.instagram}">Instagram</a>
@@ -276,7 +270,6 @@ const PHOTO = {
 function pageHead(c, lead) {
   return `<section class="page-head">
       <div class="wrap">
-        ${crumbs(c)}
         <h1>${c.page.h1}</h1>
         ${lead ? `<p class="lead">${lead}</p>` : ""}
       </div>
@@ -545,7 +538,7 @@ function notFound(mode) {
 <link rel="stylesheet" href="${c.asset("styles.css")}"><script>document.documentElement.classList.add("js")</script></head>
 <body class="page-notfound">
   ${header(c)}
-  <main id="main"><section class="page-head"><div class="wrap"><h1>Page not found</h1><p class="lead"><a href="${c.link("home")}">Home</a> · <a href="${c.link("takeout")}">Take Out Menu</a> · <a href="${c.link("catering")}">Catering Menu</a></p></div></section></main>
+  <main id="main"><section class="page-head"><div class="wrap"><h1>Page not found</h1><p class="lead"><a href="${c.link("takeout")}">Take Out Menu</a> · <a href="${c.link("catering")}">Catering Menu</a></p></div></section></main>
   ${footer(c)}
   <script src="${c.asset("app.js")}"></script>
 </body></html>
