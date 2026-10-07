@@ -154,12 +154,13 @@ const facts = (c, opts = {}) => `<dl class="facts${opts.compact ? " facts-compac
           </dl>`;
 
 function footer(c) {
+  const formPage = ["inquiry", "lobster", "pig", "weddings"].includes(c.page.key);
   return `<footer class="site-footer">
     <div class="wrap">
-      ${["inquiry", "lobster", "pig", "weddings"].includes(c.page.key) ? "" : `<div class="closer">
+      ${formPage ? "" : `<div class="closer">
         <h2>HUNGRY YET?</h2>
         <p>Let Schilly’s do the cooking.</p>
-        <a class="btn btn-yellow" href="tel:${SITE.tel}">${SITE.phone}</a>
+        <a class="btn btn-cream" href="tel:${SITE.tel}">${SITE.phone}</a>
       </div>`}
       <div class="footer-grid">
         <div>
@@ -183,6 +184,7 @@ function footer(c) {
       </div>
       <p class="copyright">© <span class="year">2026</span> ${SITE.name}.</p>
     </div>
+    <p class="wordmark" aria-hidden="true">SCHILLY’S</p>
   </footer>`;
 }
 
@@ -284,6 +286,9 @@ function ld(c) {
 const PHOTO = {
   brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w" sizes="(min-width: 900px) 44vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
   wedding: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-832.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w" sizes="(min-width: 900px) 45vw, 100vw" width="832" height="554" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
+  rotisserie: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="(min-width: 900px) 60vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">`,
+  grazing: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="(min-width: 900px) 25vw, 60vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">`,
+  salmon: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/salmon-platter-640.webp")}" srcset="${c.asset("img/salmon-platter-640.webp")} 640w, ${c.asset("img/salmon-platter-1200.webp")} 1200w" sizes="(min-width: 900px) 25vw, 60vw" width="1200" height="1600" alt="Smoked salmon platter on a ring of sliced cucumber">`,
   taste: (c) => `<div class="photos">
           <img class="p-wide" loading="lazy" decoding="async" src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="(min-width: 900px) 66vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">
           <img class="p-tall" loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="(min-width: 900px) 33vw, 50vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">
@@ -301,53 +306,86 @@ function pageHead(c, lead, more = "") {
     </section>`;
 }
 
+/* Placeholder photos (generated, not Schilly's): used only when the file exists in assets/img, tagged data-placeholder. */
+const PLACEHOLDERS = {
+  lobster: ["placeholder-lobster-bake", "Lobster bake on kraft paper: lobsters, steamers, corn and potatoes (placeholder photo)", 1536, 1024],
+  pig: ["placeholder-pig-roast", "Whole roasted pig on a tray under an event tent (placeholder photo)", 1536, 1024],
+  weddings: ["placeholder-wedding-buffet", "Barn wedding buffet with platters of brisket and pulled pork (placeholder photo)", 1536, 1024],
+};
+function placeholder(c, key, extra = "") {
+  const ph = PLACEHOLDERS[key];
+  if (!ph || !fs.existsSync(path.join(ROOT, "assets/img", ph[0] + "-1200.webp"))) return "";
+  const [n, alt, w, h] = ph;
+  return `<img data-placeholder loading="lazy" decoding="async" src="${c.asset(`img/${n}-1200.webp`)}" srcset="${c.asset(`img/${n}-640.webp`)} 640w, ${c.asset(`img/${n}-1200.webp`)} 1200w" sizes="(min-width: 900px) 50vw, 100vw" width="${w}" height="${h}" alt="${esc(alt)}"${extra}>`;
+}
+
 function home(c) {
   const bbq = MENUS.takeout.sections[0];
+  const fam = MENUS.takeout.sections[2];
+  const priceRow = ([name, p]) => `<li><span class="pl-name">${esc(titleCase(name))}</span><span class="pl-price"><sup>$</sup>${esc(p.replace("$", ""))}</span></li>`;
+  const wedPh = placeholder(c, "weddings");
+  const lobPh = placeholder(c, "lobster");
   return `<section class="hero" aria-labelledby="hero-title">
-      <div class="wrap hero-inner">
-        <div class="hero-copy">
+      <figure class="hero-photo">${PHOTO.brisket(c, ' fetchpriority="high"')}</figure>
+      <div class="wrap">
+        <div class="hero-panel">
           <h1 id="hero-title">SMOKED. HOMEMADE. MAINE.</h1>
           <p class="hero-lede">Take Out • Family Meals • Catering</p>
-          ${facts(c)}
-          <a class="btn btn-yellow hero-cta" href="${c.link("takeout")}">Take Out Menu</a>
+          <a class="btn btn-red hero-cta" href="${c.link("takeout")}">Take Out Menu</a>
         </div>
-        <figure class="hero-photo">
-          ${PHOTO.brisket(c, ' fetchpriority="high"')}
-        </figure>
+      </div>
+      <div class="wrap">
+        <dl class="facts-line">
+          <div><dt>Business Hours</dt><dd>${SITE.days} · ${SITE.time} <span class="open-status" hidden></span></dd></div>
+          <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town} <a href="${esc(SITE.maps)}">Get directions</a></dd></div>
+          <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
+        </dl>
       </div>
     </section>
 
     <section class="menus-home" aria-labelledby="menus-title">
-      <div class="wrap">
-        <h2 id="menus-title">OUR MENUS</h2>
-        <div class="sheets">
-          <article class="sheet">
-            <h3 class="ruled">TAKE OUT &amp; FAMILY MEALS</h3>
-            <p class="sheet-sub">Smoked favorites • Homemade sides • Family-size portions</p>
-            <div class="preview is-takeout">${menuSection(MENUS.takeout, bbq, false)}${menuSection(MENUS.takeout, MENUS.takeout.sections[1], false)}</div>
-            <a class="btn btn-red" href="${c.link("takeout")}">Take Out Menu</a>
-          </article>
-          <article class="sheet">
-            <h3 class="ruled">CATERING MENU</h3>
-            <p class="sheet-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
-            <ul class="board-list">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ul>
-            <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
-          </article>
+      <div class="wrap menus-grid">
+        <div class="menus-takeout">
+          <h2 id="menus-title">TAKE OUT &amp; FAMILY MEALS</h2>
+          <p class="menus-sub">Smoked favorites • Homemade sides • Family-size portions</p>
+          <h3>${esc(titleCase(bbq.title))}</h3>
+          <p class="menus-note">${esc(bbq.notes[0])}</p>
+          <ul class="price-list">${bbq.items.map(priceRow).join("")}</ul>
+          <h3>${esc(titleCase(fam.title))} <span class="menus-note-inline">${esc(fam.notes[0])}</span></h3>
+          <ul class="price-list">${fam.items.map(priceRow).join("")}</ul>
+          <a class="btn btn-red" href="${c.link("takeout")}">Take Out Menu</a>
+        </div>
+        <div class="menus-catering">
+          <h2>CATERING MENU</h2>
+          <p class="menus-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
+          <ol class="cat-list">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ol>
+          <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
         </div>
       </div>
     </section>
 
-    <section class="taste" aria-labelledby="taste-title">
+    <section class="statement" aria-label="A TASTE OF SCHILLY’S">
       <div class="wrap">
-        <h2 id="taste-title">A TASTE OF SCHILLY’S</h2>
-        ${PHOTO.taste(c)}
+        <p>Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
+      </div>
+    </section>
+
+    <section class="strip-wrap" aria-labelledby="taste-title">
+      <div class="wrap"><h2 id="taste-title">A TASTE OF SCHILLY’S</h2></div>
+      <div class="strip">
+        ${PHOTO.rotisserie(c)}
+        ${PHOTO.grazing(c)}
+        ${lobPh}
+        ${PHOTO.salmon(c)}
+        ${wedPh}
       </div>
     </section>
 
     <section class="events" aria-labelledby="events-title">
       <div class="wrap events-grid">
-        <figure class="events-photo">${PHOTO.wedding(c)}</figure>
-        <div>
+        <figure class="ev-photo ev-photo-a">${PHOTO.wedding(c)}</figure>
+        ${wedPh ? `<figure class="ev-photo ev-photo-b">${placeholder(c, "pig")}</figure>` : ""}
+        <div class="ev-text">
           <h2 id="events-title" class="visually-hidden">LOBSTER BAKES • PIG ROASTS • WEDDINGS</h2>
           <ul class="event-rows">
             ${EVENTS.map((k) => `<li><a href="${c.link(k)}">${byKey[k].h1}</a></li>`).join("\n            ")}
@@ -467,8 +505,8 @@ const BODY = {
   home, inquiry, weddings,
   takeout: (c) => menuPage(c, MENUS.takeout, false),
   catering: (c) => menuPage(c, MENUS.catering, true),
-  lobster: (c) => eventPage(c, {}),
-  pig: (c) => eventPage(c, {}),
+  lobster: (c) => eventPage(c, { photo: placeholder(c, "lobster") }),
+  pig: (c) => eventPage(c, { photo: placeholder(c, "pig") }),
 };
 
 /* ---------- document ---------- */

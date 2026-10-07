@@ -156,3 +156,9 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Cut repetition: "Reach out today for menus." (4 pages) replaced; "HUNGRY YET?" band removed from pages that already end in the inquiry form. Buttons renamed to the page names ("Take Out Menu", "Catering Menu"). Added "* Required".
 - Draft copy (21 lines, brand/source/draft-copy.txt, data-draft in HTML): home meta and events line, how to order take out, catering intro, Lobster Bakes, Pig Roasts and Weddings intros, a five-question Planning an Event list on the catering page. Facts in it are assumptions for the owner to confirm. Lobster Bakes and Pig Roasts are now indexed.
 - Gate: drafts pass but are counted separately ("20 draft lines pending owner").
+
+## Loop 20: Premium pass (21st.dev patterns, no yellow on navy)
+- Diagnosis: rectangles inside rectangles, one radius, one spacing value, a navy slab hero. Rebuilt the home page from seven 21st.dev patterns (brand/references/README.md, round 2).
+- Hero: full-bleed brisket photo with the 192°F thermometer; cream panel overlaps it; one red action. Facts as one ruled line, still on the first screen at every width (gate).
+- Gate catches: the `$` superscript was 12 px and gold on cream (1.7:1), now .62 em in red; facts-line links were 26 px tall, now 44; the strip's panorama was squeezed by the global `max-width: 100%`; the wordmark needed 3:1 for large text (#5C77A3 on navy, 3.28:1).
+- Image generation: Recraft (billing), Higgsfield (free plan) refused; Canva produced three of five before its credits ran out, but the full-size files sit on media.canva.com, which this environment blocks. Slots are wired and only render once the files exist.

@@ -1,0 +1,7 @@
+# Generated placeholder photos. NOT Schilly's photos. Replace with their own before launch.
+# Each carries data-placeholder in the HTML; build.mjs only uses one when its file exists in assets/img.
+# Generated with Canva AI (account linked to this session), 1536×1024, October 7, 2026. Prompts were written from their menu.
+placeholder-lobster-bake   Lobster bake on kraft paper: lobsters, steamers, corn and potatoes   Canva media MAHXV0-l__I
+placeholder-pig-roast      Whole roasted pig on a tray under an event tent                      Canva media MAHXV5vigyY
+placeholder-wedding-buffet Barn wedding buffet with platters of brisket and pulled pork         Canva media MAHXV2FlOYk
+# Not yet generated (credits ran out): take-out plate (brisket, mac & cheese, beans, coleslaw, cornbread); the smoker outside the kitchen.

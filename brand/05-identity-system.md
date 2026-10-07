@@ -68,3 +68,12 @@ Schilly’s five photos, never stock: `brisket` (hero, link preview), `rotisseri
 ## Words
 
 Schilly’s own wording, saved in `source/`. Interface labels from `source/ui-labels.txt`: three words or fewer, naming an action or a state. No invented reviews, prices, promises or FAQ answers.
+
+
+## Revision, October 7, 2026: premium pass
+
+- **Sign Yellow leaves the web page.** It stays in the logo, printed menus and social posts. On the site, navy type sits on cream and board; gold is a 1 px rule; red is the only action color. Reason: yellow-on-navy headlines read as signage, not as a premium site, and the color had nowhere to go but louder.
+- **Corners.** 4 px on controls only. Photos and panels are square.
+- **Frames.** The double navy frame is gone. A panel is a cream surface under a single 1 px navy rule.
+- **Rhythm.** Sections no longer share one 64 px padding: the hero overlap, the big sentence (120 px above), the photo strip and the events block each set their own pace. Photos keep their own proportions.
+- **Placeholders.** Generated photos are allowed only for subjects Schilly's has no photo of (lobster bakes, pig roasts, wedding spreads), tagged `data-placeholder`, listed in `brand/source/placeholders.txt`, and replaced before launch.

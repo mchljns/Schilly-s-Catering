@@ -36,3 +36,19 @@ Searched: restaurant menu with prices, opening hours and location card, sticky c
 | Contact Form (kevingirelli) | Pending, success and error states inside the form | Card wrapper |
 | Footer With Newsletter (balick) | An operational status indicator in the footer, reused as the open or closed line | Newsletter form, oversized wordmark |
 | Floating Food Hero, Location Card (3D tilt), Expanded Map, 3D Parallax Gallery, Masonry Lightbox | Nothing | Floating or tilting images, parallax, and lightboxes are decoration. They add JavaScript and motion and don't help anyone order |
+
+## Round 2 (October 7, 2026): premium patterns against blockiness
+
+The first build read as blocky: every section a rectangle inside the 1200 px container, one 6 px radius everywhere, one 64 px spacing value, a filled navy hero with yellow type. This round rebuilt the home page from these patterns (metadata and descriptions; 21st.dev code quota was spent, previews are blocked here; Refero serves only an app shell to this machine).
+
+| Pattern | Source | Rebuilt as |
+| --- | --- | --- |
+| Editorial image hero, panel overlapping a full-bleed photo | 21st.dev hero-07 and hero-05 (felipemenezes098), hero-carousel (crafterui) | Brisket photo at 100 vw × 70 vh; a cream panel overlaps its lower-left by 136 px with the navy headline, services line and one red button. Gold is a 1 px rule on the panel. Yellow is retired from the web page |
+| Facts as one ruled line | logo-cloud-16 (ln-dev7), DoorDash store sheet | Hours with live status, address with Get directions, phone, between a navy rule and a hairline |
+| Prices as typographic objects | menu-1 (olewandowski1), editorial-testimonial (jatin-yadav05) | Home menu prices in Solway at up to 2 rem, `$` as a small superscript; items split by hairlines; 7/4 column split with a 1 px navy column rule |
+| One big typographic moment | cta69 (ziegfiroyt) | Their own line "Slow smoked favorites, homemade comfort food & Maine hospitality." at up to 4.25 rem under a gold rule, 120 px of air above |
+| Horizontal photo strip at natural proportions | motion-scroll-horizontal, horizontal-scroll-gallery (strip only, no pinning) | Photos keep their own shapes, scroll sideways, bleed to both edges, snap; themed scrollbar |
+| Two offset images | hero-04 editorial collage (felipemenezes098) | Events block: 12-column grid, the chef photo spans 7 columns, a second photo overlaps from column 6 when a placeholder exists, the three event names as a ruled list |
+| Large wordmark footer | footer-with-suite (scrollxui), large-name-footer (arihantcodes) | "SCHILLY’S" in Solway up to 15 rem, cropped by the page's bottom edge, muted blue on navy (3.3:1) |
+
+Refused this round: marquee/ticker (motion for its own sake), parallax, pinned scroll, carousels, gradient overlays on photos, wood or paper textures from CSS noise, kicker labels, section numbers, same-size cards.
