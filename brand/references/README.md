@@ -52,3 +52,13 @@ The first build read as blocky: every section a rectangle inside the 1200 px con
 | Large wordmark footer | footer-with-suite (scrollxui), large-name-footer (arihantcodes) | "SCHILLY’S" in Solway up to 15 rem, cropped by the page's bottom edge, muted blue on navy (3.3:1) |
 
 Refused this round: marquee/ticker (motion for its own sake), parallax, pinned scroll, carousels, gradient overlays on photos, wood or paper textures from CSS noise, kicker labels, section numbers, same-size cards.
+
+## Round 3 (October 7, 2026): real sites, finally reachable in part
+
+Captures in `round3/`. Reachable: The Lost Kitchen (whole), Hawksmoor (home and menus, no video), Dishoom (home only). Still blocked here: Franklin, Snow's, Lewis, Hometown, Heritage (scripts), Eventide, Duckfat, Primo, Refero search, Godly, Siteinspire, Land-book, minimal.gallery.
+
+**The Lost Kitchen** (Freedom, Maine): first screen is one edge-to-edge photograph with eleven words; every section is a photo, one line and one button; the practical block ("long waits are expected, bring a sweater") is in the owner's voice; handmade marks (a pencil sketch, a botanical footer drawing). A stock Shopify theme that reads expensive because of photography and voice.
+
+**Hawksmoor**: one committed world (Victorian steakhouse): charcoal ground, gold small caps, photography as full-width strips. Also card grids and too much copy; a model for atmosphere, not structure.
+
+Lesson applied to Schilly's: the site needs a world, not a system; fewer words, bigger photos, one handmade element, and an owner's-voice block. Next: two committed worlds on the same five screens, with references pinned beside each.
