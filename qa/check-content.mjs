@@ -29,6 +29,7 @@ const DESCRIPTIONS = [
   "Smoked salmon platter on a ring of sliced cucumber",
   "Schilly’s chef in an apron with a bride, holding a plate at a wedding",
   "Schilly’s Take Out & Catering Kitchen logo over smoked brisket",
+  "Two spits of chickens turning inside the smoker",
   // Generated placeholders (brand/source/placeholders.txt), alt says so.
   "Lobster bake on kraft paper: lobsters, steamers, corn and potatoes (placeholder photo)",
   "Whole roasted pig on a tray under an event tent (placeholder photo)",

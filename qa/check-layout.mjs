@@ -92,7 +92,7 @@ for (const u of URLS) for (const [w, h] of widths) {
   // Lazy images: scroll the page so they load, then check none are broken.
   await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 30)); } });
   await page.waitForTimeout(300);
-  const broken = await page.evaluate(() => [...document.querySelectorAll("img")].filter((i) => !i.naturalWidth).map((i) => i.src.split("/").pop()));
+  const broken = await page.evaluate(() => [...document.querySelectorAll("img")].filter((i) => !i.naturalWidth && i.getBoundingClientRect().width > 0).map((i) => i.src.split("/").pop()));
   if (SHOTS) {
     await page.evaluate(() => scrollTo(0, 0));
     const name = (u.replace(/\/$/, "").replace(".html", "") || "home");

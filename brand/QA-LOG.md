@@ -174,3 +174,8 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Re-crawled schillyscatering.com: six media files in total, the logo and the same five photos already in use. Instagram and Facebook pages stay blocked here (only the Instagram image CDN answers).
 - Home page reshaped to stand on those five: the three tall photos (brisket, grazing table, salmon) as a staggered collage instead of a strip with empty slots; the events block keeps the chef photo only. Generated-placeholder hooks removed from the home page; the event pages still accept a placeholder file if one is ever added.
 - Gate caught nothing; one CSS specificity bug (`.collage figure` beat `.col-b`) found in screenshots and fixed.
+
+## Loop 23: Every real photo in use
+- Facebook harvest (brand/socials/README.md): one new photograph, the cover (chickens on two spits in the smoker, 2048 px phone snapshot). Everything else there is AI-generated poster art and stays off the site. Instagram is login-walled.
+- The smoker photo is cropped to a 2:1 band with a light levels lift, and joins the home collage (now four photos), the take-out menu rail and nothing else. The grazing table sits in the catering menu rail; the rotisserie beside the inquiry form. The chef-with-bride photo stays on the home page and the weddings page.
+- Gate: a rail photo hidden at phone widths was reported as broken; the gate now ignores images with no layout box.

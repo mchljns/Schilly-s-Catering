@@ -225,6 +225,7 @@ ${spy}
               <input id="menuSearch" type="search" placeholder="Search the menu" autocomplete="off">
             </label>
             <button class="btn btn-quiet print-btn" type="button" data-print>Print menu</button>
+            <figure class="rail-photo">${catering ? PHOTO.grazing(c) : PHOTO.smoker(c, "250px")}</figure>
           </aside>
           <div class="menu-panel" id="menu-panel">
             <div id="menuList" class="${catering ? "is-catering" : "is-takeout"}">
@@ -284,6 +285,7 @@ function ld(c) {
 
 /* ---------- page bodies ---------- */
 const PHOTO = {
+  smoker: (c, sizes = "100vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/smoker-1600.webp")}" srcset="${c.asset("img/smoker-800.webp")} 800w, ${c.asset("img/smoker-1600.webp")} 1600w" sizes="${sizes}" width="1600" height="800" alt="Two spits of chickens turning inside the smoker">`,
   brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w" sizes="(min-width: 900px) 44vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
   wedding: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-832.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w" sizes="(min-width: 900px) 45vw, 100vw" width="832" height="554" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
   rotisserie: (c, attrs = ' loading="lazy" decoding="async"') => `<img${attrs} src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">`,
@@ -375,6 +377,7 @@ function home(c) {
           <figure class="col-a">${PHOTO.brisket(c, ' loading="lazy" decoding="async"')}</figure>
           <figure class="col-b">${PHOTO.grazing(c)}</figure>
           <figure class="col-c">${PHOTO.salmon(c)}</figure>
+          <figure class="col-d">${PHOTO.smoker(c, "(min-width: 900px) 58vw, 100vw")}</figure>
         </div>
       </div>
     </section>
@@ -493,7 +496,7 @@ function inquiry(c) {
     <section class="inquiry">
       <div class="wrap inquiry-grid">
         <div class="sheet form-sheet">${inquiryForm(c)}</div>
-        <aside>${facts(c, { compact: true })}</aside>
+        <aside>${facts(c, { compact: true })}<figure class="aside-photo">${PHOTO.rotisserie(c)}</figure></aside>
       </div>
     </section>`;
 }
