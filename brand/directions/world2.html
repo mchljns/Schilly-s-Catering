@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World 2: Butcher paper</title>
+<style>@font-face{font-family:"Big Shoulders";src:url(fonts/big-shoulders-display-latin-wght-normal.woff2);font-weight:100 900}
+@font-face{font-family:"League Gothic";src:url(fonts/league-gothic-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:"Sofia XC";src:url(fonts/sofia-sans-extra-condensed-latin-wght-normal.woff2);font-weight:1 1000}
+@font-face{font-family:"Radio Canada";src:url(../../assets/fonts/radio-canada-400.woff2);font-weight:400}
+@font-face{font-family:"Radio Canada";src:url(../../assets/fonts/radio-canada-700.woff2);font-weight:700}
+:root{--kraft:#eae2cf;--paper:#f4efe3;--ink:#1a1a1a;--red:#a90a04;--navy:#022654}
+*{box-sizing:border-box} body{margin:0;background:var(--kraft);color:var(--ink);font:400 18px/1.55 "Radio Canada"}
+.d{font-family:"League Gothic";font-weight:400;text-transform:uppercase;line-height:.92;letter-spacing:.01em}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 0} header img{width:150px}
+nav{display:flex;gap:28px;align-items:center;font:400 24px "League Gothic";text-transform:uppercase;letter-spacing:.04em} nav a{color:var(--ink);text-decoration:none}
+nav .arrow{background:var(--red);color:#fff;padding:12px 22px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);padding-right:34px}
+.hero img{width:100%;height:clamp(420px,66vh,720px);object-fit:cover;object-position:50% 55%;display:block}
+.quote{text-align:center;padding:72px 16px 64px} .quote h1{font-size:clamp(48px,7.5vw,112px);margin:0 auto;max-width:14ch} .quote p{font:700 16px "Radio Canada";letter-spacing:.14em;text-transform:uppercase;margin:22px 0 0;color:#5a5346}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0} .split img{width:100%;height:100%;object-fit:cover;display:block;min-height:520px}
+.split .t{padding:64px;background:var(--paper)} .split h2{font-size:84px;margin:0 0 14px} .split p{font-size:21px;max-width:40ch;margin:0 0 26px}
+.btn{display:inline-block;background:var(--red);color:#fff;font:400 24px "League Gothic";text-transform:uppercase;letter-spacing:.04em;padding:14px 36px 14px 22px;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.board{padding:88px 0} .board .paper{background:var(--paper);padding:48px 56px;max-width:1000px;margin:0 auto;box-shadow:0 1px 0 #d8cfb8}
+.board h2{font-size:96px;text-align:center;margin:0} .board .sub{text-align:center;font:700 15px "Radio Canada";letter-spacing:.14em;text-transform:uppercase;color:#5a5346;margin:6px 0 32px}
+.board .g{display:grid;grid-template-columns:1fr 1fr;gap:0 56px} .board h3{font-size:42px;margin:26px 0 4px;border-bottom:3px solid var(--ink);padding-bottom:4px} .board .n{color:#5a5346;font-size:16px;margin:0 0 6px}
+.row{display:flex;align-items:baseline;gap:10px;padding:8px 0;font-weight:700} .row i{flex:1;border-bottom:2px dotted #8f7a55;position:relative;top:-5px} .row b{font:400 30px/1 "League Gothic";color:var(--red)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;padding:0 0 88px} .facts div{border-top:3px solid var(--ink);padding-top:14px} .facts h4{font-size:40px;margin:0 0 4px} .facts p{margin:0;font-weight:700}
+.events{position:relative} .events img{width:100%;height:560px;object-fit:cover;display:block} .events h2{position:absolute;left:0;right:0;bottom:40px;text-align:center;color:#fff;font-size:clamp(48px,9vw,128px);margin:0;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+footer{background:var(--ink);color:#fff;padding:64px 0 32px;text-align:center} footer .g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;text-align:left} footer h4{font-size:30px;margin:0 0 6px;color:#f0c419} footer a{color:#fff}
+footer img{width:260px;display:block;margin:40px auto 0} footer small{display:block;margin-top:20px;color:#9a9a9a}
+@media(max-width:899px){header img{width:120px} nav{display:none} .hero img{height:52vh} .quote{padding:44px 16px} .split{grid-template-columns:1fr} .split img{min-height:0;height:320px} .split .t{padding:32px 16px} .split h2{font-size:60px} .board{padding:48px 0} .board .paper{padding:28px 18px} .board h2{font-size:64px} .board .g,.facts,footer .g{grid-template-columns:1fr} .events img{height:360px}}
+</style></head><body>
+<header><div class="wrap"><img src="../../assets/img/logo-480.webp" alt="Schilly’s"><nav><a href="#">Menu</a><a href="#">Catering</a><a href="#">Events</a><a href="#">Visit us</a><a class="arrow" href="#">Catering Inquiries</a></nav></div></header>
+<section class="hero"><img src="../../assets/img/brisket-1200.webp" alt=""></section>
+<section class="quote"><h1 class="d">“Slow smoked favorites, homemade comfort food &amp; Maine hospitality.”</h1><p>Take Out • Family Meals • Catering · Casco, Maine</p></section>
+<section class="split"><img src="../../assets/img/rotisserie-1200.webp" alt=""><div class="t"><h2 class="d">Hungry yet?</h2><p>We’re a small kitchen on Roosevelt Trail in Casco. We smoke brisket, pulled pork and chicken, make the sides from scratch, and pack it up to go or bring it to your party. Wednesday through Sunday, 11 to 6. Call ahead and we’ll have it ready.</p><a class="btn" href="#">Take Out Menu</a></div></section>
+<section class="board"><div class="wrap"><div class="paper"><h2 class="d">Take Out Kitchen Menu</h2><p class="sub">Prices include Maine State Sales Tax</p><div class="g">
+<div><h3 class="d">BBQ Plates</h3><p class="n">All plates served with Mac &amp; Cheese, BBQ Beans, Coleslaw &amp; Cornbread.</p><div class="row">Pulled Chicken<i></i><b>$28</b></div><div class="row">Pulled Pork<i></i><b>$28</b></div><div class="row">Sliced Brisket<i></i><b>$30</b></div><div class="row">Three Meat<i></i><b>$35</b></div>
+<h3 class="d">Sandwiches</h3><div class="row">BBQ Beef Brisket Sandwich<i></i><b>$17</b></div><div class="row">BBQ Pulled Pork Sandwich<i></i><b>$14</b></div><div class="row">BBQ Pulled Chicken Sandwich<i></i><b>$14</b></div></div>
+<div><h3 class="d">Family Size Portions</h3><p class="n">4 Servings each</p><div class="row">Mac &amp; Cheese<i></i><b>$30</b></div><div class="row">Pulled Pork<i></i><b>$35</b></div><div class="row">Pulled Chicken<i></i><b>$35</b></div><div class="row">Brisket<i></i><b>$40</b></div>
+<h3 class="d">Sides</h3><div class="row">White Cheddar Mac &amp; Cheese<i></i><b>$7</b></div><div class="row">New England Clam Chowder<i></i><b>$8</b></div><div class="row">BBQ Baked Beans<i></i><b>$4</b></div><div class="row">Cornbread (Plain or Jalapeño)<i></i><b>$5</b></div></div>
+</div><p style="text-align:center;margin:36px 0 0"><a class="btn" href="#">Full menu</a></p></div></div></section>
+<section class="facts wrap"><div><h4 class="d">Business Hours</h4><p>Wednesday – Sunday<br>11 am – 6 pm</p></div><div><h4 class="d">Location</h4><p>224 Roosevelt Trail<br>Casco, ME 04015</p></div><div><h4 class="d">Store Phone #</h4><p>(207) 693-8840</p></div></section>
+<section class="events"><img src="../../assets/img/grazing-table-1086.webp" alt=""><h2 class="d">Lobster Bakes · Pig Roasts · Weddings</h2></section>
+<footer><div class="wrap"><div class="g"><div><h4 class="d">Find us</h4>224 Roosevelt Trail<br>Casco, ME 04015</div><div><h4 class="d">Hours</h4>Wednesday – Sunday<br>11 am – 6 pm</div><div><h4 class="d">Call</h4><a href="#">(207) 693-8840</a><br><a href="#">Instagram</a> · <a href="#">Facebook</a></div></div><img src="../../assets/img/logo-480.webp" alt=""><small>© 2026 Schilly’s Take Out &amp; Catering Kitchen.</small></div></footer>
+</body></html>
