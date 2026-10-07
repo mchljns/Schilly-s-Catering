@@ -214,8 +214,8 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 .menu-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 48px; align-items: start; }
 .menu-side { position: sticky; top: 16px; display: grid; gap: 16px; }
 @media (min-width: 1100px) { .menu-side { top: calc(var(--header-h) + 16px); } }
-.seg { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 4px; border: 2px solid var(--navy); border-radius: var(--pill); background: #fff; }
-.seg-opt { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 44px; padding: 8px 14px; border: 0; border-radius: var(--pill); background: transparent; color: var(--navy); font-size: 1rem; line-height: 1.2; text-decoration: none; transition: background-color .15s, color .15s; }
+.seg { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 4px; border: 2px solid var(--navy); border-radius: 10px; background: #fff; }
+.seg-opt { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 44px; padding: 8px 14px; border: 0; border-radius: 6px; background: transparent; color: var(--navy); font-size: 1rem; line-height: 1.2; text-decoration: none; transition: background-color .15s, color .15s; }
 @media (hover: hover) { .seg-opt:hover { background: var(--plank); color: var(--navy); } }
 .seg-opt[aria-current="page"] { background: var(--navy); color: #fff; }
 .spy { display: grid; gap: 2px; }
@@ -230,7 +230,8 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 @media (max-width: 899px) {
   .menu-layout { grid-template-columns: 1fr; gap: 0; }
   .menu-side { display: contents; }
-  .seg { grid-template-columns: 1fr 1fr; margin-bottom: 12px; }
+  .seg { grid-template-columns: 1fr 1fr; margin-bottom: 12px; border-radius: var(--pill); }
+  .seg-opt { border-radius: var(--pill); }
   .search { display: block; margin: 12px 0 4px; }
   .spy { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 10; background: var(--cream); padding: 8px 16px; margin: 0 -16px; }
   .spy::-webkit-scrollbar { display: none; }
