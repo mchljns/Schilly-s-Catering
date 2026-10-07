@@ -1,0 +1,10 @@
+# Corrections to Schilly's own text, made for the spec site. Format: original => corrected.
+# qa/check-content.mjs applies these to brand/source before tracing, so corrected text still traces.
+Caeser => Caesar
+subject to changes => subject to change
+In store pricing => In-store pricing
+(207)693-8840 => (207) 693-8840
+11 am - 6pm => 11 am – 6 pm
+Wednesday - Sunday => Wednesday – Sunday
+PARTY PLATTERS, BOARDS, and GRAZES => PARTY PLATTERS, BOARDS & GRAZES
+Event Location * => Event Location*

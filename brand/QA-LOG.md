@@ -149,3 +149,10 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Lobster Bakes and Pig Roasts no longer show salmon and chicken photos.
 - Fixed: menu search left non-matching items visible (`.item { display:flex }` beat `[hidden]`).
 - Detector after: cream-palette and gray-on-color gone; remaining findings are the known line-height and padding misreads and the deliberate frame rules.
+
+## Loop 19: Copy grade and draft copy
+- Grade before: B−. Authentic and slop-free, but thin where people decide (event pages, how to order, catering logistics) and inconsistent in their own mechanics.
+- Corrections to their text, listed in brand/source/corrections.txt and applied by the gate before tracing: Caesar, "subject to change", "In-store", "(207) 693-8840", "11 am – 6 pm", "Wednesday – Sunday", "Boards & Grazes", "Event Location*".
+- Cut repetition: "Reach out today for menus." (4 pages) replaced; "HUNGRY YET?" band removed from pages that already end in the inquiry form. Buttons renamed to the page names ("Take Out Menu", "Catering Menu"). Added "* Required".
+- Draft copy (21 lines, brand/source/draft-copy.txt, data-draft in HTML): home meta and events line, how to order take out, catering intro, Lobster Bakes, Pig Roasts and Weddings intros, a five-question Planning an Event list on the catering page. Facts in it are assumptions for the owner to confirm. Lobster Bakes and Pig Roasts are now indexed.
+- Gate: drafts pass but are counted separately ("20 draft lines pending owner").

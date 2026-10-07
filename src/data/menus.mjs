@@ -63,7 +63,7 @@ export const MENUS = {
     footnotes: [
       "Prices include Maine State Sales Tax.",
       "Consuming raw or undercooked meats, poultry, seafood, shellfish, or eggs may increase your risk of foodborne illness.",
-      "*Prices are subject to changes. In store pricing is the standard."
+      "*Prices are subject to change. In-store pricing is the standard."
     ]
   },
 
@@ -91,7 +91,7 @@ export const MENUS = {
         title: "Boxed Salads",
         notes: ["Includes a side and beverage."],
         items: [
-          ["Garden Salad"], ["Caeser Salad"], ["Cobb Salad"], ["Italian Pasta Salad"], ["Autumn Harvest Salad"],
+          ["Garden Salad"], ["Caesar Salad"], ["Cobb Salad"], ["Italian Pasta Salad"], ["Autumn Harvest Salad"],
           ["Balsamic Spinach & Beets Salad"], ["Caprese Pasta Salad"], ["BLT Pasta Salad"]
         ]
       },
@@ -110,7 +110,7 @@ export const MENUS = {
         ]
       },
       {
-        title: "PARTY PLATTERS, BOARDS, and GRAZES",
+        title: "PARTY PLATTERS, BOARDS & GRAZES",
         notes: ["Platters serve approximately 10–12 people."],
         items: [
           ["CHARCUTERIE BOARD", "", "Assortment of fine meats and cheeses, dried and fresh fruits, nuts, olives, assorted crackers with jams or honey."],

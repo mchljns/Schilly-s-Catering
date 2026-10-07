@@ -5,7 +5,7 @@
 
   var TZ = "America/New_York";
   var HOURS = { days: [0, 3, 4, 5, 6], open: 11, close: 18 }; // 0 = Sunday. Keep in sync with SITE in build.mjs.
-  var PHONE_HTML = '<a href="tel:+12076938840">(207)693-8840</a>';
+  var PHONE_HTML = '<a href="tel:+12076938840">(207) 693-8840</a>';
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };

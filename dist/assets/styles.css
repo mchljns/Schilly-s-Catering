@@ -128,6 +128,8 @@ p { margin: 0 0 1em; }
 .page-head { padding: 36px 0 8px; }
 .page-head h1 { font-size: var(--t-title); margin: 0 0 8px; }
 .page-head .lead { margin: 0; max-width: 62ch; }
+.page-note { margin: 10px 0 0; max-width: 62ch; font-size: var(--t-lead); line-height: 1.45; }
+.page-note + .page-note { margin-top: 12px; font-size: var(--t-body); color: var(--slate); }
 .page-head + .menus, .page-head + .inquiry { padding-top: 24px; }
 
 /* Hero: headline, services line, then the three facts as rows (DoorDash store info) */
@@ -246,6 +248,14 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 .menu-foot .btn { margin-top: 10px; }
 @media (max-width: 759px) { .items { grid-template-columns: 1fr; } }
 
+/* Planning an event: questions as a ruled list on a sheet */
+.faq { padding: 0 0 64px; }
+.faq-list { margin: 0; }
+.faq-list > div { padding: 16px 0; border-bottom: 2px dotted var(--edge); }
+.faq-list dt { font-weight: 700; margin-bottom: 4px; }
+.faq-list dd { margin: 0; color: var(--slate); max-width: 68ch; }
+@media (max-width: 699px) { .faq { padding-bottom: 44px; } }
+
 /* Paper sheets: a printed menu pinned on the board. Navy frame with an inner rule, like the logo's sign. */
 .sheet { background: var(--cream); border: 2px solid var(--navy); outline: 1px solid var(--navy); outline-offset: -8px; border-radius: 4px; padding: 30px 32px 32px; }
 .sheet > .ruled { font-size: var(--t-menu); margin: 0 0 8px; }
@@ -317,6 +327,7 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 .form [aria-invalid="true"] { border-color: var(--red); }
 .form-foot { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .form-status { margin: 0; font-weight: 700; }
+.form-req { margin: 0; font-size: var(--t-small); color: var(--slate); }
 
 /* Footer: the one navy band. Yellow lives here only. */
 .site-footer { background: var(--navy); color: #fff; padding: 56px 0 calc(28px + env(safe-area-inset-bottom)); }
@@ -343,7 +354,7 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
   .menus { padding: 0; border: 0; }
   .menu-layout { display: block; }
   .print-logo { display: block !important; width: 150pt; margin: 0 auto 6pt; }
-  #menu-panel::before { content: "224 Roosevelt Trail, Casco, ME 04015 · (207)693-8840 · Wednesday - Sunday 11 am - 6pm"; display: block; font-weight: 700; font-size: 10pt; margin-bottom: 8pt; text-align: center; }
+  #menu-panel::before { content: "224 Roosevelt Trail, Casco, ME 04015 · (207) 693-8840 · Wednesday – Sunday 11 am – 6 pm"; display: block; font-weight: 700; font-size: 10pt; margin-bottom: 8pt; text-align: center; }
   .items { grid-template-columns: 1fr 1fr !important; column-gap: 24pt; }
   .item { padding: 3pt 0; break-inside: avoid; }
   .menu-sec { padding-top: 10pt; break-inside: avoid; }

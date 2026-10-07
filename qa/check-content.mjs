@@ -6,8 +6,15 @@ import path from "node:path";
 import { ROOT, serve, chromium, norm, pages } from "./lib.mjs";
 
 const srcDir = path.join(ROOT, "brand/source");
-const sourceText = fs.readdirSync(srcDir).filter((f) => f.endsWith(".txt") && f !== "ui-labels.txt")
+const OURS = new Set(["ui-labels.txt", "draft-copy.txt", "corrections.txt"]);
+const readLines = (f) => fs.readFileSync(path.join(srcDir, f), "utf8").split("\n").filter((l) => l && !l.startsWith("#"));
+// Corrections (typos, spacing) are applied to their text before tracing: brand/source/corrections.txt.
+const corrections = readLines("corrections.txt").map((l) => l.split(" => "));
+let sourceText = fs.readdirSync(srcDir).filter((f) => f.endsWith(".txt") && !OURS.has(f))
   .map((f) => fs.readFileSync(path.join(srcDir, f), "utf8")).join("\n");
+for (const [a, b] of corrections) sourceText = sourceText.split(a).join(b);
+// Draft copy: example lines for the spec site, pending the owner. Allowed, but counted and reported.
+const drafts = readLines("draft-copy.txt").map(norm);
 // Lines are joined with a space, and again with ", " (an address printed on two lines is still their text).
 const corpus = norm(sourceText.replace(/\n/g, " ")) + " || " + norm(sourceText.replace(/\n/g, ", "));
 const labels = fs.readFileSync(path.join(srcDir, "ui-labels.txt"), "utf8").split("\n")
@@ -24,12 +31,14 @@ const DESCRIPTIONS = [
   "Schilly’s Take Out & Catering Kitchen logo over smoked brisket",
 ].map(norm);
 
+const draftSeen = new Set();
 function allowed(fragment) {
   // A trimmed line keeps its full stop: "…be in touch." is their sentence, cut short.
   const f = norm(fragment).replace(/[\s•·]+$/, "").replace(/[.?!]$/, "");
   if (!f || /^[•·×*\-–—|,.:;()/]+$/.test(f)) return true;
   if (/^©?\s*\d{4}$/.test(f)) return true;
   if (corpus.includes(f) || labels.includes(f) || DESCRIPTIONS.includes(f)) return true;
+  if (drafts.some((d) => d.replace(/[.?!]$/, "") === f)) { draftSeen.add(f); return true; }
   return false;
 }
 // A text node may join approved pieces with " · ", ": " or " • ".
@@ -93,7 +102,7 @@ for (const { where, text } of found) {
   if (where === "hierarchy") { failures.push(`hierarchy: ${text}`); continue; }
   if (where === "title" || where === "meta" || where.startsWith("jsonld")) {
     // Titles and meta may combine approved phrases with " · ", "&" or ". "
-    if (!text.split(/\s+·\s+|\.\s+(?=[A-Z0-9(])/).every((p) => check(p) || check(p.replace(/\.$/, "")))) failures.push(`${where}: "${text}"`);
+    if (!check(text) && !text.split(/\s+·\s+|\.\s+(?=[A-Z0-9(])/).every((p) => check(p) || check(p.replace(/\.$/, "")))) failures.push(`${where}: "${text}"`);
     continue;
   }
   if (!check(text)) failures.push(`${where}: "${text.trim()}"`);
@@ -159,4 +168,4 @@ if (failures.length) {
   console.error(`check-content: ${failures.length} problem(s)\n  ` + failures.join("\n  "));
   process.exit(1);
 }
-console.log(`check-content: ok (${seen.size} text fragments traced to schillyscatering.com or approved labels; slop lint clean)`);
+console.log(`check-content: ok (${seen.size} text fragments traced to schillyscatering.com or approved labels; ${draftSeen.size} draft lines pending owner (brand/source/draft-copy.txt); slop lint clean)`);

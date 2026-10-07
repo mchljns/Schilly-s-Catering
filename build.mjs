@@ -16,18 +16,50 @@ const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SITE = {
   name: "Schilly’s Take Out & Catering Kitchen",
   url: "https://schillyscatering.com",
-  phone: "(207)693-8840",
+  phone: "(207) 693-8840",
   tel: "+12076938840",
   street: "224 Roosevelt Trail",
   town: "Casco, ME 04015",
-  days: "Wednesday - Sunday",
-  time: "11 am - 6pm",
+  days: "Wednesday – Sunday",
+  time: "11 am – 6 pm",
   maps: "https://www.google.com/maps/search/?api=1&query=224+Roosevelt+Trail+Casco+ME+04015",
   instagram: "https://www.instagram.com/schillyseats",
   facebook: "https://www.facebook.com/share/1DnxQNy3wD/",
   updated: new Date().toISOString().slice(0, 10),
 };
 const ID = SITE.url + "/#restaurant";
+
+/* ---------- draft copy ----------
+   Example copy written for the spec site where Schilly's own site has none. Every line is listed in
+   brand/source/draft-copy.txt and carries data-draft in the HTML, so the owner can confirm or replace it.
+   Facts in here (lead times, service area, what goes in a lobster bake) are assumptions until confirmed. */
+const DRAFT = {
+  homeDesc: "BBQ take out, family meals and catering in Casco, Maine. Smoked brisket, pulled pork and pulled chicken with homemade sides, Wednesday to Sunday.",
+  events: "Lobster bakes, whole pig roasts and wedding spreads, cooked by the same kitchen that smokes our brisket every day. Tell us the date and the headcount and we’ll plan the menu with you.",
+  takeout: "Call ahead and we’ll have it ready when you get here, or stop in and order.",
+  catering: "Pick from the menu below, then tell us the date, the place and about how many people. We’ll put together a quote and walk through the details with you.",
+  lobster: [
+    "A Maine lobster bake for your backyard, camp or company outing: lobsters, steamers, corn on the cob and red potatoes, cooked together and served hot.",
+    "Tell us where you’re hosting and how many you’re feeding. We’ll build the menu around the bake, with sides and dessert from our kitchen.",
+  ],
+  pig: [
+    "A whole pig, slow roasted until it pulls apart, served with the sides people already drive to Casco for: white cheddar mac & cheese, BBQ beans, coleslaw and cornbread.",
+    "Good for graduation parties, family reunions, company cookouts and anything else with a long guest list.",
+  ],
+  weddings: [
+    "Wedding catering from the same kitchen that smokes our brisket every day. Start with grazing boards and platters at cocktail hour, sit down to a smoked BBQ dinner, and finish with Maine blueberry cake.",
+    "We cater rehearsal dinners and receptions around Sebago Lake and the Lakes Region.",
+  ],
+  faq: [
+    ["How far ahead should I book?", "Two to four weeks is usually enough for a party or an office lunch. For summer weekends and weddings, book as early as you can."],
+    ["How many people does a platter feed?", "Platters serve approximately 10–12 people."],
+    ["Where do you cater?", "We’re on Roosevelt Trail in Casco and cater events around Sebago Lake and the Lakes Region."],
+    ["Do you deliver and set up?", "Drop-off, buffet setup and full service can all be arranged. Tell us what you need in your inquiry."],
+    ["Do you have gluten-free or vegan options?", "Yes. The Black Bean Burger is gluten-free and vegan, and most salads and platters can be adjusted. Ask when you inquire."],
+  ],
+};
+const draft = (t, tag = "p", cls = "") => `<${tag}${cls ? ` class="${cls}"` : ""} data-draft>${esc(t)}</${tag}>`;
+
 
 /* ---------- helpers ---------- */
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -53,17 +85,17 @@ const price = (p) => (p && /^\$\d/.test(p) ? p.replace("$", "") + ".00" : null);
 // until Schilly's publishes real content for it (thin pages hurt the whole site).
 const PAGES = [
   { key: "home", path: "", label: "Home", title: `${SITE.name} · Casco, ME`, h1: "SMOKED. HOMEMADE. MAINE.",
-    desc: `Take Out • Family Meals • Catering. ${SITE.street}, ${SITE.town}. ${SITE.days} ${SITE.time}. ${SITE.phone}.`, index: true, priority: "1.0" },
+    desc: DRAFT.homeDesc, index: true, priority: "1.0" },
   { key: "takeout", path: "take-out-menu/", label: "Take Out Menu", title: `Take Out Kitchen Menu · ${SITE.name} · Casco, ME`, h1: "TAKE OUT KITCHEN MENU",
     desc: "BBQ Plates • White Cheddar Mac & Cheese • Family Size Portions • Sandwiches • Specialty Beef Hot Dogs • Sides • Dessert. Prices include Maine State Sales Tax.", index: true, priority: "0.9" },
   { key: "catering", path: "catering-menu/", label: "Catering Menu", title: `Catering Menu · ${SITE.name} · Casco, ME`, h1: "CATERING MENU",
-    desc: "Weddings • Backyard BBQs • Corporate Events • Private Parties. Boxed Lunch • Elevated Boxed Lunches • Boxed Salads • Soups & Crock Favorites • Desserts • Party Platters, Boards, and Grazes.", index: true, priority: "0.9" },
+    desc: "Weddings • Backyard BBQs • Corporate Events • Private Parties. Boxed Lunch • Elevated Boxed Lunches • Boxed Salads • Soups & Crock Favorites • Desserts • Party Platters, Boards & Grazes.", index: true, priority: "0.9" },
   { key: "weddings", path: "weddings/", label: "Weddings", title: `Weddings · ${SITE.name} · Casco, ME`, h1: "WEDDINGS",
-    desc: `Wedding Catering. Reach out today for menus. ${SITE.street}, ${SITE.town}. ${SITE.phone}.`, index: true, priority: "0.8" },
+    desc: DRAFT.weddings[0], index: true, priority: "0.8" },
   { key: "lobster", path: "lobster-bakes/", label: "Lobster Bakes", title: `Lobster Bakes · ${SITE.name} · Casco, ME`, h1: "LOBSTER BAKES",
-    desc: `Lobster Bakes. Reach out today for menus. ${SITE.phone}.`, index: false },
+    desc: DRAFT.lobster[0], index: true, priority: "0.7" },
   { key: "pig", path: "pig-roasts/", label: "Pig Roasts", title: `Pig Roasts · ${SITE.name} · Casco, ME`, h1: "PIG ROASTS",
-    desc: `Pig Roasts. Reach out today for menus. ${SITE.phone}.`, index: false },
+    desc: DRAFT.pig[0], index: true, priority: "0.7" },
   { key: "inquiry", path: "catering-inquiries/", label: "Catering Inquiries", title: `Catering Inquiries · ${SITE.name} · Casco, ME`, h1: "LET’S PLAN YOUR EVENT",
     desc: `Catering Inquiries. Tell us a little about your event and we’ll be in touch. ${SITE.phone}.`, index: true, priority: "0.8" },
 ];
@@ -124,11 +156,11 @@ const facts = (c, opts = {}) => `<dl class="facts${opts.compact ? " facts-compac
 function footer(c) {
   return `<footer class="site-footer">
     <div class="wrap">
-      <div class="closer">
+      ${["inquiry", "lobster", "pig", "weddings"].includes(c.page.key) ? "" : `<div class="closer">
         <h2>HUNGRY YET?</h2>
         <p>Let Schilly’s do the cooking.</p>
         <a class="btn btn-yellow" href="tel:${SITE.tel}">${SITE.phone}</a>
-      </div>
+      </div>`}
       <div class="footer-grid">
         <div>
           <h3>Business Hours</h3>
@@ -259,11 +291,12 @@ const PHOTO = {
         </div>`,
 };
 
-function pageHead(c, lead) {
+function pageHead(c, lead, more = "") {
   return `<section class="page-head">
       <div class="wrap">
         <h1>${c.page.h1}</h1>
         ${lead ? `<p class="lead">${lead}</p>` : ""}
+        ${more}
       </div>
     </section>`;
 }
@@ -276,7 +309,7 @@ function home(c) {
           <h1 id="hero-title">SMOKED. HOMEMADE. MAINE.</h1>
           <p class="hero-lede">Take Out • Family Meals • Catering</p>
           ${facts(c)}
-          <a class="btn btn-yellow hero-cta" href="${c.link("takeout")}">View Our Menu</a>
+          <a class="btn btn-yellow hero-cta" href="${c.link("takeout")}">Take Out Menu</a>
         </div>
         <figure class="hero-photo">
           ${PHOTO.brisket(c, ' fetchpriority="high"')}
@@ -292,13 +325,13 @@ function home(c) {
             <h3 class="ruled">TAKE OUT &amp; FAMILY MEALS</h3>
             <p class="sheet-sub">Smoked favorites • Homemade sides • Family-size portions</p>
             <div class="preview is-takeout">${menuSection(MENUS.takeout, bbq, false)}${menuSection(MENUS.takeout, MENUS.takeout.sections[1], false)}</div>
-            <a class="btn btn-red" href="${c.link("takeout")}">View Take Out Kitchen Menu</a>
+            <a class="btn btn-red" href="${c.link("takeout")}">Take Out Menu</a>
           </article>
           <article class="sheet">
             <h3 class="ruled">CATERING MENU</h3>
             <p class="sheet-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
             <ul class="board-list">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ul>
-            <a class="btn btn-quiet" href="${c.link("catering")}">View Catering Menu</a>
+            <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
           </article>
         </div>
       </div>
@@ -319,18 +352,31 @@ function home(c) {
           <ul class="event-rows">
             ${EVENTS.map((k) => `<li><a href="${c.link(k)}">${byKey[k].h1}</a></li>`).join("\n            ")}
           </ul>
-          <p class="events-note">Reach out today for menus.</p>
+          ${draft(DRAFT.events, "p", "events-note")}
           <a class="btn btn-red" href="${c.link("inquiry")}">Catering Inquiries</a>
         </div>
       </div>
     </section>`;
 }
 
-const menuPage = (c, menu, catering) => `${pageHead(c, esc(menu.sub))}
+const menuPage = (c, menu, catering) => `${pageHead(c, esc(menu.sub), draft(catering ? DRAFT.catering : DRAFT.takeout, "p", "page-note"))}
     <section class="menus" aria-label="${esc(menu.title)}">
       <div class="wrap">
         <img class="print-logo" src="${c.asset("img/logo-240.webp")}" width="240" height="119" alt="">
         ${fullMenu(c, menu, catering)}
+      </div>
+    </section>
+    ${catering ? faq(c) : ""}`;
+
+const faq = (c) => `<section class="faq" aria-labelledby="faq-title">
+      <div class="wrap narrow-menu">
+        <div class="sheet">
+          <h2 id="faq-title" class="ruled">PLANNING AN EVENT</h2>
+          <dl class="faq-list">
+            ${DRAFT.faq.map(([q, a]) => `<div>${draft(q, "dt")}${draft(a, "dd")}</div>`).join("\n            ")}
+          </dl>
+          <a class="btn btn-red" href="${c.link("inquiry")}">Catering Inquiries</a>
+        </div>
       </div>
     </section>`;
 
@@ -360,7 +406,7 @@ function eventPage(c, extra) {
         ${side}
       </div>
     </section>` : "";
-  return `${pageHead(c, "Reach out today for menus.")}
+  return `${pageHead(c, "", (DRAFT[c.page.key] || []).map((t) => draft(t, "p", "page-note")).join(""))}
     ${photo}
     ${extra.after || ""}
     ${form}`;
@@ -376,7 +422,7 @@ function weddings(c) {
           <h2 id="wed-menu" class="ruled">CATERING MENU</h2>
           <p class="sheet-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
           <div class="is-catering">${secs.map((s) => menuSection(MENUS.catering, s, true)).join("\n")}</div>
-          <a class="btn btn-quiet" href="${c.link("catering")}">View Catering Menu</a>
+          <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
         </div>
       </div>
     </section>`,
@@ -394,12 +440,13 @@ const inquiryForm = (c, event = "") => `<!-- Set data-endpoint to the form handl
             <label>Email address*<input name="Email address" type="email" required autocomplete="email"></label>
             <label>Phone number*<input name="Phone number" type="tel" required autocomplete="tel"></label>
           </div>
-          <label>Event Location *<input name="Event Location" required></label>
+          <label>Event Location*<input name="Event Location" required></label>
           <div class="row">
             <label>Event Date*<input name="Event Date" type="date" required></label>
             <label>Estimated Guest Count*<input name="Estimated Guest Count" type="number" min="1" inputmode="numeric" required></label>
           </div>
           <label>Message*<textarea name="Message" rows="5" required></textarea></label>
+          <p class="form-req">* Required</p>
           <div class="form-foot">
             <button class="btn btn-red" type="submit" id="sendBtn">Send</button>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>

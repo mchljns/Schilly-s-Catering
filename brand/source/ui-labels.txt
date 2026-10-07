@@ -32,3 +32,4 @@ Menu
 Main
 Footer
 Page not found
+* Required

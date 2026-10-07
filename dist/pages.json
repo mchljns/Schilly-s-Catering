@@ -22,12 +22,12 @@
  {
   "key": "lobster",
   "path": "lobster-bakes/",
-  "index": false
+  "index": true
  },
  {
   "key": "pig",
   "path": "pig-roasts/",
-  "index": false
+  "index": true
  },
  {
   "key": "inquiry",

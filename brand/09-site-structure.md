@@ -14,7 +14,7 @@ The single page became seven pages, one for each part of the business, on the sa
 | `/lobster-bakes/` | LOBSTER BAKES | No (`noindex, follow`) | Service | Their one line and the way to ask |
 | `/pig-roasts/` | PIG ROASTS | No (`noindex, follow`) | Service | Same |
 
-Every page has a unique title and description, a canonical URL, Open Graph tags, a BreadcrumbList in the structured data (no visible breadcrumbs: Home is never a nav item; the logo goes home) and the same hours, address and phone. Name, address and phone must match the Google Business Profile exactly: `224 Roosevelt Trail, Casco, ME 04015` and `(207)693-8840`.
+Every page has a unique title and description, a canonical URL, Open Graph tags, a BreadcrumbList in the structured data (no visible breadcrumbs: Home is never a nav item; the logo goes home) and the same hours, address and phone. Name, address and phone must match the Google Business Profile exactly: `224 Roosevelt Trail, Casco, ME 04015` and `(207) 693-8840` (spacing corrected for the spec site; confirm against the Google Business Profile).
 
 ## Decisions
 
