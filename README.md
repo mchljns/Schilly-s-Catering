@@ -64,3 +64,7 @@ Needs Node 18+ and Playwright with Chromium. Two gates:
 2. **Send one real test inquiry** after connecting it, and confirm it arrives.
 3. **Point the domain** at the new host. The page keeps their current section names as anchors (`#take-out-menu`, `#catering-menu`, `#catering-inquiries`, `#lobster-bakes`, `#pig-roasts`, `#weddings`). The old paths (`/take-out-menu`, `/catering-menu` and so on) need redirects to those anchors on the host.
 4. **Test on a real iPhone.** QA ran in Chromium, not Safari on a device.
+
+## Client preview
+
+`.github/workflows/preview.yml` builds with `PREVIEW_HOST=schillys.greenfalls.co` on every push to this branch and publishes `dist/` to GitHub Pages. In preview mode every page is `noindex, nofollow`, `robots.txt` disallows everything, and `dist/CNAME` carries the host. One-time setup: repository Settings → Pages → Source "GitHub Actions", custom domain `schillys.greenfalls.co`, Enforce HTTPS once the certificate issues; and in Cloudflare DNS for greenfalls.co a `CNAME schillys → mchljns.github.io` (DNS only). The production build (`npm run build`, no env) is unchanged.

@@ -193,8 +193,8 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 /* Events: one photo, then a navy panel that overlaps it with the three names */
 .events { padding: 0 0 var(--s-5); }
 .events-photo { margin: 0; }
-.events-photo img { width: 100%; height: clamp(320px, 56vh, 620px); object-fit: cover; }
-.events-panel { position: relative; width: min(680px, 100%); margin-top: -96px; padding: 36px 40px 40px; background: var(--navy); border-top: 4px solid var(--yellow); }
+.events-photo img { width: 100%; height: clamp(320px, 56vh, 620px); object-fit: cover; object-position: 50% 18%; }
+.events-panel { position: relative; width: min(560px, 100%); margin-top: -72px; padding: 36px 40px 40px; background: var(--navy); border-top: 4px solid var(--yellow); }
 .event-rows { list-style: none; margin: 0 0 18px; padding: 0; }
 .event-rows li { border-bottom: 1px solid var(--rule); }
 .event-rows a { display: flex; align-items: center; min-height: 64px; font: 800 var(--t-head)/.95 var(--display); text-transform: uppercase; color: #fff; text-decoration: none; }
@@ -319,15 +319,11 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* Footer: deep navy, the three facts, the badge, the links, the sign. */
 .site-footer { background: var(--ink); color: #fff; padding: var(--s-5) 0 32px; text-align: center; }
-.footer-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center; text-align: left; }
+.footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; text-align: left; }
 .footer-facts { margin: 0; display: grid; gap: 12px; }
 .footer-facts dt { font: 700 .9375rem var(--body); color: var(--gold); margin-bottom: 2px; }
 .footer-facts dd { margin: 0; }
 .footer-facts a { display: inline-flex; align-items: center; min-height: 44px; }
-.badge { width: 200px; height: 200px; color: var(--yellow); }
-.badge-ring { font: 800 20px var(--display); letter-spacing: .02em; fill: #fff; text-transform: uppercase; }
-.badge-big { font: 800 44px var(--display); fill: var(--yellow); text-transform: uppercase; }
-.badge-small { font: 700 14px var(--body); fill: #fff; letter-spacing: .02em; text-transform: uppercase; }
 .footer-nav { display: grid; gap: 0; justify-items: end; }
 .footer-nav a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; text-decoration: none; }
 @media (hover: hover) { .footer-nav a:hover { color: var(--yellow); } }

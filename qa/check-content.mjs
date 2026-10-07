@@ -142,7 +142,7 @@ for (const [re, what, files] of slop) for (const f of files) {
 // Brand rules (brand/README.md): Ribbon Red is for actions and money; Sign Yellow sits on Navy only.
 const css = own["assets/styles.css"].replace(/\/\*[\s\S]*?\*\//g, "");
 const RED_OK = /^(a|a:hover|.* a:hover|:focus-visible|\.btn-red(:hover|:active)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.pl-price|\.facts-line dd a|\.field-error|\.form-status\.is-error|\.fact-action|\.event-side \.event-rows a:hover|\.on-cream :focus-visible|\.cream :focus-visible|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus|\.nav a\[aria-current="page"\]:not\(\.btn\))$/;
-const YELLOW_OK = /^(\.btn-yellow|:focus-visible|\.skip-link|\.skip-link:focus, \.skip-link:hover|::selection|\.hero-lede|\.props h2|\.board h3|\.badge|\.badge-big|\.event-rows a:hover|\.cat-list a:hover|\.footer-nav a:hover|\.nav a\[aria-current="page"\]:not\(\.btn\)|\.events-panel)$/;
+const YELLOW_OK = /^(\.btn-yellow|:focus-visible|\.skip-link|\.skip-link:focus, \.skip-link:hover|::selection|\.hero-lede|\.props h2|\.board h3|\.event-rows a:hover|\.cat-list a:hover|\.footer-nav a:hover|\.nav a\[aria-current="page"\]:not\(\.btn\)|\.events-panel)$/;
 for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   const selectors = m[1].trim().split(/\s*,\s*/).filter((x) => x && !x.startsWith("@") && !x.startsWith(":root"));
   if (/var\(--red(-dark)?\)/.test(m[2])) selectors.filter((x) => !RED_OK.test(x)).forEach((x) => failures.push(`brand: Ribbon Red used on "${x}" (actions and money only)`));

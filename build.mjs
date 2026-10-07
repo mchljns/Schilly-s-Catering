@@ -28,6 +28,8 @@ const SITE = {
   updated: new Date().toISOString().slice(0, 10),
 };
 const ID = SITE.url + "/#restaurant";
+// Client preview host (CI sets PREVIEW_HOST): every page is noindex, robots disallows all, dist/CNAME is written.
+const PREVIEW = process.env.PREVIEW_HOST || "";
 
 /* ---------- draft copy ----------
    Example copy written for the spec site where Schilly's own site has none. Every line is listed in
@@ -58,7 +60,6 @@ const DRAFT = {
     ["Family Meals", "Family size portions, four servings each. Mac & cheese, pulled pork, brisket, beans and slaw."],
     ["Catering", "Weddings, backyard BBQs, corporate events and private parties. Tell us the date and the headcount."],
   ],
-  badge: "Smoked in Casco",
   cateringWhere: "Schilly’s caters events from its kitchen at 224 Roosevelt Trail, Casco, Maine.",
   faq: [
     ["How far ahead should I book?", "Two to four weeks is usually enough for a party or an office lunch. For summer weekends and weddings, book as early as you can."],
@@ -162,8 +163,6 @@ const facts = (c, opts = {}) => `<dl class="facts${opts.compact ? " facts-compac
             </div>
           </dl>`;
 
-const badge = (c) => `<svg class="badge" viewBox="0 0 200 200" role="img" aria-label="${esc(DRAFT.badge)} · Maine"><defs><path id="badge-path" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1"/><text class="badge-ring" data-draft><textPath href="#badge-path">${esc(DRAFT.badge)} · Maine · Take Out · Catering · </textPath></text><text class="badge-big" x="100" y="110" text-anchor="middle">Casco</text><text class="badge-small" x="100" y="132" text-anchor="middle">Maine</text></svg>`;
-
 function footer(c) {
   return `<footer class="site-footer">
     <div class="wrap">
@@ -173,7 +172,6 @@ function footer(c) {
           <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town}</dd></div>
           <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
         </dl>
-        ${badge(c)}
         <nav class="footer-nav" aria-label="Footer">
           ${NAV.map((k) => `<a href="${c.link(k)}">${byKey[k].label}</a>`).join("\n          ")}
           <a href="${c.link("inquiry")}">Catering Inquiries</a>
@@ -516,7 +514,7 @@ function doc(c) {
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${esc(p.title)}</title>
   <meta name="description" content="${esc(p.desc)}">
-  ${p.index ? "" : '<meta name="robots" content="noindex, follow">'}
+  ${PREVIEW ? '<meta name="robots" content="noindex, nofollow">' : p.index ? "" : '<meta name="robots" content="noindex, follow">'}
   <link rel="canonical" href="${c.canonical}">
   <meta name="theme-color" content="#022654">
   <meta property="og:type" content="website">
@@ -562,7 +560,7 @@ ${PAGES.filter((p) => p.index).map((p) => `  <url><loc>${SITE.url}/${p.path}</lo
 </urlset>
 `;
 }
-const robots = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`;
+const robots = () => (PREVIEW ? "User-agent: *\nDisallow: /\n" : `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
 function llms() {
   return `# ${SITE.name}
 
@@ -652,6 +650,7 @@ for (const mode of ["dist", "preview"]) {
     copyDir(path.join(ROOT, "assets"), path.join(out, "assets"));
     write(path.join(out, "sitemap.xml"), sitemap());
     write(path.join(out, "robots.txt"), robots());
+    if (PREVIEW) { write(path.join(out, "CNAME"), PREVIEW + "\n"); write(path.join(out, ".nojekyll"), ""); }
     write(path.join(out, "llms.txt"), llms());
     write(path.join(out, "llms-full.txt"), llmsFull());
     write(path.join(out, "_redirects"), redirects());
