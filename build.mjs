@@ -164,15 +164,15 @@ function footer(c) {
       </div>`}
       <div class="footer-grid">
         <div>
-          <h3>Business Hours</h3>
+          <h2 class="f-label">Business Hours</h2>
           <p>${SITE.days}<br>${SITE.time}</p>
         </div>
         <div>
-          <h3>Location</h3>
+          <h2 class="f-label">Location</h2>
           <p>${SITE.street}<br>${SITE.town}</p>
         </div>
         <div>
-          <h3>Store Phone #</h3>
+          <h2 class="f-label">Store Phone #</h2>
           <p><a href="tel:${SITE.tel}">${SITE.phone}</a></p>
         </div>
         <nav class="footer-nav" aria-label="Footer">
