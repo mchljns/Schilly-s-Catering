@@ -136,7 +136,7 @@ window.MENUS = {
       }
     ],
     closing: {
-      text: "Looking for something you don’t see? Give us a call."
+      text: "Give us a call."
     }
   }
 };

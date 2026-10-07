@@ -119,6 +119,27 @@ for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   if (/var\(--yellow\)/.test(m[2])) selectors.filter((x) => !YELLOW_OK.test(x)).forEach((x) => failures.push(`brand: Sign Yellow used on "${x}" (Navy backgrounds only)`));
 }
 
+// Prose slop filter (stop-slop rules) on every visible sentence of four words or more.
+// Exempt: menu item descriptions (inventory lists) and the legally required food-safety and price notices.
+const EXEMPT = /consuming raw or undercooked|prices are subject to|^prices include/i;
+const PROSE_SLOP = [
+  [/\?\s+\S/, "rhetorical question used as a setup"],
+  [/^from\b.+\bto\b/i, "\"From X to Y\" opener"],
+  [/\band more( information)?\b|so much more/i, "filler tail"],
+  [/\b(we['’]d love|unforgettable|make it special|something for everyone|look no further|elevate|seamless)\b/i, "stock warmth"],
+  [/—/, "em dash"],
+  [/!/, "exclamation"],
+  [/coming soon/i, "stale notice"],
+];
+const prose = new Set();
+for (const { where, text } of found) {
+  const t = text.trim();
+  if (t.split(/\s+/).length < 4 || where.startsWith("@") || EXEMPT.test(t)) continue;
+  if (/item-detail|sec-notes/.test(where)) continue;
+  prose.add(t);
+}
+for (const t of prose) for (const [re, what] of PROSE_SLOP) if (re.test(t)) failures.push(`prose slop (${what}): "${t.slice(0, 90)}"`);
+
 if (failures.length) {
   console.error(`check-content: ${failures.length} problem(s)\n  ` + failures.join("\n  "));
   process.exit(1);
