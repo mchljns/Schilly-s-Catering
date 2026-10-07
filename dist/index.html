@@ -20,9 +20,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/icon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
-  <link rel="preload" href="assets/fonts/newsreader-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/newsreader-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/radio-canada-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/img/rotisserie-1200.webp" imagesrcset="assets/img/rotisserie-640.webp 640w, assets/img/rotisserie-1200.webp 1200w" imagesizes="100vw">
+  <link rel="preload" as="image" href="assets/img/brisket-900.webp" imagesrcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" imagesizes="(min-width: 900px) 52vw, 100vw">
   <link rel="stylesheet" href="assets/styles.css">
   <script>document.documentElement.classList.add("js")</script>
   <script type="application/ld+json">
@@ -98,20 +98,18 @@
   </header>
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <figure class="hero-photo"><img fetchpriority="high" src="assets/img/rotisserie-1200.webp" srcset="assets/img/rotisserie-640.webp 640w, assets/img/rotisserie-1200.webp 1200w" sizes="100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit"></figure>
-      <div class="wrap">
-        <div class="hero-panel">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
           <h1 id="hero-title">Smoked. Homemade. Maine.</h1>
           <p class="hero-lede">Take Out • Family Meals • Catering</p>
           <a class="btn btn-red hero-cta" href="take-out-menu/">Take Out Menu</a>
+          <dl class="facts-line">
+            <div><dt>Business Hours</dt><dd>Wednesday – Sunday · 11 am – 6 pm <span class="open-status" hidden></span></dd></div>
+            <div><dt>Location</dt><dd>224 Roosevelt Trail, Casco, ME 04015 <a href="https://www.google.com/maps/search/?api=1&amp;query=224+Roosevelt+Trail+Casco+ME+04015">Get directions</a></dd></div>
+            <div><dt>Store Phone #</dt><dd><a href="tel:+12076938840">(207) 693-8840</a></dd></div>
+          </dl>
         </div>
-      </div>
-      <div class="wrap">
-        <dl class="facts-line">
-          <div><dt>Business Hours</dt><dd>Wednesday – Sunday · 11 am – 6 pm <span class="open-status" hidden></span></dd></div>
-          <div><dt>Location</dt><dd>224 Roosevelt Trail, Casco, ME 04015 <a href="https://www.google.com/maps/search/?api=1&amp;query=224+Roosevelt+Trail+Casco+ME+04015">Get directions</a></dd></div>
-          <div><dt>Store Phone #</dt><dd><a href="tel:+12076938840">(207) 693-8840</a></dd></div>
-        </dl>
+        <figure class="hero-photo"><img src="assets/img/brisket-640.webp" srcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" sizes="(min-width: 900px) 52vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees" fetchpriority="high"></figure>
       </div>
     </section>
 
@@ -146,7 +144,7 @@
       <div class="wrap">
         <h2 id="taste-title">A Taste of Schilly’s</h2>
         <div class="collage">
-          <figure class="col-a"><img src="assets/img/brisket-640.webp" srcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" sizes="(min-width: 900px) 44vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees" loading="lazy" decoding="async"></figure>
+          <figure class="col-a"><img loading="lazy" decoding="async" src="assets/img/rotisserie-1200.webp" srcset="assets/img/rotisserie-640.webp 640w, assets/img/rotisserie-1200.webp 1200w" sizes="100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit"></figure>
           <figure class="col-b"><img loading="lazy" decoding="async" src="assets/img/grazing-table-640.webp" srcset="assets/img/grazing-table-640.webp 640w, assets/img/grazing-table-1086.webp 1086w" sizes="(min-width: 900px) 25vw, 60vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table"></figure>
           <figure class="col-c"><img loading="lazy" decoding="async" src="assets/img/salmon-platter-640.webp" srcset="assets/img/salmon-platter-640.webp 640w, assets/img/salmon-platter-1200.webp 1200w" sizes="(min-width: 900px) 25vw, 60vw" width="1200" height="1600" alt="Smoked salmon platter on a ring of sliced cucumber"></figure>
           <figure class="col-d"><img loading="lazy" decoding="async" src="assets/img/smoker-1600.webp" srcset="assets/img/smoker-800.webp 800w, assets/img/smoker-1600.webp 1600w" sizes="(min-width: 900px) 58vw, 100vw" width="1600" height="800" alt="Two spits of chickens turning inside the smoker"></figure>
@@ -203,7 +201,7 @@
       </div>
       <p class="copyright">© <span class="year">2026</span> Schilly’s Take Out & Catering Kitchen.</p>
     </div>
-    <p class="wordmark" aria-hidden="true">Schilly’s</p>
+    <div class="footer-sign" aria-hidden="true"><img src="assets/img/logo-960.webp" width="960" height="477" alt="" loading="lazy" decoding="async"></div>
   </footer>
   <p class="visually-hidden" id="spyAnnounce" aria-live="polite"></p>
   <script src="assets/app.js"></script>

@@ -179,3 +179,10 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Facebook harvest (brand/socials/README.md): one new photograph, the cover (chickens on two spits in the smoker, 2048 px phone snapshot). Everything else there is AI-generated poster art and stays off the site. Instagram is login-walled.
 - The smoker photo is cropped to a 2:1 band with a light levels lift, and joins the home collage (now four photos), the take-out menu rail and nothing else. The grazing table sits in the catering menu rail; the rotisserie beside the inquiry form. The chef-with-bride photo stays on the home page and the weddings page.
 - Gate: a rail photo hidden at phone widths was reported as broken; the gate now ignores images with no layout box.
+
+## Loop 24: Sign in the footer, a second ground, a hero around the best photo
+- Footer: the type wordmark is replaced by the logo itself, cropped at the page's bottom edge, on navy (tested on navy, tan and white; the gold rim separates it from navy).
+- Plank is back as the second web ground: hero band, page heads, events block.
+- Hero: asymmetric split around the brisket (the one photo the critique said sets the brand): photo tall and bleeding to the right viewport edge, copy and the ruled facts on the left. On phones the photo follows the copy at 4:5 so hours stay on the first screen.
+- Weight: the home page went to 643 KB. Newsreader is now the static 500 file (24 KB instead of 132), the logo and three photos were recompressed; back under the 600 KB budget.
+- Screenshot catches: the bleed used 50% of the grid cell rather than the viewport and clipped the thermometer; fixed with min(-16px, (1200px - 100vw) / 2).

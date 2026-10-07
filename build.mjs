@@ -184,7 +184,7 @@ function footer(c) {
       </div>
       <p class="copyright">© <span class="year">2026</span> ${SITE.name}.</p>
     </div>
-    <p class="wordmark" aria-hidden="true">Schilly’s</p>
+    <div class="footer-sign" aria-hidden="true"><img src="${c.asset("img/logo-960.webp")}" width="960" height="477" alt="" loading="lazy" decoding="async"></div>
   </footer>`;
 }
 
@@ -286,7 +286,7 @@ function ld(c) {
 /* ---------- page bodies ---------- */
 const PHOTO = {
   smoker: (c, sizes = "100vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/smoker-1600.webp")}" srcset="${c.asset("img/smoker-800.webp")} 800w, ${c.asset("img/smoker-1600.webp")} 1600w" sizes="${sizes}" width="1600" height="800" alt="Two spits of chickens turning inside the smoker">`,
-  brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w" sizes="(min-width: 900px) 44vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
+  brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w" sizes="(min-width: 900px) 52vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
   wedding: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-832.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w" sizes="(min-width: 900px) 45vw, 100vw" width="832" height="554" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
   rotisserie: (c, attrs = ' loading="lazy" decoding="async"') => `<img${attrs} src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">`,
   grazing: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="(min-width: 900px) 25vw, 60vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">`,
@@ -326,20 +326,18 @@ function home(c) {
   const fam = MENUS.takeout.sections[2];
   const priceRow = ([name, p]) => `<li><span class="pl-name">${esc(titleCase(name))}</span><span class="pl-price"><sup>$</sup>${esc(p.replace("$", ""))}</span></li>`;
   return `<section class="hero" aria-labelledby="hero-title">
-      <figure class="hero-photo">${PHOTO.rotisserie(c, ' fetchpriority="high"')}</figure>
-      <div class="wrap">
-        <div class="hero-panel">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
           <h1 id="hero-title">Smoked. Homemade. Maine.</h1>
           <p class="hero-lede">Take Out • Family Meals • Catering</p>
           <a class="btn btn-red hero-cta" href="${c.link("takeout")}">Take Out Menu</a>
+          <dl class="facts-line">
+            <div><dt>Business Hours</dt><dd>${SITE.days} · ${SITE.time} <span class="open-status" hidden></span></dd></div>
+            <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town} <a href="${esc(SITE.maps)}">Get directions</a></dd></div>
+            <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
+          </dl>
         </div>
-      </div>
-      <div class="wrap">
-        <dl class="facts-line">
-          <div><dt>Business Hours</dt><dd>${SITE.days} · ${SITE.time} <span class="open-status" hidden></span></dd></div>
-          <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town} <a href="${esc(SITE.maps)}">Get directions</a></dd></div>
-          <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
-        </dl>
+        <figure class="hero-photo">${PHOTO.brisket(c, ' fetchpriority="high"')}</figure>
       </div>
     </section>
 
@@ -374,7 +372,7 @@ function home(c) {
       <div class="wrap">
         <h2 id="taste-title">A Taste of Schilly’s</h2>
         <div class="collage">
-          <figure class="col-a">${PHOTO.brisket(c, ' loading="lazy" decoding="async"')}</figure>
+          <figure class="col-a">${PHOTO.rotisserie(c)}</figure>
           <figure class="col-b">${PHOTO.grazing(c)}</figure>
           <figure class="col-c">${PHOTO.salmon(c)}</figure>
           <figure class="col-d">${PHOTO.smoker(c, "(min-width: 900px) 58vw, 100vw")}</figure>
@@ -513,7 +511,7 @@ const BODY = {
 function doc(c) {
   const p = c.page;
   const preloadHero = p.key === "home"
-    ? `<link rel="preload" as="image" href="${c.asset("img/rotisserie-1200.webp")}" imagesrcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" imagesizes="100vw">`
+    ? `<link rel="preload" as="image" href="${c.asset("img/brisket-900.webp")}" imagesrcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w" imagesizes="(min-width: 900px) 52vw, 100vw">`
     : "";
   return `<!doctype html>
 <html lang="en">
@@ -537,7 +535,7 @@ function doc(c) {
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="${c.asset("img/icon-32.png")}" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="${c.asset("img/icon-180.png")}">
-  <link rel="preload" href="${c.asset("fonts/newsreader-var.woff2")}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="${c.asset("fonts/newsreader-500.woff2")}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="${c.asset("fonts/radio-canada-400.woff2")}" as="font" type="font/woff2" crossorigin>
   ${preloadHero}
   <link rel="stylesheet" href="${c.asset("styles.css")}">
