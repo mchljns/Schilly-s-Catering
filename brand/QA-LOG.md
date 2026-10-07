@@ -162,3 +162,10 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Hero: full-bleed brisket photo with the 192°F thermometer; cream panel overlaps it; one red action. Facts as one ruled line, still on the first screen at every width (gate).
 - Gate catches: the `$` superscript was 12 px and gold on cream (1.7:1), now .62 em in red; facts-line links were 26 px tall, now 44; the strip's panorama was squeezed by the global `max-width: 100%`; the wordmark needed 3:1 for large text (#5C77A3 on navy, 3.28:1).
 - Image generation: Recraft (billing), Higgsfield (free plan) refused; Canva produced three of five before its credits ran out, but the full-size files sit on media.canva.com, which this environment blocks. Slots are wired and only render once the files exist.
+
+## Loop 21: Hero image, cream, type
+- Client notes: wrong hero image, cream still present, fonts juvenile.
+- Hero: the brisket is a tall phone close-up; the rotisserie panorama (their only wide photo) takes the hero at its natural 1200:481, the brisket moves to the strip.
+- Ground: white. Every cream, plank and board use removed from the web CSS; panels are rules only; the statement sits on a navy band.
+- Type: Newsreader 500 (variable, OFL, via the Fontsource npm package since Google Fonts and the CDNs are blocked here), sentence case everywhere, including menu section titles and the "Lunch Menu" group label. Compared against Bodoni Moda, Libre Caslon Display and Source Serif 4 in brand/type-round4.png.
+- Both gates passed on the first run after the change; screenshots at 390 and 1280 checked.

@@ -78,3 +78,17 @@ The client asked for faces that AI-built sites don't overuse. Roboto Slab and La
 ## Round three: the client picks Solway
 
 On October 7 the client chose Solway from the deep-dive sheet over Coustard. Solway 800 is a friendlier slab with rounder bowls. It keeps the link to the sign's ribbon lettering and is narrower than Coustard, so "HOMEMADE." fits phones with room to spare. It is not in either overuse group. Rules from round two stand with Solway 800 in place of Coustard 900. License: SIL Open Font License.
+
+## Round four: premium pass, October 7
+
+The client's verdict on Solway 800 in capitals: juvenile. A slab in all caps reads as a lunch-counter sign, which the logo already does better. Specimens: `type-round4.png` (Solway caps, Newsreader 500 and 600, Bodoni Moda 500, Libre Caslon Display, Source Serif 4 600, on the same lines).
+
+| Face | Verdict |
+| --- | --- |
+| **Newsreader 500, optical size on** | **Chosen.** An editorial text serif with real display cuts at large sizes. Warm enough to sit beside the painted sign, calm enough to feel premium. Not in the AI-default set (round two's exclusion list) and not among the web's most-used faces. Variable, OFL, self-hosted from the Fontsource npm package |
+| Newsreader 600 | Too dark at 90 px; the 500 holds the page |
+| Bodoni Moda 500 | Fashion magazine, wrong for brisket |
+| Libre Caslon Display | Elegant but anonymous, and one weight only |
+| Source Serif 4 600 | Reads as documentation |
+
+**Rules now.** Newsreader 500 for headlines, section titles, menu section titles, prices and the footer wordmark, in sentence or title case, never capitals. Letter-spacing −0.01 em (−0.02 em on the headline). Radio Canada 400 and 700 for everything else, unchanged. Solway leaves the site.

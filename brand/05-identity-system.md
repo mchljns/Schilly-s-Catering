@@ -77,3 +77,5 @@ Schilly’s own wording, saved in `source/`. Interface labels from `source/ui-la
 - **Frames.** The double navy frame is gone. A panel is a cream surface under a single 1 px navy rule.
 - **Rhythm.** Sections no longer share one 64 px padding: the hero overlap, the big sentence (120 px above), the photo strip and the events block each set their own pace. Photos keep their own proportions.
 - **Placeholders.** Generated photos are allowed only for subjects Schilly's has no photo of (lobster bakes, pig roasts, wedding spreads), tagged `data-placeholder`, listed in `brand/source/placeholders.txt`, and replaced before launch.
+
+- **Second revision, same day.** Cream and Plank leave the web too (the client: "we're still using the cream color"); they remain print and social colors. The web ground is white, with navy type, gold and navy hairlines, red actions and one navy band mid-page. Display type is Newsreader 500 in sentence case (brand/04-type-study.md, round four); Solway is retired. The hero photo must be a wide frame: the rotisserie panorama, until Schilly's or a generated placeholder supplies a better wide shot.
