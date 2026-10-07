@@ -91,9 +91,10 @@ p { margin: 0 0 1em; }
 /* The ribbon: printed menus and social posts only. */
 .ribbon { display: inline-block; margin: 0; padding: 8px 26px 7px; background: var(--red); color: var(--cream); font: 700 .95rem/1.2 var(--body); clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 50%, 100% 100%, 0 100%, 12px 50%); }
 
-/* Header: navy, logo, caps links, one yellow pill. Sticky at every width.
-   Under 1100 px: logo and a hamburger; the menu drops down under the header over a scrim. */
-.site-header { position: sticky; top: 0; z-index: 50; background: var(--navy); border-bottom: 1px solid var(--rule); padding-top: env(safe-area-inset-top); }
+/* Header: navy, logo, caps links, one yellow pill. Sticky from 1100 px.
+   Under 1100 px: logo and a hamburger; the menu drops down under the header over a scrim.
+   The header scrolls away on phones so the menu pages' sticky chip rail owns the top edge. */
+.site-header { position: relative; z-index: 50; background: var(--navy); border-bottom: 1px solid var(--rule); padding-top: env(safe-area-inset-top); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 12px 0; }
 .logo { display: inline-flex; flex: none; border-radius: 4px; }
 .logo img { width: 150px; }
@@ -112,6 +113,7 @@ p { margin: 0 0 1em; }
 .nav-toggle[aria-expanded="true"] .burger i:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] .burger i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
 @media (min-width: 1100px) {
+  .site-header { position: sticky; top: 0; }
   .logo img { width: 190px; height: auto; }
 }
 @media (max-width: 1099px) {
@@ -125,7 +127,8 @@ p { margin: 0 0 1em; }
   .nav a[aria-current="page"]:not(.btn) { box-shadow: inset 4px 0 0 var(--yellow); padding-left: 16px; }
   .nav .nav-cta { margin: 16px 0 0; justify-self: start; }
   .nav-phone { display: inline-flex; align-items: center; min-height: 44px; margin-top: 8px; border-bottom: 0 !important; justify-self: start; color: var(--mist); font-size: 1rem; text-decoration: none; text-transform: none; letter-spacing: 0; }
-  .nav-open { overflow: hidden; }
+  .nav-open .site-header { position: sticky; top: 0; }
+
   .nav-open::after { content: ""; position: fixed; inset: 0; z-index: 40; background: rgba(3, 26, 58, .6); }
 }
 

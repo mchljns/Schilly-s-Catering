@@ -198,3 +198,11 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 Under 1100 px the header is now the logo and a round hamburger (three bars that fold into an X). The Menu pill and the two quick-link pills are gone. The drawer drops down under the sticky header over a scrim: Take Out Menu, Catering Menu, Weddings, Lobster Bakes, Pig Roasts as 52 px rows, the yellow Catering Inquiries pill, the store phone. Escape, a tap outside and growing past 1100 px close it. Without script the same list renders in the page flow.
 
 Gate changes: the two-tap price check opens the hamburger first (home, under 1100 px); the inquiry-in-header check counts the link once the drawer is open. A grazing-table-800 rendition keeps the 768 px first load under the 600 KB budget (the drawer removed 52 px of header, which pulled the events photo inside Chrome's lazy-load distance).
+
+## Loop 27: critique re-score on the live preview (dual-agent)
+
+Score 27/40 (loop 18 was 23/36, i.e. 64% to 68%). Detector: 60 warnings in dist, 1 reproduced in-browser (the 4px top rule on the events panel); the rest are the static engine assuming a white page and folding print CSS (documented in loop 25). Browser evidence: all pages 200, no overflow, no text under 14px, no targets under 40px, no console errors; hamburger, open status, search and the empty-submit error state all behave.
+
+Fixed now: the sticky header from loop 26 sat on top of the menu pages' sticky chip rail on phones (the review's P0). The header scrolls away again under 1100 px and is sticky only while the drawer is open, so the chips own the top edge.
+
+Open from the review: phone number only inside the drawer on phones; all eight inquiry fields required; the catering FAQ lives only on the catering menu page; five nav labels wrap at 1280; subpage heads are text-only navy; CTA colour differs between navy and cream sections (by rule, not by action).
