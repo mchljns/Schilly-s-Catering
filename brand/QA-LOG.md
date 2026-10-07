@@ -169,3 +169,8 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Ground: white. Every cream, plank and board use removed from the web CSS; panels are rules only; the statement sits on a navy band.
 - Type: Newsreader 500 (variable, OFL, via the Fontsource npm package since Google Fonts and the CDNs are blocked here), sentence case everywhere, including menu section titles and the "Lunch Menu" group label. Compared against Bodoni Moda, Libre Caslon Display and Source Serif 4 in brand/type-round4.png.
 - Both gates passed on the first run after the change; screenshots at 390 and 1280 checked.
+
+## Loop 22: Build on the assets they have
+- Re-crawled schillyscatering.com: six media files in total, the logo and the same five photos already in use. Instagram and Facebook pages stay blocked here (only the Instagram image CDN answers).
+- Home page reshaped to stand on those five: the three tall photos (brisket, grazing table, salmon) as a staggered collage instead of a strip with empty slots; the events block keeps the chef photo only. Generated-placeholder hooks removed from the home page; the event pages still accept a placeholder file if one is ever added.
+- Gate caught nothing; one CSS specificity bug (`.collage figure` beat `.col-b`) found in screenshots and fixed.

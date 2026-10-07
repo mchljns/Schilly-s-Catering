@@ -323,8 +323,6 @@ function home(c) {
   const bbq = MENUS.takeout.sections[0];
   const fam = MENUS.takeout.sections[2];
   const priceRow = ([name, p]) => `<li><span class="pl-name">${esc(titleCase(name))}</span><span class="pl-price"><sup>$</sup>${esc(p.replace("$", ""))}</span></li>`;
-  const wedPh = placeholder(c, "weddings");
-  const lobPh = placeholder(c, "lobster");
   return `<section class="hero" aria-labelledby="hero-title">
       <figure class="hero-photo">${PHOTO.rotisserie(c, ' fetchpriority="high"')}</figure>
       <div class="wrap">
@@ -370,21 +368,20 @@ function home(c) {
       </div>
     </section>
 
-    <section class="strip-wrap" aria-labelledby="taste-title">
-      <div class="wrap"><h2 id="taste-title">A Taste of Schilly’s</h2></div>
-      <div class="strip">
-        ${PHOTO.brisket(c, ' loading="lazy" decoding="async"')}
-        ${PHOTO.grazing(c)}
-        ${lobPh}
-        ${PHOTO.salmon(c)}
-        ${wedPh}
+    <section class="collage-wrap" aria-labelledby="taste-title">
+      <div class="wrap">
+        <h2 id="taste-title">A Taste of Schilly’s</h2>
+        <div class="collage">
+          <figure class="col-a">${PHOTO.brisket(c, ' loading="lazy" decoding="async"')}</figure>
+          <figure class="col-b">${PHOTO.grazing(c)}</figure>
+          <figure class="col-c">${PHOTO.salmon(c)}</figure>
+        </div>
       </div>
     </section>
 
     <section class="events" aria-labelledby="events-title">
       <div class="wrap events-grid">
         <figure class="ev-photo ev-photo-a">${PHOTO.wedding(c)}</figure>
-        ${wedPh ? `<figure class="ev-photo ev-photo-b">${placeholder(c, "pig")}</figure>` : ""}
         <div class="ev-text">
           <h2 id="events-title" class="visually-hidden">LOBSTER BAKES • PIG ROASTS • WEDDINGS</h2>
           <ul class="event-rows">
