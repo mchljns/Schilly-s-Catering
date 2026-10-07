@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "designer-skills": {
+      "source": {
+        "source": "github",
+        "repo": "Owl-Listener/designer-skills"
+      }
+    }
+  }
+}
