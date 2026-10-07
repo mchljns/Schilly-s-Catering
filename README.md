@@ -1,33 +1,37 @@
-# Schilly's Catering website
+# Schilly's Take Out & Catering Kitchen website
 
-A fast, single-page static site (plain HTML/CSS/JS, no build step) built to replace
-schillyscatering.com/catering-menu. Open `index.html` in a browser to preview, or deploy
-the folder as-is to Netlify, Vercel, GitHub Pages, or any web host.
+A fast, single-page static site (plain HTML/CSS/JS, no build step) to replace
+schillyscatering.com. Open `index.html` to preview, or deploy the folder as-is to
+Netlify, Vercel, GitHub Pages or any web host.
+
+All content comes from the live site (Oct 2026): the take out menu, catering menu, hours,
+address, phone and social links.
 
 ## What's on the page
-- **Clear hero**: what they cook, where, and two actions (quote / menu)
-- **Services**: lobster bakes, pig roasts, BBQ, weddings, corporate, emergency feeding
-- **Menu**: searchable, dietary filters (GF / V / VG / DF), sticky category jump-bar,
-  and **+ Add** buttons that collect dishes into the quote request
-- **How booking works**: 4 steps
-- **Reviews**: from the existing testimonials page
-- **FAQ**: with FAQPage structured data
-- **Quote form**: builds a message and opens the visitor's texting app pre-filled to
-  (207) 713-1564, or copies it. No backend or form service needed.
-- Sticky call/quote bar on phones, printable menu (Print button → clean 2-column menu)
+- **Hero + "at a glance" strip**: hours with a live *Open now / Closed* indicator (Maine time),
+  tap-for-directions address, tap-to-call phone. These are the three things take-out customers look for first.
+- **Menus in one place**: Take Out and Catering tabs, search, a sticky section jump-bar.
+  Take out reads like a classic menu (name … price). Catering items have **+ Add** buttons
+  that collect dishes into the inquiry.
+- **Events**: BBQs, corporate, weddings, lobster bakes, pig roasts. These replace the
+  three "Coming soon" pages on the current site.
+- **Photo gallery** (the 5 photos from the current homepage), **How catering works**, **Inquiry form**
+  (same fields as the current form, plus the dishes they picked), **Hours & location**, **FAQ**.
+- Phones get a sticky Call / Menu / Plan event bar. "Print this menu" prints a clean copy of the selected menu.
+- SEO / AI search: Restaurant + opening hours + FAQ structured data, meta/OG tags,
+  `robots.txt`, `sitemap.xml`, `llms.txt`.
 
-SEO / AI search: LocalBusiness + FAQ JSON-LD, meta/OG tags, `robots.txt`, `sitemap.xml`, `llms.txt`.
+## Editing
+- **Menus**: `assets/menu-data.js`. Add, remove or reprice items; everything rebuilds itself.
+- **Hours**: update the hours table in `index.html`, `HOURS` at the top of `assets/app.js`,
+  and the JSON-LD `openingHoursSpecification`.
 
-## Editing the menu
-Everything lives in `assets/menu-data.js`. Add, remove or reword items there; the menu,
-filters and jump links rebuild themselves. Add `price: "$18 / person"` to show a price.
-
-## Before launch: please confirm
-The live site couldn't be fetched when this was built, so these need checking with Schilly's:
-1. **Menu items** in `assets/menu-data.js` are a draft based on their advertised services.
-   Replace them with the real menu, then set `MENU_IS_DRAFT = false`.
-2. **Email address**: none was known. If they have one, add it to the contact card and footer.
-3. **FAQ answers** (booking lead time, minimums, service styles) are reasonable defaults.
-   Confirm them.
-4. **Photos**: real food/event photos would help a lot. Add them to `assets/` and the hero and service cards.
-5. **Reviews** are shortened from their testimonials page. Confirm the wording is OK.
+## Before launch
+1. **Connect the inquiry form.** No email address appears on the current site, so the form
+   needs somewhere to send. Easiest: create a free form at formspree.io with Schilly's email,
+   then paste its URL into `data-endpoint=""` on `<form id="inquiryForm">` in `index.html`.
+   Until then, the form shows the visitor a copy-able summary and the phone number, so no inquiry is lost.
+2. **Photos**: they're loaded from the current site builder's image host (brandcrowd). Download
+   them into `assets/` and update the `src` paths so they keep working after the switch. Also add real alt text (what's in each photo).
+3. **Reviews**: the old testimonials page is gone (404). Add a few real Google/Facebook reviews; social proof matters a lot for catering.
+4. **Lobster bake / pig roast / wedding menus**: add them to `menu-data.js` (or as event cards) when ready.
