@@ -1,0 +1,16 @@
+# Schilly's Catering
+
+> Full-service caterer in South Portland, Maine. Smoked BBQ, whole pig roasts, Maine lobster bakes, wedding catering, corporate events and group outings, and emergency feeding across Greater Portland, Southern Maine and the Casco Bay islands.
+
+- Address: 95 Darling Ave, South Portland, ME 04106
+- Phone (call or text): (207) 713-1564
+- Facebook: https://www.facebook.com/schillysfoods/
+- Pricing: quoted per event on guest count, menu, service style and location
+- Dietary: gluten-free, vegetarian, vegan and dairy-free options; allergies planned for at booking
+
+## Pages
+- [Catering menu](https://schillyscatering.com/#menu): event packages, smoked meats, appetizers, sides, vegetarian mains, desserts
+- [How booking works](https://schillyscatering.com/#how)
+- [Reviews](https://schillyscatering.com/#reviews)
+- [FAQ](https://schillyscatering.com/#faq)
+- [Get a quote](https://schillyscatering.com/#quote)
