@@ -1,151 +1,150 @@
 (function () {
   "use strict";
 
-  var STORE_KEY = "schillys-picked";
   var TZ = "America/New_York";
-  // Open days (0 = Sunday) and hours, 24h clock. Keep in sync with the hours table.
-  var HOURS = { days: [0, 3, 4, 5, 6], open: 11, close: 18 };
+  var HOURS = { days: [0, 3, 4, 5, 6], open: 11, close: 18 }; // 0 = Sunday. Keep in sync with index.html.
+  var PHONE_HTML = '<a href="tel:+12076938840">(207)693-8840</a>';
+  var STORE_KEY = "schillys-dishes";
 
   var menus = window.MENUS || {};
-  var tags = window.TAGS || {};
-  var $ = function (sel, root) { return (root || document).querySelector(sel); };
-  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
-
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   function el(tag, attrs, text) {
-    var node = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
-    if (text != null) node.textContent = text;
-    return node;
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
   }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
-  function loadPicked() {
-    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch (e) { return []; }
-  }
-  function savePicked() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(state.picked)); } catch (e) { /* storage unavailable */ }
-  }
-
-  var state = { tab: "takeout", query: "", picked: loadPicked() };
-
-  var listEl = $("#menuList");
-  var jumpEl = $("#menuJump");
-  var searchEl = $("#menuSearch");
-  var emptyEl = $("#menuEmpty");
-  var panel = $("#panel");
-
-  /* ---------- Open / closed status ---------- */
-  function nowInMaine() {
-    var parts = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", hour: "numeric", minute: "numeric", hour12: false }).formatToParts(new Date());
+  /* Open / closed, in Maine time */
+  (function openStatus() {
+    var out = $("#openStatus");
+    var parts;
+    try {
+      parts = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(new Date());
+    } catch (e) { return; }
     var get = function (t) { return (parts.find(function (p) { return p.type === t; }) || {}).value; };
     var day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
-    return { day: day, hour: (+get("hour")) % 24 + (+get("minute")) / 60 };
-  }
-
-  function renderOpenStatus() {
-    var out = $("#openStatus");
-    var n;
-    try { n = nowInMaine(); } catch (e) { return; }
-    var openToday = HOURS.days.indexOf(n.day) !== -1;
-    var isOpen = openToday && n.hour >= HOURS.open && n.hour < HOURS.close;
+    var hour = +get("hour") + get("minute") / 60;
+    var openDay = HOURS.days.indexOf(day) !== -1;
+    var open = openDay && hour >= HOURS.open && hour < HOURS.close;
     var msg;
-    if (isOpen) {
-      msg = "Open now · until 6pm";
-    } else if (openToday && n.hour < HOURS.open) {
-      msg = "Closed · opens today at 11am";
-    } else {
-      var names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      var d = n.day;
-      for (var i = 1; i <= 7; i++) { d = (n.day + i) % 7; if (HOURS.days.indexOf(d) !== -1) break; }
-      msg = "Closed · opens " + (i === 1 ? "tomorrow" : names[d]) + " at 11am";
-    }
+    if (open) msg = "Open now · until 6 pm";
+    else if (openDay && hour < HOURS.open) msg = "Closed · opens today at 11 am";
+    else if (HOURS.days.indexOf((day + 1) % 7) !== -1) msg = "Closed · opens tomorrow at 11 am";
+    else msg = "Closed · opens Wednesday at 11 am";
     out.textContent = msg;
-    out.classList.toggle("is-open", isOpen);
+    out.classList.toggle("is-open", open);
     out.hidden = false;
-    var row = $('.hours tr[data-day="' + n.day + '"]');
-    if (row) row.classList.add("today");
-  }
-  renderOpenStatus();
+  })();
 
-  /* ---------- Menu rendering ---------- */
-  function renderMenu() {
+  /* Menus */
+  var state = { tab: "takeout", query: "", dishes: load() };
+  var listEl = $("#menuList"), jumpEl = $("#menuJump"), searchEl = $("#menuSearch");
+
+  function load() { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch (e) { return []; } }
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state.dishes)); } catch (e) { /* private mode */ } }
+
+  function render() {
     var m = menus[state.tab];
-    if (!m) return;
     var catering = state.tab === "catering";
-    $("#menuIntro").textContent = m.intro || "";
     listEl.textContent = "";
     jumpEl.textContent = "";
-    listEl.classList.toggle("is-takeout", !catering);
 
-    m.categories.forEach(function (cat) {
-      jumpEl.appendChild(el("a", { href: "#cat-" + cat.id }, cat.title));
+    $("#menuSub").textContent = m.sub;
+    var intro = $("#menuIntro");
+    intro.hidden = !m.intro;
+    intro.textContent = m.intro || "";
 
-      var section = el("section", { class: "menu-cat", id: "cat-" + cat.id, "aria-labelledby": "h-" + cat.id });
-      section.appendChild(el("h3", { id: "h-" + cat.id }, cat.title));
-      if (cat.blurb) section.appendChild(el("p", { class: "cat-blurb" }, cat.blurb));
+    m.sections.forEach(function (sec) {
+      var id = m.id + "-" + slug(sec.title);
+      if (sec.group) listEl.appendChild(el("h3", { class: "menu-group" }, sec.group));
+      jumpEl.appendChild(el("a", { href: "#" + id }, sec.title));
 
+      var box = el("section", { class: "menu-sec", id: id, "aria-labelledby": id + "-h" });
+      box.appendChild(el("h3", { id: id + "-h" }, sec.title));
+      if (sec.notes) {
+        var notes = el("div", { class: "sec-notes" });
+        sec.notes.forEach(function (n) { notes.appendChild(el("p", null, n)); });
+        box.appendChild(notes);
+      }
       var ul = el("ul", { class: "items" });
-      cat.items.forEach(function (item) {
+      sec.items.forEach(function (it) {
+        var name = it[0], price = it[1], detail = it[2];
         var li = el("li", { class: "item" });
-        li.dataset.search = [item.name, item.desc, item.note, cat.title].join(" ").toLowerCase();
-
-        var main = el("div", { class: "item-main" });
-        var nameRow = el("p", { class: "item-name" });
-        nameRow.appendChild(el("span", null, item.name));
-        (item.tags || []).forEach(function (t) {
-          if (tags[t]) nameRow.appendChild(el("span", { class: "tag", title: tags[t].label }, tags[t].short));
-        });
-        main.appendChild(nameRow);
-        if (item.desc) main.appendChild(el("p", { class: "item-desc" }, item.desc));
-        if (item.note) main.appendChild(el("p", { class: "item-note" }, item.note));
-        li.appendChild(main);
-
-        if (item.price) li.appendChild(el("span", { class: "item-price" }, item.price));
-
+        li.dataset.search = [name, detail, sec.title].join(" ").toLowerCase();
+        var text = el("div", { class: "item-text" });
+        text.appendChild(el("p", { class: "item-name" }, name));
+        if (detail) text.appendChild(el("p", { class: "item-detail" }, detail));
+        li.appendChild(text);
+        if (price) li.appendChild(el("span", { class: "item-price" }, price));
         if (catering) {
-          var key = cat.title + ": " + item.name;
-          li.appendChild(el("button", { type: "button", class: "add-btn", "data-key": key, "data-name": item.name, "aria-label": "Add " + item.name + " to your inquiry" }));
+          li.appendChild(el("button", { type: "button", class: "add", "data-dish": name, "aria-label": "+ Add: " + name }));
         }
         ul.appendChild(li);
       });
-      section.appendChild(ul);
-      listEl.appendChild(section);
+      box.appendChild(ul);
+      listEl.appendChild(box);
     });
 
     var foot = $("#menuFoot");
     foot.textContent = "";
-    (m.footnotes || []).forEach(function (f) { foot.appendChild(el("li", null, f)); });
-
-    applySearch();
-    syncAddButtons();
-    observeCategories();
+    if (m.footnotes || m.closing) {
+      var f = el("div", { class: "menu-foot" });
+      if (m.closing) {
+        f.appendChild(el("h3", null, m.closing.title));
+        f.appendChild(el("p", null, m.closing.text));
+        var call = el("a", { class: "btn btn-red", href: "tel:+12076938840" }, "Call");
+        f.appendChild(call);
+      }
+      (m.footnotes || []).forEach(function (t) { f.appendChild(el("p", null, t)); });
+      foot.appendChild(f);
+    }
+    filter();
+    syncAdds();
+    watchSections();
   }
 
-  function applySearch() {
-    var q = state.query;
-    var any = false;
-    $$(".menu-cat", listEl).forEach(function (cat) {
+  function filter() {
+    var q = state.query, any = false;
+    $$(".menu-sec", listEl).forEach(function (sec) {
       var shown = 0;
-      $$(".item", cat).forEach(function (li) {
+      $$(".item", sec).forEach(function (li) {
         li.hidden = !!q && li.dataset.search.indexOf(q) === -1;
         if (!li.hidden) shown++;
       });
-      cat.hidden = shown === 0;
-      var link = jumpEl.querySelector('a[href="#' + cat.id + '"]');
-      if (link) link.hidden = shown === 0;
+      sec.hidden = !shown;
+      var link = jumpEl.querySelector('a[href="#' + sec.id + '"]');
+      if (link) link.hidden = !shown;
       if (shown) any = true;
     });
-    emptyEl.hidden = any;
+    $$(".menu-group", listEl).forEach(function (g) { g.hidden = !!q; });
+    $("#menuEmpty").hidden = any;
+  }
+  searchEl.addEventListener("input", function () { state.query = searchEl.value.trim().toLowerCase(); filter(); });
+
+  var observer;
+  function watchSections() {
+    if (!("IntersectionObserver" in window)) return;
+    if (observer) observer.disconnect();
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        $$("a", jumpEl).forEach(function (a) {
+          var on = a.getAttribute("href") === "#" + e.target.id;
+          a.classList.toggle("active", on);
+          if (on) jumpEl.scrollLeft = a.offsetLeft - 16;
+        });
+      });
+    }, { rootMargin: "-35% 0px -60% 0px" });
+    $$(".menu-sec", listEl).forEach(function (s) { observer.observe(s); });
   }
 
-  searchEl.addEventListener("input", function () {
-    state.query = searchEl.value.trim().toLowerCase();
-    applySearch();
-  });
-
-  /* ---------- Tabs ---------- */
+  /* Tabs */
   var tabs = $$(".tab");
-  function selectTab(name, focus) {
-    if (!menus[name]) return;
+  function select(name, focus) {
+    if (!menus[name] || name === state.tab && listEl.childNodes.length) return;
     state.tab = name;
     tabs.forEach(function (t) {
       var on = t.dataset.tab === name;
@@ -153,196 +152,85 @@
       t.tabIndex = on ? 0 : -1;
       if (on && focus) t.focus();
     });
-    panel.setAttribute("aria-labelledby", "tab-" + name);
-    renderMenu();
+    $("#menu-panel").setAttribute("aria-labelledby", "tab-" + name);
+    render();
   }
   tabs.forEach(function (t) {
-    t.addEventListener("click", function () { selectTab(t.dataset.tab); });
+    t.addEventListener("click", function () { select(t.dataset.tab); });
     t.addEventListener("keydown", function (e) {
-      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-      var i = tabs.indexOf(t) + (e.key === "ArrowRight" ? 1 : -1);
-      selectTab(tabs[(i + tabs.length) % tabs.length].dataset.tab, true);
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      var i = (tabs.indexOf(t) + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      select(tabs[i].dataset.tab, true);
     });
   });
-  // Any link like <a data-tab-link="catering"> switches the menu tab before scrolling.
   document.addEventListener("click", function (e) {
     var a = e.target.closest("[data-tab-link]");
-    if (a) selectTab(a.dataset.tabLink);
+    if (a) select(a.dataset.tabLink);
   });
 
-  /* ---------- Active section in jump bar ---------- */
-  var io = null;
-  function observeCategories() {
-    if (!("IntersectionObserver" in window)) return;
-    if (io) io.disconnect();
-    io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        $$("a", jumpEl).forEach(function (a) {
-          var active = a.getAttribute("href") === "#" + en.target.id;
-          a.classList.toggle("active", active);
-          if (active) jumpEl.scrollLeft = a.offsetLeft - 16;
-        });
-      });
-    }, { rootMargin: "-40% 0px -55% 0px" });
-    $$(".menu-cat", listEl).forEach(function (c) { io.observe(c); });
-  }
-
-  /* ---------- Picked dishes (inquiry builder) ---------- */
-  var pickedList = $("#pickedList");
-  var toast = $("#toast");
-  var toastTimer;
-
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1800);
-  }
-
-  function syncAddButtons() {
-    $$(".add-btn", listEl).forEach(function (b) {
-      var on = state.picked.indexOf(b.dataset.key) !== -1;
+  /* Dishes for the inquiry */
+  function syncAdds() {
+    $$(".add", listEl).forEach(function (b) {
+      var on = state.dishes.indexOf(b.dataset.dish) !== -1;
       b.setAttribute("aria-pressed", String(on));
-      b.textContent = on ? "✓ Added" : "+ Add";
+      b.textContent = on ? "Added" : "+ Add";
     });
-  }
-
-  function renderPicked() {
-    syncAddButtons();
-    pickedList.textContent = "";
-    state.picked.forEach(function (key) {
-      var li = el("li", null, key.split(": ").pop());
-      li.title = key;
-      li.appendChild(el("button", { type: "button", "aria-label": "Remove " + key, "data-key": key }, "×"));
-      pickedList.appendChild(li);
+    var list = $("#pickedList");
+    list.textContent = "";
+    state.dishes.forEach(function (d) {
+      var li = el("li", null, d);
+      li.appendChild(el("button", { type: "button", "data-dish": d, "aria-label": "Remove: " + d }, "×"));
+      list.appendChild(li);
     });
-    $("#pickedEmpty").hidden = state.picked.length > 0;
-    var count = $("#barCount");
-    count.hidden = state.picked.length === 0;
-    count.textContent = state.picked.length;
+    $("#picked").hidden = !state.dishes.length;
   }
-
-  function toggle(key, name) {
-    var i = state.picked.indexOf(key);
-    if (i === -1) { state.picked.push(key); showToast("Added " + name + " to your inquiry"); }
-    else { state.picked.splice(i, 1); showToast("Removed " + name); }
-    savePicked();
-    renderPicked();
+  function toggle(d) {
+    var i = state.dishes.indexOf(d);
+    if (i === -1) state.dishes.push(d); else state.dishes.splice(i, 1);
+    save();
+    syncAdds();
   }
+  listEl.addEventListener("click", function (e) { var b = e.target.closest(".add"); if (b) toggle(b.dataset.dish); });
+  $("#pickedList").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) toggle(b.dataset.dish); });
 
-  listEl.addEventListener("click", function (e) {
-    var b = e.target.closest(".add-btn");
-    if (b) toggle(b.dataset.key, b.dataset.name);
-  });
-  pickedList.addEventListener("click", function (e) {
-    var b = e.target.closest("button");
-    if (b) toggle(b.dataset.key, b.dataset.key.split(": ").pop());
-  });
-
-  /* ---------- Inquiry form ---------- */
-  var form = $("#inquiryForm");
-  var errEl = $("#formError");
-  var sendBtn = $("#sendBtn");
-
-  function fieldLabel(input) {
-    return input.closest("label").firstChild.textContent.trim().toLowerCase();
-  }
-
-  function validate() {
-    var bad = [];
-    $$("input[required]", form).forEach(function (input) {
-      var ok = input.value.trim() !== "" && input.checkValidity();
-      input.setAttribute("aria-invalid", String(!ok));
-      if (!ok) bad.push(input);
-    });
-    errEl.hidden = !bad.length;
-    if (bad.length) {
-      errEl.textContent = "Please check: " + bad.map(fieldLabel).join(", ") + ".";
-      bad[0].focus();
-    }
-    return !bad.length;
-  }
-
-  function collect() {
-    var data = {};
-    $$("input[name], textarea[name]", form).forEach(function (i) { data[i.name] = i.value.trim(); });
-    data.dishes = state.picked.join("; ");
-    return data;
-  }
-
-  function asText(d) {
-    var lines = ["Catering inquiry"];
-    var add = function (label, v) { if (v) lines.push(label + ": " + v); };
-    add("Name", (d.first_name + " " + d.last_name).trim());
-    add("Email", d.email);
-    add("Phone", d.phone);
-    add("Event date", d.event_date);
-    add("Guests", d.guest_count);
-    add("Location", d.event_location);
-    add("Interested in", state.picked.join(", "));
-    add("Details", d.message);
-    return lines.join("\n");
-  }
-
-  function showPanel(id) {
-    $("#formActions").hidden = true;
-    var p = $(id);
-    p.hidden = false;
-    p.focus();
-  }
-
+  /* Inquiry form: same fields as the current site. Sends JSON to data-endpoint. */
+  var form = $("#inquiryForm"), statusEl = $("#formStatus"), sendBtn = $("#sendBtn");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (!validate()) return;
-    var data = collect();
-    var endpoint = form.dataset.endpoint;
+    var bad = $$("input[required], textarea[required]", form).filter(function (i) {
+      var ok = i.value.trim() !== "" && i.checkValidity();
+      i.setAttribute("aria-invalid", String(!ok));
+      return !ok;
+    });
+    if (bad.length) { statusEl.textContent = ""; bad[0].focus(); return; }
 
-    if (!endpoint) {
-      $("#fallbackText").value = asText(data);
-      showPanel("#formFallback");
-      return;
-    }
+    var data = {};
+    $$("input, textarea", form).forEach(function (i) { if (i.name) data[i.name] = i.value.trim(); });
+    if (state.dishes.length) data.Dishes = state.dishes.join(", ");
+    data._subject = "Catering Inquiries";
+
+    var endpoint = form.dataset.endpoint;
+    if (!endpoint) { statusEl.innerHTML = "Not sent · " + PHONE_HTML; return; }
 
     sendBtn.disabled = true;
-    sendBtn.textContent = "Sending…";
-    fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(data)
-    }).then(function (r) {
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      state.picked = [];
-      savePicked();
-      renderPicked();
-      showPanel("#formDone");
-    }).catch(function () {
-      sendBtn.disabled = false;
-      sendBtn.textContent = "Send inquiry";
-      $("#fallbackText").value = asText(data);
-      showPanel("#formFallback");
-    });
+    statusEl.textContent = "Sending";
+    fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().then(function (j) { return r.ok && String(j.success) !== "false"; }); })
+      .then(function (ok) {
+        if (!ok) throw new Error("rejected");
+        statusEl.textContent = "Sent";
+        form.reset();
+        state.dishes = [];
+        save();
+        syncAdds();
+      })
+      .catch(function () { statusEl.innerHTML = "Not sent · " + PHONE_HTML; })
+      .then(function () { sendBtn.disabled = false; });
   });
 
-  $("#copyBtn").addEventListener("click", function () {
-    var ta = $("#fallbackText");
-    var done = function () { showToast("Copied"); };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(ta.value).then(done, function () { ta.select(); });
-    } else {
-      ta.select();
-    }
-  });
-
-  /* ---------- Misc ---------- */
-  $$("[data-print]").forEach(function (b) {
-    b.addEventListener("click", function () { window.print(); });
-  });
-  $$("#gallery img").forEach(function (img) {
-    img.addEventListener("error", function () { img.remove(); });
-  });
+  $$("[data-print]").forEach(function (b) { b.addEventListener("click", function () { window.print(); }); });
   $("#year").textContent = new Date().getFullYear();
 
-  selectTab(location.hash === "#catering" ? "catering" : "takeout");
-  renderPicked();
+  select(/catering/.test(location.hash) ? "catering" : "takeout");
 })();

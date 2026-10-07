@@ -1,243 +1,144 @@
 /*
- * Schilly's Take Out & Catering Kitchen — menu data
- * ------------------------------------------------------------------
- * The ONE file to edit when a menu changes. The page builds both menus,
- * the category jump-links, search and the catering inquiry list from it.
+ * Schilly's Take Out & Catering Kitchen: menu data.
  *
- * Item fields:
- *   name   – required
- *   desc   – optional short description
- *   price  – optional, e.g. "$14" or "Market price"
- *   note   – optional small print, e.g. "Upgrade to GF Udi's bun +$3"
- *   tags   – optional: "gf" (gluten-free), "vg" (vegan), "v" (vegetarian)
+ * Every word here is copied from schillyscatering.com (/take-out-menu and
+ * /catering-menu, October 2026). Keep it that way: when the menu changes,
+ * paste the new wording, don't rewrite it. `npm run check` (qa/check-content.mjs)
+ * fails if any text here is missing from brand/source/.
  *
- * Source: schillyscatering.com/take-out-menu and /catering-menu (Oct 2026).
+ *   title  section heading, as printed on the menu
+ *   notes  lines printed under the heading
+ *   items  [name, price?, detail?]  price and detail are optional
  */
-
-window.TAGS = {
-  gf: { label: "Gluten-free", short: "GF" },
-  vg: { label: "Vegan", short: "Vegan" },
-  v: { label: "Vegetarian", short: "V" }
-};
-
 window.MENUS = {
   takeout: {
-    title: "Take Out Menu",
-    intro: "Smoked low and slow, homemade sides, family-size portions. Open Wednesday–Sunday, 11am–6pm.",
+    id: "take-out-menu",
+    label: "TAKE OUT & FAMILY MEALS",
+    sub: "Smoked favorites • Homemade sides • Family-size portions",
+    title: "TAKE OUT KITCHEN MENU",
+    sections: [
+      {
+        title: "BBQ PLATES",
+        notes: ["All plates served with Mac & Cheese, BBQ Beans, Coleslaw & Cornbread."],
+        items: [["Pulled Chicken", "$28"], ["Pulled Pork", "$28"], ["Sliced Brisket", "$30"], ["Three Meat", "$35"]]
+      },
+      {
+        title: "WHITE CHEDDAR MAC & CHEESE",
+        items: [["Mac & Cheese Bowl", "$10"], ["Pulled Pork Mac & Cheese", "$14"], ["Pulled Chicken Mac & Cheese", "$14"], ["Brisket Mac & Cheese", "$17"]]
+      },
+      {
+        title: "FAMILY SIZE PORTIONS",
+        notes: ["(4 Servings each)"],
+        items: [["Mac & Cheese", "$30"], ["Pulled Pork", "$35"], ["Pulled Chicken", "$35"], ["Brisket", "$40"], ["Baked Beans", "$12"], ["Coleslaw", "$10"]]
+      },
+      {
+        title: "SANDWICHES",
+        items: [
+          ["BBQ Beef Brisket Sandwich", "$17"], ["BBQ Pulled Chicken Sandwich", "$14"], ["BBQ Pulled Pork Sandwich", "$14"],
+          ["Add Coleslaw to any Sandwich", "$2"],
+          ["Chicken Salad Sandwich", "$9"], ["Chicken Salad Wrap", "$9"], ["Peanut Butter & Jelly", "$5"], ["Grilled Cheese", "$7"]
+        ]
+      },
+      {
+        title: "SPECIALTY ITEMS",
+        items: [["Black Bean Veggie Burger Homemade GF*", "$13", "served with Lettuce & Tomato"], ["Upgrade to GF* Udi’s Bun", "$3"]]
+      },
+      {
+        title: "SPECIALTY BEEF HOT DOGS",
+        notes: ["Choice of Red or Brown"],
+        items: [["Fair Dog “Pulled Pork & Coleslaw”", "$11"], ["Mac & Cheese Dog", "$9"], ["BLT Dog", "$8"], ["Hot Dog Single", "$5"], ["Twin", "$8"], ["1 Hot Dog Meal with Soda & Chips", "$9"]]
+      },
+      {
+        title: "SIDES",
+        items: [
+          ["White Cheddar Mac & Cheese", "$7"], ["New England Clam Chowder", "$8"], ["BBQ Baked Beans", "$4"], ["Potato Salad", "$4"],
+          ["Pasta Salad", "$4"], ["Coleslaw", "$3"], ["Chips", "$2"], ["Cornbread (Plain or Jalapeno)", "$5"]
+        ]
+      },
+      {
+        title: "DESSERT",
+        items: [["Whoopie Pie", "$4"], ["Blueberry Cake", "$7"], ["Jumbo Cookies", "$4"]]
+      }
+    ],
     footnotes: [
       "Prices include Maine State Sales Tax.",
-      "Prices are subject to change. In-store pricing is the standard.",
-      "Consuming raw or undercooked meats, poultry, seafood, shellfish, or eggs may increase your risk of foodborne illness."
-    ],
-    categories: [
-      {
-        id: "bbq-plates",
-        title: "BBQ Plates",
-        blurb: "Every plate comes with mac & cheese, BBQ beans, coleslaw and cornbread.",
-        items: [
-          { name: "Pulled Chicken", price: "$28" },
-          { name: "Pulled Pork", price: "$28" },
-          { name: "Sliced Brisket", price: "$30" },
-          { name: "Three Meat", price: "$35" }
-        ]
-      },
-      {
-        id: "mac",
-        title: "White Cheddar Mac & Cheese",
-        items: [
-          { name: "Mac & Cheese Bowl", price: "$10" },
-          { name: "Pulled Pork Mac & Cheese", price: "$14" },
-          { name: "Pulled Chicken Mac & Cheese", price: "$14" },
-          { name: "Brisket Mac & Cheese", price: "$17" }
-        ]
-      },
-      {
-        id: "family",
-        title: "Family Size Portions",
-        blurb: "Each feeds about 4.",
-        items: [
-          { name: "Mac & Cheese", price: "$30" },
-          { name: "Pulled Pork", price: "$35" },
-          { name: "Pulled Chicken", price: "$35" },
-          { name: "Brisket", price: "$40" },
-          { name: "Baked Beans", price: "$12" },
-          { name: "Coleslaw", price: "$10" }
-        ]
-      },
-      {
-        id: "sandwiches",
-        title: "Sandwiches",
-        blurb: "Add coleslaw to any sandwich for $2.",
-        items: [
-          { name: "BBQ Beef Brisket Sandwich", price: "$17" },
-          { name: "BBQ Pulled Chicken Sandwich", price: "$14" },
-          { name: "BBQ Pulled Pork Sandwich", price: "$14" },
-          { name: "Chicken Salad Sandwich", price: "$9" },
-          { name: "Chicken Salad Wrap", price: "$9" },
-          { name: "Grilled Cheese", price: "$7" },
-          { name: "Peanut Butter & Jelly", price: "$5" }
-        ]
-      },
-      {
-        id: "specialty",
-        title: "Specialty Items",
-        items: [
-          { name: "Homemade Black Bean Veggie Burger", desc: "Served with lettuce and tomato.", price: "$13", note: "Upgrade to a gluten-free Udi's bun +$3", tags: ["gf"] }
-        ]
-      },
-      {
-        id: "hot-dogs",
-        title: "Specialty Beef Hot Dogs",
-        blurb: "Your choice of red or brown dog.",
-        items: [
-          { name: "Fair Dog", desc: "Topped with pulled pork and coleslaw.", price: "$11" },
-          { name: "Mac & Cheese Dog", price: "$9" },
-          { name: "BLT Dog", price: "$8" },
-          { name: "Hot Dog Meal", desc: "One hot dog with soda and chips.", price: "$9" },
-          { name: "Twin Dogs", price: "$8" },
-          { name: "Single Hot Dog", price: "$5" }
-        ]
-      },
-      {
-        id: "sides",
-        title: "Sides",
-        items: [
-          { name: "New England Clam Chowder", price: "$8" },
-          { name: "White Cheddar Mac & Cheese", price: "$7" },
-          { name: "Cornbread", desc: "Plain or jalapeño.", price: "$5" },
-          { name: "BBQ Baked Beans", price: "$4" },
-          { name: "Potato Salad", price: "$4" },
-          { name: "Pasta Salad", price: "$4" },
-          { name: "Coleslaw", price: "$3" },
-          { name: "Chips", price: "$2" }
-        ]
-      },
-      {
-        id: "dessert",
-        title: "Dessert",
-        items: [
-          { name: "Blueberry Cake", price: "$7" },
-          { name: "Whoopie Pie", price: "$4" },
-          { name: "Jumbo Cookie", price: "$4" }
-        ]
-      }
+      "Consuming raw or undercooked meats, poultry, seafood, shellfish, or eggs may increase your risk of foodborne illness.",
+      "*Prices are subject to changes. In store pricing is the standard."
     ]
   },
 
   catering: {
-    title: "Catering Menu",
-    intro: "Homemade Maine flavor for weddings, backyard BBQs, corporate events and private parties. Catering is priced per event. Tap + Add on anything you like and it goes on your inquiry.",
-    footnotes: [
-      "More catering options are coming. Don't see what you want? Call us. We'd love to create something for your event."
-    ],
-    categories: [
+    id: "catering-menu",
+    label: "CATERING MENU",
+    sub: "Weddings • Backyard BBQs • Corporate Events • Private Parties & So much More",
+    title: "CATERING MENU",
+    intro: "From intimate gatherings to unforgettable celebrations, Schilly’s brings homemade Maine flavor to your table.",
+    sections: [
       {
-        id: "boxed",
-        title: "Boxed Lunches",
-        blurb: "Boxed or buffet. Each includes a side and a beverage.",
+        group: "LUNCH MENU",
+        title: "BOXED LUNCH",
+        notes: ["Lunch Boxes or Buffet options", "Includes a side and beverage"],
+        items: [["Hamburger or Cheeseburger"], ["Hot Dog"], ["Meatball Sub"], ["Tuna Salad"], ["Chicken Salad"], ["Egg Salad"], ["Sliced Turkey or Ham"], ["BLT"]]
+      },
+      {
+        title: "ELEVATED BOXED LUNCHES",
+        notes: ["Includes a side, fresh fruit, and beverage.", "Served on Sourdough, Brioche Roll, Whole Wheat Wrap, or Artisan Bread."],
         items: [
-          { name: "Hamburger or Cheeseburger" },
-          { name: "Hot Dog" },
-          { name: "Meatball Sub" },
-          { name: "Tuna Salad" },
-          { name: "Chicken Salad" },
-          { name: "Egg Salad" },
-          { name: "Sliced Turkey or Ham" },
-          { name: "BLT" }
+          ["Sliced Roast Brisket"], ["BBQ Pulled Pork or Chicken"], ["Grilled Chicken"], ["Cranberry Walnut Chicken Salad"],
+          ["Turkey Bacon Club"], ["Thanksgiving Turkey Club"], ["Black Bean Burger *GF & Vegan"], ["Lobster Roll", "+ Market Cost"]
         ]
       },
       {
-        id: "elevated",
-        title: "Elevated Boxed Lunches",
-        blurb: "Each includes a side, fresh fruit and a beverage. Served on sourdough, brioche roll, whole wheat wrap or artisan bread.",
-        items: [
-          { name: "Sliced Roast Brisket" },
-          { name: "BBQ Pulled Pork or Chicken" },
-          { name: "Grilled Chicken" },
-          { name: "Cranberry Walnut Chicken Salad" },
-          { name: "Turkey Bacon Club" },
-          { name: "Thanksgiving Turkey Club" },
-          { name: "Black Bean Burger", tags: ["gf", "vg"] },
-          { name: "Lobster Roll", price: "Market price" }
-        ]
-      },
-      {
-        id: "salads",
         title: "Boxed Salads",
-        blurb: "Each includes a side and a beverage.",
+        notes: ["Includes a side and beverage."],
         items: [
-          { name: "Garden Salad" },
-          { name: "Caesar Salad" },
-          { name: "Cobb Salad" },
-          { name: "Italian Pasta Salad" },
-          { name: "Autumn Harvest Salad" },
-          { name: "Balsamic Spinach & Beets Salad" },
-          { name: "Caprese Pasta Salad" },
-          { name: "BLT Pasta Salad" }
+          ["Garden Salad"], ["Caeser Salad"], ["Cobb Salad"], ["Italian Pasta Salad"], ["Autumn Harvest Salad"],
+          ["Balsamic Spinach & Beets Salad"], ["Caprese Pasta Salad"], ["BLT Pasta Salad"]
         ]
       },
       {
-        id: "soups",
-        title: "Soups & Crock Favorites",
+        title: "SOUPS & CROCK FAVORITES",
         items: [
-          { name: "Cream of Tomato" },
-          { name: "Chicken Noodle" },
-          { name: "Hearty Beef & Vegetable" },
-          { name: "Beef & Bean Chili" },
-          { name: "White Chicken Chili" },
-          { name: "White Cheddar Mac & Cheese" },
-          { name: "Fish Chowder" },
-          { name: "Clam Chowder" },
-          { name: "New England Corn Chowder" }
+          ["Cream of Tomato"], ["Chicken Noodle"], ["Hearty Beef & Vegetable"], ["Beef & Bean Chili"],
+          ["White Cheddar Mac & Cheese"], ["Fish and Clam Chowders"], ["New England Corn Chowder"], ["White Chicken Chili"]
         ]
       },
       {
-        id: "platters",
-        title: "Party Platters, Boards & Grazes",
-        blurb: "Platters serve about 10–12 people.",
+        title: "DESSERTS",
         items: [
-          { name: "Charcuterie Board", desc: "Fine meats and cheeses, dried and fresh fruit, nuts, olives and crackers with jam or honey." },
-          { name: "Deli Platter", desc: "Ham, turkey, roast beef and Genoa salami with American and Swiss, and your choice of breads." },
-          { name: "Cheese Platter", desc: "Mozzarella, Swiss, yellow cheddar and pepper jack with artisan crackers." },
-          { name: "Finger Sandwiches", desc: "Chicken, ham, tuna, seafood and egg salad." },
-          { name: "Italian Finger Sandwiches", desc: "Ham, turkey or roast beef with American cheese, onion, pepper, tomato, pickle and olives." },
-          { name: "Sliders", desc: "Sliced brisket, BBQ chicken, pulled pork or cheeseburger." },
-          { name: "Chicken Wings", desc: "Seasoned wings with ranch and blue cheese, carrots and celery." },
-          { name: "Chicken Satay or Beef Skewers", desc: "Grilled or smoked, with dipping sauce." },
-          { name: "Shrimp Cocktail", desc: "Large shrimp on lettuce with cocktail sauce and lemon." },
-          { name: "Antipasto Skewers", desc: "Genoa salami, soppressata, mozzarella, cheese tortellini, pepperoncini, artichoke hearts, olives and basil with Greek dressing." },
-          { name: "Caprese Salad Bites", desc: "Tomato, mozzarella and basil with balsamic glaze." },
-          { name: "Vegetable Platter", desc: "Seasonal vegetables with dips." },
-          { name: "Hummus Platter", desc: "Hummus and naan with seasonal vegetables." },
-          { name: "Fresh Fruit Salad", desc: "Watermelon, cantaloupe, honeydew, red and green grapes, kiwi and orange." },
-          { name: "Lettuce & Tomato Platter", desc: "Green leaf and romaine with sliced tomatoes and red onion." }
+          ["Brownies"], ["Chocolate Chip Cookies"], ["Mini Whoopie Pie"], ["Oatmeal Cream Pie"],
+          ["Oatmeal Raisin Cookies"], ["Peanut Butter Cookie"], ["Strawberry Shortcake"], ["Maine Blueberry Cake"]
         ]
       },
       {
-        id: "dips",
-        title: "Dips & Spreads",
-        blurb: "Platters serve about 10–12 people.",
+        title: "PARTY PLATTERS, BOARDS, and GRAZES",
+        notes: ["Platters serve approximately 10–12 people."],
         items: [
-          { name: "Balsamic Blueberry Jam or Red Pepper Jelly", desc: "Over whipped or smoked cream cheese, with assorted crackers." },
-          { name: "Buffalo Chicken Dip", desc: "With tortilla chips, carrot and celery sticks." },
-          { name: "Spinach & Artichoke Dip", desc: "Warm or cold, with tortilla chips and carrot sticks." },
-          { name: "Mexican Street Corn Dip", desc: "With tortilla chips." }
-        ]
-      },
-      {
-        id: "desserts",
-        title: "Desserts",
-        items: [
-          { name: "Brownies" },
-          { name: "Chocolate Chip Cookies" },
-          { name: "Oatmeal Raisin Cookies" },
-          { name: "Peanut Butter Cookies" },
-          { name: "Mini Whoopie Pies" },
-          { name: "Oatmeal Cream Pies" },
-          { name: "Strawberry Shortcake" },
-          { name: "Maine Blueberry Cake" }
+          ["CHARCUTERIE BOARD", "", "Assortment of fine meats and cheeses, dried and fresh fruits, nuts, olives, assorted crackers with jams or honey."],
+          ["DELI PLATTER", "", "Assorted deli meats with choice of ham, turkey, roast beef and Genoa salami, American and Swiss cheeses, with choice of breads."],
+          ["CHEESE PLATTER", "", "Mozzarella, Swiss, yellow cheddar and pepper jack served with artisan crackers."],
+          ["FINGER SANDWICHES", "", "Chicken, ham, tuna, seafood and egg salad."],
+          ["ITALIAN FINGER SANDWICHES", "", "Made with ham, turkey, or roast beef with American cheese, onion, pepper, tomato, pickle, and olives."],
+          ["SLIDERS", "", "Sliced Brisket • BBQ Chicken • Pulled Pork • Cheeseburger"],
+          ["CHICKEN WINGS", "", "Seasoned chicken wings with Ranch & Blue Cheese, carrots & celery."],
+          ["CHICKEN SATAY OR BEEF SKEWERS", "", "Grilled or smoked with dipping sauce."],
+          ["VEGETABLE PLATTER", "", "Seasonal vegetables served with dips."],
+          ["HUMMUS PLATTER", "", "Hummus and Naan served with seasonal vegetables."],
+          ["FRESH FRUIT SALAD", "", "Watermelon, cantaloupe, honeydew, green and red grapes, kiwi, and orange slices."],
+          ["SHRIMP COCKTAIL", "", "Large shrimp on a bed of lettuce with cocktail sauce and lemon slices."],
+          ["CAPRESE SALAD BITES", "", "Fresh tomato, mozzarella, and basil with balsamic glaze."],
+          ["BALSAMIC BLUEBERRY JAM or RED PEPPER JELLY", "", "Served over Whipped OR Smoked Cream Cheese spread with assorted crackers."],
+          ["BUFFALO CHICKEN DIP", "", "Served with tortilla chips and fresh carrot and celery sticks."],
+          ["ANTIPASTO SKEWERS", "", "Genoa salami, soppressata, mozzarella balls, cheese tortellini, pepperoncini peppers, artichoke hearts, Kalamata or black olives, and fresh basil dressed with Greek dressing."],
+          ["MEXICAN STREET CORN DIP", "", "Served with tortilla chips."],
+          ["SPINACH & ARTICHOKE DIP", "", "Served warmed OR cold with tortilla chips and carrot sticks."],
+          ["LETTUCE & TOMATO PLATTER", "", "Green leaf and romaine lettuce with sliced tomatoes and red onions."]
         ]
       }
-    ]
+    ],
+    closing: {
+      title: "MORE CATERING OPTIONS COMING SOON!",
+      text: "We’re continuing to update our online catering menu. Looking for something you don’t see? Give us a call — we’d love to create something for your event."
+    }
   }
 };

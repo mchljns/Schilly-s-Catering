@@ -1,0 +1,33 @@
+# Interface labels the site may use that are not on schillyscatering.com.
+# Rule: three words or fewer, states an action or a state, no adjectives.
+Skip to content
+Call
+Get directions
+Open now
+until 6 pm
+Closed
+opens today at 11 am
+opens tomorrow at 11 am
+opens Wednesday at 11 am
+Search the menu
+No matches
++ Add
+Added
+Remove
+Print menu
+Dishes
+Instagram
+Facebook
+Today
+Monday
+Tuesday
+Wednesday
+Thursday
+Friday
+Saturday
+Sunday
+11 am - 6pm
+Sending
+Sent
+Not sent
+Copy

@@ -1,0 +1,10 @@
+{
+  "name": "schillys-site",
+  "private": true,
+  "description": "Static site for Schilly's Take Out & Catering Kitchen. No build step.",
+  "scripts": {
+    "check": "node qa/check-content.mjs && node qa/check-layout.mjs",
+    "check:content": "node qa/check-content.mjs",
+    "check:layout": "node qa/check-layout.mjs"
+  }
+}

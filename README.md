@@ -1,37 +1,45 @@
-# Schilly's Take Out & Catering Kitchen website
+# Schilly’s Take Out & Catering Kitchen website
 
-A fast, single-page static site (plain HTML/CSS/JS, no build step) to replace
-schillyscatering.com. Open `index.html` to preview, or deploy the folder as-is to
-Netlify, Vercel, GitHub Pages or any web host.
+A one-page static site for schillyscatering.com: plain HTML, CSS and JavaScript, no build step. Upload the folder to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages).
 
-All content comes from the live site (Oct 2026): the take out menu, catering menu, hours,
-address, phone and social links.
+Every sentence on the page comes from the current schillyscatering.com. The logo, the five photos and the two typefaces are Schilly’s own. The brand identity, with the reasons behind each choice, is in `brand/README.md`. `brand/guide.html` shows it visually.
 
-## What's on the page
-- **Hero + "at a glance" strip**: hours with a live *Open now / Closed* indicator (Maine time),
-  tap-for-directions address, tap-to-call phone. These are the three things take-out customers look for first.
-- **Menus in one place**: Take Out and Catering tabs, search, a sticky section jump-bar.
-  Take out reads like a classic menu (name … price). Catering items have **+ Add** buttons
-  that collect dishes into the inquiry.
-- **Events**: BBQs, corporate, weddings, lobster bakes, pig roasts. These replace the
-  three "Coming soon" pages on the current site.
-- **Photo gallery** (the 5 photos from the current homepage), **How catering works**, **Inquiry form**
-  (same fields as the current form, plus the dishes they picked), **Hours & location**, **FAQ**.
-- Phones get a sticky Call / Menu / Plan event bar. "Print this menu" prints a clean copy of the selected menu.
-- SEO / AI search: Restaurant + opening hours + FAQ structured data, meta/OG tags,
-  `robots.txt`, `sitemap.xml`, `llms.txt`.
+## What’s on the page
+
+1. Header: logo, Take Out Menu, Catering Menu, Catering Inquiries.
+2. Hero: SMOKED. HOMEMADE. MAINE., their line, View Our Menu, the brisket photo.
+3. Business Hours, Location and Store Phone #, with an open or closed indicator on Maine time, a directions link and tap to call.
+4. Our Menus: Take Out and Catering tabs, search, section links that stay on screen, print. Catering items have + Add, which carries dishes into the inquiry.
+5. A Taste of Schilly’s: three of their photos.
+6. Lobster Bakes, Pig Roasts, Weddings: their text and the wedding photo.
+7. Let’s Plan Your Event: their form, same fields.
+8. Footer: Hungry Yet?, hours, location, phone, Instagram, Facebook.
 
 ## Editing
-- **Menus**: `assets/menu-data.js`. Add, remove or reprice items; everything rebuilds itself.
-- **Hours**: update the hours table in `index.html`, `HOURS` at the top of `assets/app.js`,
-  and the JSON-LD `openingHoursSpecification`.
+
+| Change | File |
+| --- | --- |
+| Menu items or prices | `assets/menu-data.js` (paste their wording, don’t rewrite it) |
+| Hours | `index.html` (two places), `HOURS` in `assets/app.js`, JSON-LD in `index.html` |
+| Colors, type, spacing | `assets/styles.css` tokens, matching `brand/README.md` |
+| New interface label | add it to `brand/source/ui-labels.txt` first |
+
+## Checks
+
+```bash
+npm run check
+```
+
+Needs Node 18+ and Playwright with Chromium. Two gates:
+
+- `qa/check-content.mjs` opens the page in a browser, switches tabs, and fails if any visible text, alt text, label or meta tag is missing from `brand/source/` (the saved text of their site plus the approved labels). It also fails on emojis, gradients, lift animations, left-border callouts, hero eyebrows, placeholders, and on Ribbon Red or Sign Yellow outside their brand jobs.
+- `qa/check-layout.mjs` loads the page at 360, 390, 768 and 1280 px and fails on horizontal overflow, text under 14 px, contrast under WCAG AA, touch targets under 40 px, distorted or broken images, console errors, a first load over 600 KB, an hours band below the first screen on phones, or a missing header inquiry link.
+
+`brand/QA-LOG.md` records each review loop.
 
 ## Before launch
-1. **Connect the inquiry form.** No email address appears on the current site, so the form
-   needs somewhere to send. Easiest: create a free form at formspree.io with Schilly's email,
-   then paste its URL into `data-endpoint=""` on `<form id="inquiryForm">` in `index.html`.
-   Until then, the form shows the visitor a copy-able summary and the phone number, so no inquiry is lost.
-2. **Photos**: they're loaded from the current site builder's image host (brandcrowd). Download
-   them into `assets/` and update the `src` paths so they keep working after the switch. Also add real alt text (what's in each photo).
-3. **Reviews**: the old testimonials page is gone (404). Add a few real Google/Facebook reviews; social proof matters a lot for catering.
-4. **Lobster bake / pig roast / wedding menus**: add them to `menu-data.js` (or as event cards) when ready.
+
+1. **Connect the form.** Their current form sends through the site builder, and the site doesn’t show an email address. Set `data-endpoint` on `<form id="inquiryForm">` in `index.html`. For FormSubmit, the form Green Falls uses: `https://formsubmit.co/ajax/<their email>`, then confirm the activation email FormSubmit sends. Until it’s set, Send shows “Not sent” with the store phone number.
+2. **Send one real test inquiry** after connecting it, and confirm it arrives.
+3. **Point the domain** at the new host. The page keeps their current section names as anchors (`#take-out-menu`, `#catering-menu`, `#catering-inquiries`, `#lobster-bakes`, `#pig-roasts`, `#weddings`). The old paths (`/take-out-menu`, `/catering-menu` and so on) need redirects to those anchors on the host.
+4. **Test on a real iPhone.** QA ran in Chromium, not Safari on a device.
