@@ -141,3 +141,11 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - `check-layout` now runs 8 pages × 4 widths. It caught 34 px event links inside a heading (now a list of 44 px links), a 19 px breadcrumb link, and a 404 page that overflowed on phones (missing the header script). Price is within one tap of the header at 390 px and wider, and two taps at 360.
 - Visual review: the menu pages repeated the sub line. Removed.
 - Link check: no broken internal links in `dist/` or `preview/`. Fonts load in both.
+
+## Loop 18: Impeccable critique and module redesign
+- Critique (design review + Impeccable detector, run independently): 23/36. The menu pages read as Schilly's; the home page below the hero read as a filled-in restaurant template.
+- Color research against AI defaults: Slate #4A5468 was Tailwind slate-600 (ΔE 0.005) and Cream #FFF9EE was orange-50 (ΔE 0.005), which trips Impeccable's cream rule. Slate is now navy ink #2F4468; the page ground is Board #F7E8CC; Cream is kept for paper only (menus, forms). Stray grays (#C9D2E3 copyright, white hover wash, white inputs) replaced with palette colors.
+- Modules rebuilt in the menu board's own devices: the hero is the navy sign (yellow headline, gold rules, yellow action); menus and forms are cream sheets with the logo's double navy frame; Lobster Bakes, Pig Roasts and Weddings are set as ruled board rows. "LUNCH MENU" is no longer a gray eyebrow.
+- Lobster Bakes and Pig Roasts no longer show salmon and chicken photos.
+- Fixed: menu search left non-matching items visible (`.item { display:flex }` beat `[hidden]`).
+- Detector after: cream-palette and gray-on-color gone; remaining findings are the known line-height and padding misreads and the deliberate frame rules.
