@@ -70,9 +70,8 @@ window.MENUS = {
   catering: {
     id: "catering-menu",
     label: "CATERING MENU",
-    sub: "Weddings • Backyard BBQs • Corporate Events • Private Parties & So much More",
+    sub: "Weddings • Backyard BBQs • Corporate Events • Private Parties",
     title: "CATERING MENU",
-    intro: "From intimate gatherings to unforgettable celebrations, Schilly’s brings homemade Maine flavor to your table.",
     sections: [
       {
         group: "LUNCH MENU",
@@ -137,8 +136,7 @@ window.MENUS = {
       }
     ],
     closing: {
-      title: "MORE CATERING OPTIONS COMING SOON!",
-      text: "We’re continuing to update our online catering menu. Looking for something you don’t see? Give us a call — we’d love to create something for your event."
+      text: "Looking for something you don’t see? Give us a call."
     }
   }
 };

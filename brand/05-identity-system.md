@@ -40,7 +40,7 @@ Rules:
 
 Study and Google Fonts deep dive: `04-type-study.md`. Hierarchy and case: `06-hierarchy.md`.
 
-- **Coustard 900** (OFL): headline, section titles, menu section titles, prices. A fat Clarendon that matches the logo’s ribbon capitals. Rare on the web, never an AI default.
+- **Solway 800** (OFL): headline, section titles, menu section titles, prices. A fat Clarendon that matches the logo’s ribbon capitals. Rare on the web, never an AI default.
 - **Radio Canada 400 and 700** (OFL): everything else. Body 18 px, details 16 px, buttons and labels 16 to 17 px in Radio Canada 700, in the case Schilly’s wrote. No tracked capitals.
 - Six sizes: display, title, menu title, lead, body, small. Self-hosted WOFF2 with `font-display: swap`.
 
@@ -48,7 +48,7 @@ Study and Google Fonts deep dive: `04-type-study.md`. Hierarchy and case: `06-hi
 
 | Device | Built from | Rules |
 | --- | --- | --- |
-| **Ribbon** | The logo’s red ribbon | Notched ends, Ribbon Red with cream Coustard capitals, light grounds only. For printed menus and social posts. Not on the web page: under a headline it reads as a badge (`06-hierarchy.md`) |
+| **Ribbon** | The logo’s red ribbon | Notched ends, Ribbon Red with cream Solway capitals, light grounds only. For printed menus and social posts. Not on the web page: under a headline it reads as a badge (`06-hierarchy.md`) |
 | **Ruled frame** | Printed menu boards (The Dinner Ladies, Refero) | Two hairlines top and bottom, 3 px apart, Frame Navy. Menu section titles only |
 | **Leader** | Printed menus (21st.dev Restaurant Menu Block) | 2 px dotted Wood Edge from item name to price |
 | **Fact rows** | DoorDash store sheet, Yelp, Google (Refero) | Label, value, action. Status and hours on one line |

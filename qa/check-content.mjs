@@ -25,7 +25,8 @@ const DESCRIPTIONS = [
 ].map(norm);
 
 function allowed(fragment) {
-  const f = norm(fragment).replace(/[\s•·]+$/, "");
+  // A trimmed line keeps its full stop: "…be in touch." is their sentence, cut short.
+  const f = norm(fragment).replace(/[\s•·]+$/, "").replace(/[.?!]$/, "");
   if (!f || /^[•·×*\-–—|,.:;()]+$/.test(f)) return true;
   if (/^©?\s*\d{4}$/.test(f)) return true;
   if (corpus.includes(f) || labels.includes(f) || DESCRIPTIONS.includes(f)) return true;

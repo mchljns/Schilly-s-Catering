@@ -13,6 +13,8 @@ How Schilly’s Take Out & Catering Kitchen looks and reads, built with the Gene
 | 04 Type study and Google Fonts deep dive | `04-type-study.md`, `type-study.png`, `font-deep-dive.png` |
 | 05 Identity system | `05-identity-system.md`, `guide.html` |
 | 06 Hierarchy and AI giveaways | `06-hierarchy.md` |
+| 07 Copy: removing the AI feel | `07-copy.md` |
+| 08 Hero construction | `08-hero.md` |
 | QA log | `QA-LOG.md` |
 | Live-site text (the only allowed copy) | `source/` |
 | Logo files | `logo/` |

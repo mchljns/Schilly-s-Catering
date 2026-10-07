@@ -124,3 +124,13 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 ## Still open
 - **Social photos.** Instagram and Facebook page hosts are refused by the network policy, though their image CDNs are allowed. Without the pages there's no list of photos to fetch.
 - Inquiry delivery, Safari on an iPhone, and printing from Safari and Firefox are unverified.
+
+---
+
+# Round three
+
+## Loop 16: client picks Solway, copy and hero
+- Swapped Coustard 900 for Solway 800, the client's pick from the deep-dive sheet.
+- Copy edited by cutting only (`07-copy.md`). The four "From X to Y" openers, stock warmth lines, a rhetorical question and a stale "coming soon" are gone. The content gate accepts a trimmed sentence that keeps its full stop: 312 fragments, all traced.
+- Hero checked against best practice (`08-hero.md`). One primary action: View Our Menu is solid red, and the header's Catering Inquiries became an outline. View Our Menu now shows on phones too.
+- Gates pass at all four widths. Hours rows start at 344 px (360 × 740) and 356 px (390 × 844).

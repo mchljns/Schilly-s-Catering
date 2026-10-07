@@ -2,12 +2,12 @@
 
 A one-page static site for schillyscatering.com: plain HTML, CSS and JavaScript, no build step. Upload the folder to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages).
 
-Every sentence on the page comes from the current schillyscatering.com. The logo and the five photos are Schilly’s own. Type is Coustard (a Clarendon that matches the logo’s ribbon lettering) and Radio Canada, chosen in a Google Fonts deep dive to avoid faces that AI-built sites overuse. The brand work follows the Generation Maine process; every stage and reason is in `brand/README.md`, and `brand/guide.html` shows the system on one page.
+Every sentence on the page comes from the current schillyscatering.com. The logo and the five photos are Schilly’s own. Type is Solway (a friendly slab that echoes the logo’s ribbon lettering, chosen by the client) and Radio Canada, chosen in a Google Fonts deep dive to avoid faces that AI-built sites overuse. The brand work follows the Generation Maine process; every stage and reason is in `brand/README.md`, and `brand/guide.html` shows the system on one page.
 
 ## What’s on the page
 
 1. Header: logo, Take Out Menu, Catering Menu, Catering Inquiries.
-2. Hero: SMOKED. HOMEMADE. MAINE., their services line and sentence, then Business Hours (with an open or closed status on Maine time), Location (Get directions) and Store Phone # (Call) as rows. The brisket photo.
+2. Hero: SMOKED. HOMEMADE. MAINE., their services line, then Business Hours (with an open or closed status on Maine time), Location (Get directions) and Store Phone # (Call) as rows. The brisket photo.
 3. Our Menus: a Take Out and Catering switch, a section rail that tracks your place (chips on phones), search, print. Take-out prices on dotted leaders. Catering items have + Add, which carries dishes into the inquiry.
 4. A Taste of Schilly’s: three of their photos.
 5. Lobster Bakes, Pig Roasts, Weddings: their text and the wedding photo.

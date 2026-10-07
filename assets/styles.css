@@ -2,7 +2,7 @@
    Direction: Menu Board (Concept A). Rules: brand/05-identity-system.md, brand/06-hierarchy.md.
    Color audit: brand/color/README.md. Every color is sampled from the logo. */
 
-@font-face { font-family: "Coustard"; src: url("fonts/coustard-900.woff2") format("woff2"); font-weight: 900; font-display: swap; }
+@font-face { font-family: "Solway"; src: url("fonts/solway-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
 @font-face { font-family: "Radio Canada"; src: url("fonts/radio-canada-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Radio Canada"; src: url("fonts/radio-canada-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
@@ -20,7 +20,7 @@
   --radius: 6px;
   --control: 48px;
   --header-h: 120px;
-  --slab: "Coustard", Rockwell, Georgia, serif;
+  --slab: "Solway", Rockwell, Georgia, serif;
   --body: "Radio Canada", "Helvetica Neue", Arial, sans-serif;
   /* Scale (brand/06-hierarchy.md): display, title, menu title, lead, body, small */
   --t-display: clamp(2.25rem, 11vw, 4.75rem);
@@ -43,7 +43,7 @@ a:hover { color: var(--red-dark); }
 :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
 .site-footer :focus-visible { outline-color: var(--yellow); }
 
-h1, h2, h3 { font-family: var(--slab); font-weight: 900; line-height: 1.08; margin: 0 0 .4em; }
+h1, h2, h3 { font-family: var(--slab); font-weight: 800; line-height: 1.08; margin: 0 0 .4em; }
 h1 { font-size: var(--t-display); line-height: .98; }
 h2 { font-size: var(--t-title); }
 h3 { font-size: var(--t-menu); }
@@ -77,7 +77,7 @@ p { margin: 0 0 1em; }
 /* The ribbon: kept for printed menus and social posts (brand/06-hierarchy.md). Not used on the web page. */
 .ribbon {
   display: inline-block; margin: 0; padding: 8px 26px 7px; background: var(--red); color: var(--cream);
-  font: 900 .95rem/1.2 var(--slab);
+  font: 800 .95rem/1.2 var(--slab);
   clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 50%, 100% 100%, 0 100%, 12px 50%);
 }
 
@@ -108,7 +108,7 @@ p { margin: 0 0 1em; }
 /* Hero: headline, services line, then the three facts as rows (DoorDash store info) */
 .hero-copy { min-width: 0; }
 .hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; padding: 48px 0 56px; }
-.hero-lede { font-size: var(--t-lead); line-height: 1.45; max-width: 34ch; margin: 20px 0 24px; }
+.hero-lede { font-size: var(--t-lead); font-weight: 700; line-height: 1.45; max-width: 34ch; margin: 16px 0 22px; }
 .hero-lede strong { color: var(--navy); }
 .facts { margin: 0 0 22px; border-top: 2px solid var(--navy); }
 .fact { display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
@@ -127,7 +127,7 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
   .hero-inner { grid-template-columns: 1fr; gap: 0; padding: 24px 0 0; }
   .hero-photo { margin: 24px -16px 0; }
   .hero-photo img { aspect-ratio: 16 / 9; border-radius: 0; }
-  .hero-cta { display: none; }
+
 }
 @media (max-width: 559px) {
   .hero-lede { margin: 14px 0 16px; }
@@ -198,7 +198,7 @@ a.fact-main { display: inline-flex; align-items: center; min-height: 44px; }
 .item-name { margin: 0; font-weight: 700; }
 .item-detail { margin: 2px 0 0; font-size: 1rem; color: var(--slate); }
 .leader { flex: 1; min-width: 20px; border-bottom: 2px dotted var(--edge); position: relative; top: -5px; }
-.item-price { font: 900 var(--t-body)/1 var(--slab); color: var(--red); white-space: nowrap; }
+.item-price { font: 800 var(--t-body)/1 var(--slab); color: var(--red); white-space: nowrap; }
 /* Catering rows have details and an Add button instead of a price */
 .is-catering .item { align-items: center; border-bottom: 1px solid var(--line); padding: 12px 0; }
 .is-catering .item-text { flex: 1; }

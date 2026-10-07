@@ -74,3 +74,7 @@ The client asked for faces that AI-built sites don't overuse. Roboto Slab and La
 2. **Radio Canada 400 and 700** for everything else. Body 18 px, details 16 px.
 3. Labels stay in sentence case or title case as Schilly's wrote them. No tracked uppercase micro-labels (see `06-hierarchy.md`).
 4. Roboto Slab, Lato, Oswald and Anton leave the site.
+
+## Round three: the client picks Solway
+
+On October 7 the client chose Solway from the deep-dive sheet over Coustard. Solway 800 is a friendlier slab with rounder bowls. It keeps the link to the sign's ribbon lettering and is narrower than Coustard, so "HOMEMADE." fits phones with room to spare. It is not in either overuse group. Rules from round two stand with Solway 800 in place of Coustard 900. License: SIL Open Font License.

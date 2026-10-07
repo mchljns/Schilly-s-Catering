@@ -18,20 +18,20 @@ The client approved Concept A and asked for clear hierarchy decisions, and for b
 
 ## Case
 
-Capitals belong to the Coustard levels: the headline, section titles and menu section titles, which Schilly’s already writes in capitals. Text that Schilly’s typed in capitals but that sits at body size (the section rail, platter names such as CHARCUTERIE BOARD) is set in title case. The words and their order don’t change, only the case. BBQ, BLT and GF stay capitalized.
+Capitals belong to the Solway levels: the headline, section titles and menu section titles, which Schilly’s already writes in capitals. Text that Schilly’s typed in capitals but that sits at body size (the section rail, platter names such as CHARCUTERIE BOARD) is set in title case. The words and their order don’t change, only the case. BBQ, BLT and GF stay capitalized.
 
 ## The scale
 
 | Level | Face | Desktop | Phone | Used for |
 | --- | --- | --- | --- | --- |
-| Display | Coustard 900 | 76 px, line 0.98 | 11% of the screen width: 40 px at 360, 43 px at 390 (Coustard is wide; "HOMEMADE." must fit one line) | The one headline |
-| Title | Coustard 900 | 36 px | 28 px | Section titles: OUR MENUS, A TASTE OF SCHILLY’S, events, LET’S PLAN YOUR EVENT, HUNGRY YET? |
-| Menu title | Coustard 900 | 26 px | 22 px | Menu section titles in the ruled frame |
+| Display | Solway 800 | 76 px, line 0.98 | 11% of the screen width: 40 px at 360, 43 px at 390 ("HOMEMADE." must fit one line) | The one headline |
+| Title | Solway 800 | 36 px | 28 px | Section titles: OUR MENUS, A TASTE OF SCHILLY’S, events, LET’S PLAN YOUR EVENT, HUNGRY YET? |
+| Menu title | Solway 800 | 26 px | 22 px | Menu section titles in the ruled frame |
 | Lead | Radio Canada 400 | 22 px, line 1.45 | 19 px | The services line, the hero line, section second lines |
 | Body | Radio Canada 400 and 700 | 18 px, line 1.6 | 17 px | Text, item names (700), facts, buttons (700), nav (700) |
 | Small | Radio Canada 400 | 16 px | 16 px | Item details, field labels, notes. 14 px only for the copyright line |
 
-Each step is about 1.25 to 1.5 times the one below it, so levels never blur. Prices sit at body size in Coustard 900, Ribbon Red.
+Each step is about 1.25 to 1.5 times the one below it, so levels never blur. Prices sit at body size in Solway 800, Ribbon Red.
 
 ## Enforced
 

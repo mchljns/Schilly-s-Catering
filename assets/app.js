@@ -15,7 +15,7 @@
     if (text != null) n.textContent = text;
     return n;
   }
-  // Capitals are reserved for Coustard headings (brand/06-hierarchy.md). Text that Schilly's typed
+  // Capitals are reserved for Solway headings (brand/06-hierarchy.md). Text that Schilly's typed
   // in capitals but that sits at body size (rail links, platter names) is set in title case: same words.
   var KEEP = { BBQ: 1, BLT: 1, GF: 1, "GF*": 1, OR: 0 };
   var SMALL = { or: 1, and: 1, with: 1, of: 1, to: 1, a: 1, on: 1 };
@@ -113,9 +113,9 @@
     if (m.footnotes || m.closing) {
       var f = el("div", { class: "menu-foot" });
       if (m.closing) {
-        f.appendChild(el("h3", null, m.closing.title));
+        if (m.closing.title) f.appendChild(el("h3", null, m.closing.title));
         f.appendChild(el("p", null, m.closing.text));
-        var call = el("a", { class: "btn btn-red", href: "tel:+12076938840" }, "Call");
+        var call = el("a", { class: "btn btn-red", href: "tel:+12076938840" }, "(207)693-8840");
         f.appendChild(call);
       }
       (m.footnotes || []).forEach(function (t) { f.appendChild(el("p", null, t)); });
