@@ -284,9 +284,9 @@ function ld(c) {
 const PHOTO = {
   smoker: (c, sizes = "100vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/smoker-1600.webp")}" srcset="${c.asset("img/smoker-800.webp")} 800w, ${c.asset("img/smoker-1600.webp")} 1600w" sizes="${sizes}" width="1600" height="800" alt="Two spits of chickens turning inside the smoker">`,
   brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w, ${c.asset("img/brisket-1800.webp")} 1800w" sizes="(min-width: 900px) 46vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
-  wedding: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-1200.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w, ${c.asset("img/wedding-chef-1200.webp")} 1200w" sizes="100vw" width="1200" height="799" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
+  wedding: (c, sizes = "100vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-832.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w" sizes="${sizes}" width="1200" height="799" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
   rotisserie: (c, attrs = ' loading="lazy" decoding="async"') => `<img${attrs} src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w, ${c.asset("img/rotisserie-2000.webp")} 2000w" sizes="(min-width: 700px) 50vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">`,
-  grazing: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="(min-width: 900px) 25vw, 60vw" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">`,
+  grazing: (c, sizes = "(min-width: 900px) 25vw, 60vw") => `<img loading="lazy" decoding="async" src="${c.asset("img/grazing-table-640.webp")}" srcset="${c.asset("img/grazing-table-640.webp")} 640w, ${c.asset("img/grazing-table-1086.webp")} 1086w" sizes="${sizes}" width="1086" height="1448" alt="Charcuterie boards and a vegetable platter on an outdoor table">`,
   salmon: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/salmon-platter-640.webp")}" srcset="${c.asset("img/salmon-platter-640.webp")} 640w, ${c.asset("img/salmon-platter-1200.webp")} 1200w, ${c.asset("img/salmon-platter-1536.webp")} 1536w" sizes="(min-width: 900px) 250px, 100vw" width="1200" height="1600" alt="Smoked salmon platter on a ring of sliced cucumber">`,
   taste: (c) => `<div class="photos">
           <img class="p-wide" loading="lazy" decoding="async" src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="(min-width: 900px) 66vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">
@@ -343,7 +343,7 @@ function home(c) {
       <img class="band-texture" src="${c.asset("img/smoker-800.webp")}" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <div class="wrap band-grid">
         <figure>${PHOTO.rotisserie(c)}</figure>
-        <figure>${PHOTO.grazing(c)}</figure>
+        <figure>${PHOTO.salmon(c)}</figure>
       </div>
     </section>
 
@@ -377,7 +377,7 @@ function home(c) {
     </section>
 
     <section class="events" aria-labelledby="events-title">
-      <figure class="events-photo">${PHOTO.wedding(c)}</figure>
+      <figure class="events-photo">${PHOTO.grazing(c, "100vw")}</figure>
       <div class="wrap">
         <div class="events-panel">
           <h2 id="events-title" class="visually-hidden">Lobster Bakes • Pig Roasts • Weddings</h2>
@@ -447,7 +447,7 @@ function eventPage(c, extra) {
 
 function weddings(c) {
   return eventPage(c, {
-    photo: PHOTO.wedding(c),
+    photo: PHOTO.wedding(c, "(min-width: 900px) 640px, 100vw"),
     after: `<section class="menus-home" aria-labelledby="wed-menu">
       <div class="wrap">
         <h2 id="wed-menu">Catering Menu</h2>
