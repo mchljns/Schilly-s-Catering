@@ -8,3 +8,4 @@ In store pricing => In-store pricing
 Wednesday - Sunday => Wednesday – Sunday
 PARTY PLATTERS, BOARDS, and GRAZES => PARTY PLATTERS, BOARDS & GRAZES
 Event Location * => Event Location*
+Jalapeno => Jalapeño

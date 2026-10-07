@@ -140,7 +140,7 @@ for (const [re, what, files] of slop) for (const f of files) {
 
 // Brand rules (brand/README.md): Ribbon Red is for actions and money; Sign Yellow sits on Navy only.
 const css = own["assets/styles.css"].replace(/\/\*[\s\S]*?\*\//g, "");
-const RED_OK = /^(a|a:hover|.* a:hover|:focus-visible|\.btn-red(:hover)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.pl-price|\.facts-line dd a|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus|\.nav a\[aria-current="page"\]:not\(\.btn\))$/;
+const RED_OK = /^(a|a:hover|.* a:hover|:focus-visible|\.btn-red(:hover)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.pl-price|\.facts-line dd a|\.field-error|\.form-status\.is-error|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus|\.nav a\[aria-current="page"\]:not\(\.btn\))$/;
 const YELLOW_OK = /^(\.btn-yellow)$/;
 for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   const selectors = m[1].trim().split(/\s*,\s*/).filter((x) => x && !x.startsWith("@") && !x.startsWith(":root"));

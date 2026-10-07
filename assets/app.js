@@ -67,18 +67,17 @@
   }
 
   /* Scroll spy, rebuilt from the 21st.dev Scroll Spy pattern (ddoemonn):
-     the active section is the last one whose top has passed a reading line. The line slides toward
-     the bottom as the page nears its end, so short final sections still light up. A click holds its
-     section until scrolling settles. */
+     the active section is the last one whose top has passed a fixed reading line a third of the way
+     down the screen. At the true end of the page the last section lights. A click holds its section
+     until scrolling settles (scrollend where supported, a timer elsewhere). */
   var spyLock = null, spyLockTimer = 0, spyFrame = 0, spyActive = "";
   function headerOffset() { return window.innerWidth >= 1100 ? 136 : 24; }
   function measureSpy() {
     var secs = listEl ? $$(".menu-sec", listEl).filter(function (s) { return !s.hidden; }) : [];
     if (!secs.length) return "";
-    var offset = headerOffset();
     var max = document.documentElement.scrollHeight - window.innerHeight;
-    var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 1;
-    var line = offset + ratio * Math.max(0, window.innerHeight - offset - 1);
+    if (max > 0 && window.scrollY >= max - 2) return secs[secs.length - 1].id;
+    var line = headerOffset() + window.innerHeight * 0.33;
     var current = secs[0].id;
     secs.forEach(function (s) { if (s.getBoundingClientRect().top <= line + 1) current = s.id; });
     return current;
@@ -116,6 +115,7 @@
     window.addEventListener("scroll", syncSpy, { passive: true });
     window.addEventListener("resize", syncSpy);
     ["wheel", "touchstart"].forEach(function (t) { window.addEventListener(t, function () { spyLock = null; }, { passive: true }); });
+    window.addEventListener("scrollend", function () { if (spyLock) { spyLock = null; clearTimeout(spyLockTimer); syncSpy(); } });
     jumpEl.addEventListener("click", function (e) {
       var a = e.target.closest("a");
       if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -130,7 +130,7 @@
       var h = target.querySelector("h2");
       if (h) h.focus({ preventScroll: true });
       clearTimeout(spyLockTimer);
-      spyLockTimer = setTimeout(function () { spyLock = null; syncSpy(); }, 900);
+      spyLockTimer = setTimeout(function () { spyLock = null; syncSpy(); }, "onscrollend" in window ? 2500 : 900);
     });
     syncSpy();
   }
@@ -139,14 +139,34 @@
   var form = $("#inquiryForm");
   if (form) {
     var statusEl = $("#formStatus"), sendBtn = $("#sendBtn");
+    var dateEl = form.querySelector('input[type="date"]');
+    if (dateEl) dateEl.min = new Date().toISOString().slice(0, 10);
+    var fields = $$("input[required], textarea[required]", form);
+    fields.forEach(function (i, n) {
+      var msg = document.createElement("p");
+      msg.className = "field-error"; msg.id = "err-" + n;
+      i.setAttribute("aria-describedby", msg.id);
+      i.parentNode.appendChild(msg);
+      i.addEventListener("input", function () { if (i.getAttribute("aria-invalid") === "true" && i.value.trim() && i.checkValidity()) { i.setAttribute("aria-invalid", "false"); msg.textContent = ""; } });
+    });
+    function problem(i) {
+      if (!i.value.trim()) return "Required";
+      if (i.checkValidity()) return "";
+      if (i.type === "email") return "Check this email";
+      if (i.type === "tel") return "Check this number";
+      if (i.type === "date") return "Check this date";
+      return "Check this entry";
+    }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var bad = $$("input[required], textarea[required]", form).filter(function (i) {
-        var ok = i.value.trim() !== "" && i.checkValidity();
-        i.setAttribute("aria-invalid", String(!ok));
-        return !ok;
+      var bad = fields.filter(function (i) {
+        var p = problem(i);
+        i.setAttribute("aria-invalid", String(!!p));
+        document.getElementById(i.getAttribute("aria-describedby")).textContent = p;
+        return !!p;
       });
-      if (bad.length) { statusEl.textContent = ""; bad[0].focus(); return; }
+      statusEl.classList.toggle("is-error", !!bad.length);
+      if (bad.length) { statusEl.textContent = "Fill in the marked fields"; bad[0].focus(); return; }
       var data = {};
       $$("input, textarea", form).forEach(function (i) { if (i.name) data[i.name] = i.value.trim(); });
       data._subject = "Catering Inquiries";

@@ -34,28 +34,30 @@ const ID = SITE.url + "/#restaurant";
    brand/source/draft-copy.txt and carries data-draft in the HTML, so the owner can confirm or replace it.
    Facts in here (lead times, service area, what goes in a lobster bake) are assumptions until confirmed. */
 const DRAFT = {
-  homeDesc: "BBQ take out, family meals and catering in Casco, Maine. Smoked brisket, pulled pork and pulled chicken with homemade sides, Wednesday to Sunday.",
-  events: "Lobster bakes, whole pig roasts and wedding spreads, cooked by the same kitchen that smokes our brisket every day. Tell us the date and the headcount and we’ll plan the menu with you.",
+  homeDesc: "Take out, family meals and catering in Casco, Maine. Smoked brisket, pulled pork and pulled chicken with homemade sides, Wednesday – Sunday.",
+  events: "Lobster bakes, whole pig roasts and wedding catering. Tell us the date and the headcount and we’ll plan the menu with you.",
   takeout: "Call ahead and we’ll have it ready when you get here, or stop in and order.",
-  catering: "Pick from the menu below, then tell us the date, the place and about how many people. We’ll put together a quote and walk through the details with you.",
+  catering: "Tell us the date, the place and about how many people, and which parts of the menu below you have in mind. We’ll send you a quote.",
   lobster: [
-    "A Maine lobster bake for your backyard, camp or company outing: lobsters, steamers, corn on the cob and red potatoes, cooked together and served hot.",
-    "Tell us where you’re hosting and how many you’re feeding. We’ll build the menu around the bake, with sides and dessert from our kitchen.",
+    "A lobster bake for your party: lobsters, steamers, corn on the cob and red potatoes.",
+    "Tell us where and how many. We’ll add sides and dessert from the catering menu.",
   ],
   pig: [
-    "A whole pig, slow roasted until it pulls apart, served with the sides people already drive to Casco for: white cheddar mac & cheese, BBQ beans, coleslaw and cornbread.",
+    "A whole pig, slow roasted until it pulls apart, with White Cheddar Mac & Cheese, BBQ beans, coleslaw and cornbread.",
     "Good for graduation parties, family reunions, company cookouts and anything else with a long guest list.",
   ],
   weddings: [
-    "Wedding catering from the same kitchen that smokes our brisket every day. Start with grazing boards and platters at cocktail hour, sit down to a smoked BBQ dinner, and finish with Maine blueberry cake.",
+    "Grazing boards and platters for cocktail hour, smoked BBQ for dinner, Maine Blueberry Cake for dessert.",
     "We cater rehearsal dinners and receptions around Sebago Lake and the Lakes Region.",
   ],
+  cateringDesc: "Catering menu for weddings, backyard BBQs, corporate events and private parties from Schilly’s in Casco, Maine: boxed lunches, salads, soups, desserts and party platters.",
+  takeoutDesc: "Take out menu for Schilly’s in Casco, Maine: BBQ plates, White Cheddar Mac & Cheese, family size portions, sandwiches, hot dogs, sides and dessert. Prices include Maine State Sales Tax.",
+  cateringWhere: "Schilly’s caters events from its kitchen at 224 Roosevelt Trail, Casco, Maine.",
   faq: [
     ["How far ahead should I book?", "Two to four weeks is usually enough for a party or an office lunch. For summer weekends and weddings, book as early as you can."],
-    ["How many people does a platter feed?", "Platters serve approximately 10–12 people."],
     ["Where do you cater?", "We’re on Roosevelt Trail in Casco and cater events around Sebago Lake and the Lakes Region."],
-    ["Do you deliver and set up?", "Drop-off, buffet setup and full service can all be arranged. Tell us what you need in your inquiry."],
-    ["Do you have gluten-free or vegan options?", "Yes. The Black Bean Burger is gluten-free and vegan, and most salads and platters can be adjusted. Ask when you inquire."],
+    ["Do you deliver and set up?", "Yes. We do drop-off, buffet setup and full service. Say which in your inquiry."],
+    ["Do you have gluten-free or vegan options?", "The Black Bean Burger is gluten-free and vegan. Ask about anything else when you inquire."],
   ],
 };
 const draft = (t, tag = "p", cls = "") => `<${tag}${cls ? ` class="${cls}"` : ""} data-draft>${esc(t)}</${tag}>`;
@@ -87,9 +89,9 @@ const PAGES = [
   { key: "home", path: "", label: "Home", title: `${SITE.name} · Casco, ME`, h1: "SMOKED. HOMEMADE. MAINE.",
     desc: DRAFT.homeDesc, index: true, priority: "1.0" },
   { key: "takeout", path: "take-out-menu/", label: "Take Out Menu", title: `Take Out Kitchen Menu · ${SITE.name} · Casco, ME`, h1: "TAKE OUT KITCHEN MENU",
-    desc: "BBQ Plates • White Cheddar Mac & Cheese • Family Size Portions • Sandwiches • Specialty Beef Hot Dogs • Sides • Dessert. Prices include Maine State Sales Tax.", index: true, priority: "0.9" },
+    desc: DRAFT.takeoutDesc, index: true, priority: "0.9" },
   { key: "catering", path: "catering-menu/", label: "Catering Menu", title: `Catering Menu · ${SITE.name} · Casco, ME`, h1: "CATERING MENU",
-    desc: "Weddings • Backyard BBQs • Corporate Events • Private Parties. Boxed Lunch • Elevated Boxed Lunches • Boxed Salads • Soups & Crock Favorites • Desserts • Party Platters, Boards & Grazes.", index: true, priority: "0.9" },
+    desc: DRAFT.cateringDesc, index: true, priority: "0.9" },
   { key: "weddings", path: "weddings/", label: "Weddings", title: `Weddings · ${SITE.name} · Casco, ME`, h1: "WEDDINGS",
     desc: DRAFT.weddings[0], index: true, priority: "0.8" },
   { key: "lobster", path: "lobster-bakes/", label: "Lobster Bakes", title: `Lobster Bakes · ${SITE.name} · Casco, ME`, h1: "LOBSTER BAKES",
@@ -154,27 +156,19 @@ const facts = (c, opts = {}) => `<dl class="facts${opts.compact ? " facts-compac
           </dl>`;
 
 function footer(c) {
-  const formPage = ["inquiry", "lobster", "pig", "weddings"].includes(c.page.key);
   return `<footer class="site-footer">
     <div class="wrap">
-      ${formPage ? "" : `<div class="closer">
+      ${c.page.key !== "home" ? "" : `<div class="closer">
         <h2>Hungry yet?</h2>
         <p>Let Schilly’s do the cooking.</p>
         <a class="btn btn-cream" href="tel:${SITE.tel}">${SITE.phone}</a>
       </div>`}
       <div class="footer-grid">
-        <div>
-          <h2 class="f-label">Business Hours</h2>
-          <p>${SITE.days}<br>${SITE.time}</p>
-        </div>
-        <div>
-          <h2 class="f-label">Location</h2>
-          <p>${SITE.street}<br>${SITE.town}</p>
-        </div>
-        <div>
-          <h2 class="f-label">Store Phone #</h2>
-          <p><a href="tel:${SITE.tel}">${SITE.phone}</a></p>
-        </div>
+        <dl class="footer-facts">
+          <div><dt>Business Hours</dt><dd>${SITE.days} · ${SITE.time}</dd></div>
+          <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town}</dd></div>
+          <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
+        </dl>
         <nav class="footer-nav" aria-label="Footer">
           ${NAV.map((k) => `<a href="${c.link(k)}">${byKey[k].label}</a>`).join("\n          ")}
           <a href="${c.link("inquiry")}">Catering Inquiries</a>
@@ -207,8 +201,8 @@ ${items}
 
 function fullMenu(c, menu, catering) {
   const spy = menu.sections.map((s) => `<a href="#${menu.id}-${slug(s.title)}">${esc(titleCase(s.title))}</a>`).join("\n");
-  const switcher = `<div class="seg" role="navigation" aria-label="OUR MENUS">
-              <a class="seg-opt" href="${c.link("takeout")}"${catering ? "" : ' aria-current="page"'}>Take Out &amp; Family Meals</a>
+  const switcher = `<div class="seg" role="navigation" aria-label="Our Menus">
+              <a class="seg-opt" href="${c.link("takeout")}"${catering ? "" : ' aria-current="page"'}>Take Out Menu</a>
               <a class="seg-opt" href="${c.link("catering")}"${catering ? ' aria-current="page"' : ""}>Catering Menu</a>
             </div>`;
   const foot = [];
@@ -225,7 +219,7 @@ ${spy}
               <input id="menuSearch" type="search" placeholder="Search the menu" autocomplete="off">
             </label>
             <button class="btn btn-quiet print-btn" type="button" data-print>Print menu</button>
-            <figure class="rail-photo">${catering ? PHOTO.grazing(c) : PHOTO.smoker(c, "250px")}</figure>
+            <figure class="rail-photo">${catering ? PHOTO.salmon(c) : PHOTO.smoker(c, "250px")}</figure>
           </aside>
           <div class="menu-panel" id="menu-panel">
             <div id="menuList" class="${catering ? "is-catering" : "is-takeout"}">
@@ -242,7 +236,7 @@ function restaurantLD() {
   return {
     "@type": "Restaurant", "@id": ID, name: SITE.name, url: SITE.url + "/",
     logo: SITE.url + "/assets/img/logo-960.webp", image: SITE.url + "/assets/img/og-image.jpg",
-    telephone: "+1-207-693-8840", slogan: "SMOKED. HOMEMADE. MAINE.",
+    telephone: "+1-207-693-8840", slogan: "Smoked. Homemade. Maine.", description: DRAFT.homeDesc,
     address: { "@type": "PostalAddress", streetAddress: SITE.street, addressLocality: "Casco", addressRegion: "ME", postalCode: "04015", addressCountry: "US" },
     openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "11:00", closes: "18:00" }],
     servesCuisine: ["BBQ"],
@@ -344,7 +338,7 @@ function home(c) {
     <section class="menus-home" aria-labelledby="menus-title">
       <div class="wrap menus-grid">
         <div class="menus-takeout">
-          <h2 id="menus-title">Take Out &amp; Family Meals</h2>
+          <h2 id="menus-title">Take Out Kitchen Menu</h2>
           <p class="menus-sub">Smoked favorites • Homemade sides • Family-size portions</p>
           <h3>${esc(titleCase(bbq.title))}</h3>
           <p class="menus-note">${esc(bbq.notes[0])}</p>
@@ -362,7 +356,7 @@ function home(c) {
       </div>
     </section>
 
-    <section class="statement" aria-label="A TASTE OF SCHILLY’S">
+    <section class="statement" aria-label="Slow smoked favorites">
       <div class="wrap">
         <p>Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
       </div>
@@ -373,9 +367,8 @@ function home(c) {
         <h2 id="taste-title">A Taste of Schilly’s</h2>
         <div class="collage">
           <figure class="col-a">${PHOTO.rotisserie(c)}</figure>
+          <figure class="col-d">${PHOTO.smoker(c, "(min-width: 700px) 58vw, 100vw")}</figure>
           <figure class="col-b">${PHOTO.grazing(c)}</figure>
-          <figure class="col-c">${PHOTO.salmon(c)}</figure>
-          <figure class="col-d">${PHOTO.smoker(c, "(min-width: 900px) 58vw, 100vw")}</figure>
         </div>
       </div>
     </section>
@@ -384,7 +377,7 @@ function home(c) {
       <div class="wrap events-grid">
         <figure class="ev-photo ev-photo-a">${PHOTO.wedding(c)}</figure>
         <div class="ev-text">
-          <h2 id="events-title" class="visually-hidden">LOBSTER BAKES • PIG ROASTS • WEDDINGS</h2>
+          <h2 id="events-title" class="visually-hidden">Lobster Bakes • Pig Roasts • Weddings</h2>
           <ul class="event-rows">
             ${EVENTS.map((k) => `<li><a href="${c.link(k)}">${byKey[k].label}</a></li>`).join("\n            ")}
           </ul>
@@ -408,6 +401,7 @@ const faq = (c) => `<section class="faq" aria-labelledby="faq-title">
       <div class="wrap narrow-menu">
         <div class="sheet">
           <h2 id="faq-title" class="ruled">Planning an Event</h2>
+          ${draft(DRAFT.cateringWhere, "p", "sheet-sub")}
           <dl class="faq-list">
             ${DRAFT.faq.map(([q, a]) => `<div>${draft(q, "dt")}${draft(a, "dd")}</div>`).join("\n            ")}
           </dl>
@@ -449,17 +443,14 @@ function eventPage(c, extra) {
 }
 
 function weddings(c) {
-  const secs = MENUS.catering.sections.filter((s) => /PLATTERS|DESSERTS/.test(s.title));
   return eventPage(c, {
     photo: PHOTO.wedding(c),
-    after: `<section class="menus" aria-labelledby="wed-menu">
-      <div class="wrap narrow-menu">
-        <div class="sheet">
-          <h2 id="wed-menu" class="ruled">Catering Menu</h2>
-          <p class="sheet-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
-          <div class="is-catering">${secs.map((s) => menuSection(MENUS.catering, s, true)).join("\n")}</div>
-          <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
-        </div>
+    after: `<section class="menus-home" aria-labelledby="wed-menu">
+      <div class="wrap">
+        <h2 id="wed-menu">Catering Menu</h2>
+        <p class="menus-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
+        <ol class="cat-list cols">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ol>
+        <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
       </div>
     </section>`,
   });
@@ -474,7 +465,7 @@ const inquiryForm = (c, event = "") => `<!-- Set data-endpoint to the form handl
           </div>
           <div class="row">
             <label>Email address*<input name="Email address" type="email" required autocomplete="email"></label>
-            <label>Phone number*<input name="Phone number" type="tel" required autocomplete="tel"></label>
+            <label>Phone number*<input name="Phone number" type="tel" required minlength="10" autocomplete="tel"></label>
           </div>
           <label>Event Location*<input name="Event Location" required></label>
           <div class="row">
@@ -525,7 +516,7 @@ function doc(c) {
   <meta name="theme-color" content="#022654">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${esc(SITE.name)}">
-  <meta property="og:title" content="${esc(p.h1 === "SMOKED. HOMEMADE. MAINE." ? p.h1 : p.label)}">
+  <meta property="og:title" content="${esc(p.key === "home" ? "Smoked. Homemade. Maine." : p.label)}">
   <meta property="og:description" content="${esc(p.desc)}">
   <meta property="og:url" content="${c.canonical}">
   <meta property="og:image" content="${SITE.url}/assets/img/og-image.jpg">
@@ -570,7 +561,9 @@ const robots = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xm
 function llms() {
   return `# ${SITE.name}
 
-> SMOKED. HOMEMADE. MAINE. Take Out • Family Meals • Catering.
+> Smoked. Homemade. Maine. Take Out • Family Meals • Catering.
+
+${DRAFT.homeDesc}
 
 - Location: ${SITE.street}, ${SITE.town}
 - Business Hours: ${SITE.days}, ${SITE.time}
@@ -627,7 +620,7 @@ function notFound(mode) {
 <link rel="stylesheet" href="${c.asset("styles.css")}"><script>document.documentElement.classList.add("js")</script></head>
 <body class="page-notfound">
   ${header(c)}
-  <main id="main"><section class="page-head"><div class="wrap"><h1>Page not found</h1><p class="lead"><a href="${c.link("takeout")}">Take Out Menu</a> · <a href="${c.link("catering")}">Catering Menu</a></p></div></section></main>
+  <main id="main"><section class="page-head"><div class="wrap"><h1>Page not found</h1><p class="lead"><a href="${c.link("takeout")}">Take Out Menu</a> · <a href="${c.link("catering")}">Catering Menu</a> · <a href="tel:${SITE.tel}">${SITE.phone}</a></p></div></section></main>
   ${footer(c)}
   <script src="${c.asset("app.js")}"></script>
 </body></html>

@@ -2,24 +2,25 @@
 # NOT from schillyscatering.com. Each line needs the owner's confirmation before launch.
 # Facts to confirm: lead times, service area, delivery/setup, lobster bake contents, pig roast details, dietary options.
 # In the HTML every draft line carries data-draft. qa/check-content.mjs counts them separately.
-BBQ take out, family meals and catering in Casco, Maine. Smoked brisket, pulled pork and pulled chicken with homemade sides, Wednesday to Sunday.
-Lobster bakes, whole pig roasts and wedding spreads, cooked by the same kitchen that smokes our brisket every day. Tell us the date and the headcount and we’ll plan the menu with you.
+Take out, family meals and catering in Casco, Maine. Smoked brisket, pulled pork and pulled chicken with homemade sides, Wednesday – Sunday.
+Lobster bakes, whole pig roasts and wedding catering. Tell us the date and the headcount and we’ll plan the menu with you.
 Call ahead and we’ll have it ready when you get here, or stop in and order.
-Pick from the menu below, then tell us the date, the place and about how many people. We’ll put together a quote and walk through the details with you.
-A Maine lobster bake for your backyard, camp or company outing: lobsters, steamers, corn on the cob and red potatoes, cooked together and served hot.
-Tell us where you’re hosting and how many you’re feeding. We’ll build the menu around the bake, with sides and dessert from our kitchen.
-A whole pig, slow roasted until it pulls apart, served with the sides people already drive to Casco for: white cheddar mac & cheese, BBQ beans, coleslaw and cornbread.
+Tell us the date, the place and about how many people, and which parts of the menu below you have in mind. We’ll send you a quote.
+A lobster bake for your party: lobsters, steamers, corn on the cob and red potatoes.
+Tell us where and how many. We’ll add sides and dessert from the catering menu.
+A whole pig, slow roasted until it pulls apart, with White Cheddar Mac & Cheese, BBQ beans, coleslaw and cornbread.
 Good for graduation parties, family reunions, company cookouts and anything else with a long guest list.
-Wedding catering from the same kitchen that smokes our brisket every day. Start with grazing boards and platters at cocktail hour, sit down to a smoked BBQ dinner, and finish with Maine blueberry cake.
+Grazing boards and platters for cocktail hour, smoked BBQ for dinner, Maine Blueberry Cake for dessert.
 We cater rehearsal dinners and receptions around Sebago Lake and the Lakes Region.
+Catering menu for weddings, backyard BBQs, corporate events and private parties from Schilly’s in Casco, Maine: boxed lunches, salads, soups, desserts and party platters.
+Take out menu for Schilly’s in Casco, Maine: BBQ plates, White Cheddar Mac & Cheese, family size portions, sandwiches, hot dogs, sides and dessert. Prices include Maine State Sales Tax.
+Schilly’s caters events from its kitchen at 224 Roosevelt Trail, Casco, Maine.
 How far ahead should I book?
 Two to four weeks is usually enough for a party or an office lunch. For summer weekends and weddings, book as early as you can.
-How many people does a platter feed?
-Platters serve approximately 10–12 people.
 Where do you cater?
 We’re on Roosevelt Trail in Casco and cater events around Sebago Lake and the Lakes Region.
 Do you deliver and set up?
-Drop-off, buffet setup and full service can all be arranged. Tell us what you need in your inquiry.
+Yes. We do drop-off, buffet setup and full service. Say which in your inquiry.
 Do you have gluten-free or vegan options?
-Yes. The Black Bean Burger is gluten-free and vegan, and most salads and platters can be adjusted. Ask when you inquire.
+The Black Bean Burger is gluten-free and vegan. Ask about anything else when you inquire.
 PLANNING AN EVENT

@@ -52,7 +52,7 @@ export const MENUS = {
         title: "SIDES",
         items: [
           ["White Cheddar Mac & Cheese", "$7"], ["New England Clam Chowder", "$8"], ["BBQ Baked Beans", "$4"], ["Potato Salad", "$4"],
-          ["Pasta Salad", "$4"], ["Coleslaw", "$3"], ["Chips", "$2"], ["Cornbread (Plain or Jalapeno)", "$5"]
+          ["Pasta Salad", "$4"], ["Coleslaw", "$3"], ["Chips", "$2"], ["Cornbread (Plain or Jalapeño)", "$5"]
         ]
       },
       {

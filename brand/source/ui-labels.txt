@@ -33,3 +33,8 @@ Main
 Footer
 Page not found
 * Required
+Check this email
+Check this number
+Check this date
+Check this entry
+Fill in the marked fields

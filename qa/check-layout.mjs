@@ -4,7 +4,7 @@ import path from "node:path";
 import { ROOT, serve, chromium, pages } from "./lib.mjs";
 
 const SHOTS = process.env.SHOTS || "";
-const widths = [[360, 740], [390, 844], [768, 1024], [1280, 900]];
+const widths = [[360, 740], [390, 844], [768, 1024], [1024, 768], [1280, 900], [1440, 900]];
 const failures = [];
 const notes = [];
 const site = await serve();
@@ -136,4 +136,4 @@ site.close();
 
 console.log(notes.join("\n"));
 if (failures.length) { console.error(`check-layout: ${failures.length} problem(s)\n  ` + failures.join("\n  ")); process.exit(1); }
-console.log(`check-layout: ok (${URLS.length} pages × 360, 390, 768, 1280 px: no overflow, text >= 14px, AA contrast, control edges 3:1, targets >= 40px, images intact, price within 2 taps)`);
+console.log(`check-layout: ok (${URLS.length} pages × 360, 390, 768, 1024, 1280, 1440 px: no overflow, text >= 14px, AA contrast, control edges 3:1, targets >= 40px, images intact, price within 2 taps)`);
