@@ -1,0 +1,15 @@
+set1 ubereats.com https://www.ubereats.com/store/zara-forest-turkish-cuisine/VALSfd45RwuFEoUyK7lMI | fonts: Helvetica Neue, Uber Move, Uber Move
+set1 doordash.com https://www.doordash.com/en/store/wise-son's-deli-catering-san-francisco-2603499 | fonts: Arial, DD Norms
+set1 doordash.com https://www.doordash.com/store/the-melt-san-francisco-422819/30543348/?pickup=tr | fonts: Helvetica Neue, Arial, DD Norms
+set1 yelp.com https://www.yelp.com/biz/bubbakoos-burritos-clark | fonts: Open Sans, Arial, Poppins
+set1 tripadvisor.com https://www.tripadvisor.com/Restaurant_Review-g189158-d27586618-Reviews-Ponto_Co | fonts: Trip Sans VF
+set1 google.com https://www.google.com/maps/search/starbucks/@41.83951,-91.8896938,10z/data=!3m1 | fonts: 
+set1 starbucks.com https://www.starbucks.com/ | fonts: SoDo Sans
+set1 starbucks.com https://app.starbucks.com/menu/product/2123548/single/nutrition | fonts: SoDo Sans
+set2 dinnerladies.com.au https://www.dinnerladies.com.au/pages/in-the-media | fonts: San Francisco, Arial, Denim, Denim, Denim
+set2 dinnerladies.com.au https://www.dinnerladies.com.au/collections/dinner-boxes | fonts: Arial, Denim, Denim, Denim, Denim
+set2 drinkdouze.com https://drinkdouze.com/en/pages/submit-a-stockist | fonts: Robin, Boogy Brut, Robin
+set2 blueapron.com https://www.blueapron.com/market/categories/meal-kits | fonts: Helvetica Neue, Lucida Grande, Cera Pro, Chronicle Deck
+set2 kitchenstories.com https://www.kitchenstories.com/en | fonts: UI Sans Serif, TT Commons, Aimé
+set2 volkshotel.nl https://www.volkshotel.nl/en/directions/ | fonts: Apercu, Century Old Style, Apercu, Apercu
+set2 volkshotel.nl https://www.volkshotel.nl/en/directions/ | fonts: Apercu, Century Old Style, Apercu, Apercu

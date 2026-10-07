@@ -52,14 +52,32 @@ for (const [w, h] of widths) {
       const s = getComputedStyle(img); const b = img.getBoundingClientRect();
       if (s.objectFit !== "cover" && b.width && Math.abs(b.width / b.height - img.naturalWidth / img.naturalHeight) > 0.02) out.distorted.push(img.src.split("/").pop());
     });
+    // Non-text contrast (WCAG 1.4.11): every control's edge must reach 3:1 against what is behind it.
+    out.edges = [];
+    const parentBg = (el) => { for (let e = el.parentElement; e; e = e.parentElement) { const c = getComputedStyle(e).backgroundColor; const x = lum(c); if (x.a > 0.5) return x.L; } return 1; };
+    const ratioOf = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    document.querySelectorAll("button, a.btn, input, textarea, .seg, .spy a, .nav a").forEach((e) => {
+      if (!visible(e) || e.closest(".skip-link")) return;
+      const s = getComputedStyle(e);
+      const behind = parentBg(e);
+      const bw = parseFloat(s.borderTopWidth);
+      const bg = lum(s.backgroundColor);
+      let r;
+      if (bw >= 1 && lum(s.borderTopColor).a > 0.5) r = Math.max(ratioOf(lum(s.borderTopColor).L, behind), bg.a > 0.5 ? ratioOf(bg.L, behind) : 0);
+      else if (bg.a > 0.5) r = ratioOf(bg.L, behind);
+      else return; // borderless, transparent: a text link, judged by text contrast
+      if (r < 3) out.edges.push(`${r.toFixed(2)}:1 ${e.tagName}.${e.className} "${(e.textContent || e.name || "").trim().slice(0, 24)}"`);
+    });
+    out.ribbons = document.querySelectorAll(".ribbon").length;
     const inView = (sel) => { const e = document.querySelector(sel); if (!e) return false; const b = e.getBoundingClientRect(); return b.top < innerHeight * 3 && b.bottom > 0; };
-    out.firstScreen = { hours: document.querySelector(".info").getBoundingClientRect().top, vh: innerHeight };
+    out.firstScreen = { hours: document.querySelector(".facts").getBoundingClientRect().top, vh: innerHeight };
     out.inquiryInHeader = !!document.querySelector('.site-header a[href="#catering-inquiries"]');
     return out;
   });
 
   // Price within two taps: tap "Take Out Menu" in the header, then a price is on screen.
   await page.click('.nav a[data-tab-link="takeout"]');
+  await page.waitForTimeout(400);
   await page.waitForTimeout(200);
   const priceOnScreen = await page.evaluate(() => [...document.querySelectorAll(".item-price")].some((p) => { const b = p.getBoundingClientRect(); return b.top >= 0 && b.bottom <= innerHeight; }));
 
@@ -79,6 +97,8 @@ for (const [w, h] of widths) {
   r.small.forEach((x) => failures.push(`${tag} text under 14px: ${x}`));
   r.contrast.forEach((x) => failures.push(`${tag} contrast: ${x}`));
   r.targets.forEach((x) => failures.push(`${tag} touch target under 40px: ${x}`));
+  r.edges.forEach((x) => failures.push(`${tag} control edge under 3:1: ${x}`));
+  if (r.ribbons > 0) failures.push(`${tag} ${r.ribbons} ribbon(s) on the web page (ribbon is for print and social only, brand/06-hierarchy.md)`);
   r.distorted.forEach((x) => failures.push(`${tag} distorted image: ${x}`));
   broken.forEach((x) => failures.push(`${tag} broken image: ${x}`));
   errors.forEach((x) => failures.push(`${tag} console: ${x}`));

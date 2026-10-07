@@ -1,0 +1,235 @@
+<!-- Historical record of round one (October 7, 2026), set in Oswald and Lato, which have since been retired and removed. The rendered PNGs in this folder are the record. -->
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Schilly’s direction mockups</title>
+<style>
+@font-face{font-family:Oswald;src:url(../../assets/fonts/oswald-variable.woff2);font-weight:200 700}
+@font-face{font-family:Lato;src:url(../../assets/fonts/lato-400.woff2)}
+@font-face{font-family:Lato;src:url(../../assets/fonts/lato-700.woff2);font-weight:700}
+:root{--navy:#022654;--red:#A90A04;--yellow:#FCDF19;--gold:#E8A924;--plank:#F6E4C4;--cream:#FFF9EE;--slate:#4A5468;--edge:#8F7A55;--line:#E6D5B3}
+*{box-sizing:border-box}body{margin:0;background:#777;font:18px/1.55 Lato,Arial;color:var(--navy)}
+.m{overflow:hidden;position:relative;margin:20px;background:var(--cream)}
+h1,h2,h3,.o{font-family:Oswald,Arial Narrow;font-weight:600;text-transform:uppercase;letter-spacing:.02em;line-height:1.05;margin:0}
+p{margin:0}
+.btn{display:inline-flex;align-items:center;height:48px;padding:0 22px;border-radius:6px;font:600 17px Oswald;text-transform:uppercase;letter-spacing:.04em}
+img{display:block}
+.logo{width:200px}
+/* ---------- shared bits ---------- */
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row .k{font:600 13px Oswald;letter-spacing:.08em;text-transform:uppercase;width:110px;color:var(--slate)}
+.row .v{flex:1;font-weight:700}
+.row .a{font-weight:700;color:var(--red);text-decoration:underline;text-underline-offset:3px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.item{display:flex;align-items:baseline;gap:8px;padding:9px 0}
+.item .n{font-weight:700}
+.item .lead{flex:1;border-bottom:2px dotted var(--edge);transform:translateY(-4px);min-width:16px}
+.item .p{font:600 20px Oswald;color:var(--red)}
+.seg{display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:9px;gap:4px}
+.seg span{display:flex;align-items:center;justify-content:center;height:44px;border-radius:6px;font:600 16px Oswald;text-transform:uppercase;letter-spacing:.04em}
+/* ===== Direction A: Menu Board ===== */
+.A .ruled{border-top:1px solid var(--navy);border-bottom:1px solid var(--navy);padding:10px 0 8px;text-align:center;position:relative}
+.A .ruled::before,.A .ruled::after{content:"";position:absolute;left:0;right:0;border-top:1px solid var(--navy)}
+.A .ruled::before{top:3px}.A .ruled::after{bottom:3px}
+.A .seg{background:var(--plank);border:2px solid var(--edge)}
+.A .seg .on{background:var(--navy);color:#fff}
+.A .add{height:40px;padding:0 12px;border:2px solid var(--red);border-radius:6px;color:var(--red);font:600 14px Oswald;text-transform:uppercase;display:inline-flex;align-items:center}
+/* ===== Direction B: Roadside Sign ===== */
+.B .ribbon{display:inline-block;background:var(--red);color:var(--cream);font:600 15px Oswald;letter-spacing:.1em;text-transform:uppercase;padding:6px 22px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%,10px 50%)}
+.B .seg{background:#0b2f63;border:2px solid #36507e}
+.B .seg span{color:#dfe5f0}
+.B .seg .on{background:var(--yellow);color:var(--navy)}
+.B .add{height:40px;padding:0 12px;border-radius:6px;background:var(--navy);color:#fff;font:600 14px Oswald;text-transform:uppercase;display:inline-flex;align-items:center}
+</style></head><body>
+
+<!-- 1. Desktop hero 1280x720 -->
+<div class="m A" id="A-desktop" style="width:1280px;height:720px">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 60px;border-bottom:1px solid var(--line)">
+    <img class="logo" src="../../assets/img/logo-480.webp"><div style="display:flex;gap:26px;align-items:center;font:600 16px Oswald;text-transform:uppercase;letter-spacing:.04em"><span>Take Out Menu</span><span>Catering Menu</span><span class="btn" style="background:var(--red);color:#fff">Catering Inquiries</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:56px;padding:44px 60px;align-items:center">
+    <div>
+      <h1 style="font-size:84px;line-height:.95">Smoked.<br>Homemade.<br>Maine.</h1>
+      <p class="o" style="font-size:20px;letter-spacing:.06em;margin:18px 0 10px;color:var(--slate)">Take Out • Family Meals • Catering</p>
+      <p style="font-size:20px;max-width:30ch;margin-bottom:22px">Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
+      <div style="border-top:2px solid var(--navy)">
+        <div class="row"><span class="k">Business Hours</span><span class="v"><span class="dot" style="background:#2f8f4e"></span>Wednesday - Sunday, 11 am - 6pm</span></div>
+        <div class="row"><span class="k">Location</span><span class="v">224 Roosevelt Trail, Casco, ME 04015</span><span class="a">Get directions</span></div>
+        <div class="row"><span class="k">Store Phone #</span><span class="v">(207)693-8840</span><span class="a">Call</span></div>
+      </div>
+    </div>
+    <img src="../../assets/img/brisket-900.webp" style="width:100%;height:560px;object-fit:cover;object-position:50% 60%;border-radius:6px">
+  </div>
+</div>
+<div class="m B" id="B-desktop" style="width:1280px;height:720px;background:var(--navy);color:#fff">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 60px;background:var(--cream)">
+    <img class="logo" src="../../assets/img/logo-480.webp"><div style="display:flex;gap:26px;align-items:center;font:600 16px Oswald;text-transform:uppercase;letter-spacing:.04em;color:var(--navy)"><span>Take Out Menu</span><span>Catering Menu</span><span class="btn" style="background:var(--red);color:#fff">Catering Inquiries</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:56px;padding:40px 60px 0;align-items:center">
+    <div>
+      <h1 style="font-size:84px;line-height:.95;color:var(--yellow)">Smoked.<br>Homemade.<br>Maine.</h1>
+      <span class="ribbon" style="margin-top:20px">Take Out • Family Meals • Catering</span>
+      <p style="font-size:20px;max-width:30ch;margin:16px 0 26px">Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
+      <span class="btn" style="background:var(--yellow);color:var(--navy)">View Our Menu</span>
+    </div>
+    <img src="../../assets/img/brisket-900.webp" style="width:100%;height:440px;object-fit:cover;object-position:50% 60%;border-radius:6px">
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(232,169,36,.5);padding:0 60px">
+    <div style="padding:16px 0"><p class="o" style="font-size:13px;letter-spacing:.08em;color:var(--gold)">Business Hours</p><p style="font-weight:700"><span class="dot" style="background:var(--yellow)"></span>Wednesday - Sunday, 11 am - 6pm</p></div>
+    <div style="padding:16px 24px;border-left:1px solid rgba(232,169,36,.5)"><p class="o" style="font-size:13px;letter-spacing:.08em;color:var(--gold)">Location</p><p style="font-weight:700">224 Roosevelt Trail, Casco</p></div>
+    <div style="padding:16px 24px;border-left:1px solid rgba(232,169,36,.5)"><p class="o" style="font-size:13px;letter-spacing:.08em;color:var(--gold)">Store Phone #</p><p style="font-weight:700">(207)693-8840</p></div>
+  </div>
+</div>
+
+<!-- 2. Phone first screen 390x844 -->
+<div class="m A" id="A-phone" style="width:390px;height:844px">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line)"><img src="../../assets/img/logo-480.webp" style="width:150px"><span class="btn" style="background:var(--red);color:#fff;height:44px;padding:0 14px;font-size:15px">Catering Inquiries</span></div>
+  <div style="padding:22px 16px 0">
+    <h1 style="font-size:46px;line-height:.95">Smoked. Homemade. Maine.</h1>
+    <p class="o" style="font-size:16px;letter-spacing:.06em;margin:12px 0 8px;color:var(--slate)">Take Out • Family Meals • Catering</p>
+    <div style="border-top:2px solid var(--navy);margin-top:14px">
+      <div class="row"><span class="v" style="font-size:16px"><span class="dot" style="background:#2f8f4e"></span>Wed - Sun · 11 am - 6pm</span></div>
+      <div class="row"><span class="v" style="font-size:16px">224 Roosevelt Trail, Casco</span><span class="a" style="font-size:16px">Get directions</span></div>
+      <div class="row"><span class="v" style="font-size:16px">(207)693-8840</span><span class="a" style="font-size:16px">Call</span></div>
+    </div>
+    <div class="seg" style="margin:18px 0 0"><span class="on">Take Out</span><span>Catering</span></div>
+  </div>
+  <img src="../../assets/img/brisket-640.webp" style="width:100%;height:230px;object-fit:cover;margin-top:18px">
+</div>
+<div class="m B" id="B-phone" style="width:390px;height:844px">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px"><img src="../../assets/img/logo-480.webp" style="width:150px"><span class="btn" style="background:var(--red);color:#fff;height:44px;padding:0 14px;font-size:15px">Catering Inquiries</span></div>
+  <div style="background:var(--navy);color:#fff;padding:22px 16px 18px">
+    <h1 style="font-size:46px;line-height:.95;color:var(--yellow)">Smoked. Homemade. Maine.</h1>
+    <span class="ribbon" style="font-size:13px;margin-top:12px">Take Out • Family Meals • Catering</span>
+    <p style="font-size:17px;margin:10px 0 16px">Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
+    <span class="btn" style="background:var(--yellow);color:var(--navy)">View Our Menu</span>
+  </div>
+  <img src="../../assets/img/brisket-640.webp" style="width:100%;height:180px;object-fit:cover">
+  <div style="background:var(--navy);color:#fff;padding:6px 16px 10px">
+    <div class="row" style="border-color:rgba(232,169,36,.5)"><span class="v" style="font-size:16px"><span class="dot" style="background:var(--yellow)"></span>Wed - Sun · 11 am - 6pm</span></div>
+    <div class="row" style="border-color:rgba(232,169,36,.5)"><span class="v" style="font-size:16px">224 Roosevelt Trail, Casco</span><span style="color:var(--yellow);font-weight:700;font-size:16px;text-decoration:underline">Get directions</span></div>
+    <div class="row" style="border:0"><span class="v" style="font-size:16px">(207)693-8840</span><span style="color:var(--yellow);font-weight:700;font-size:16px;text-decoration:underline">Call</span></div>
+  </div>
+</div>
+
+<!-- 3. Take-out menu section 1280x640 -->
+<div class="m A" id="A-menu" style="width:1280px;height:640px;padding:36px 60px">
+  <div style="display:grid;grid-template-columns:220px 1fr;gap:48px">
+    <div style="border-right:1px solid var(--line);padding-right:18px">
+      <div class="seg" style="grid-template-columns:1fr;margin-bottom:18px"><span class="on">Take Out</span><span>Catering</span></div>
+      <div style="font:600 15px Oswald;text-transform:uppercase;letter-spacing:.04em;line-height:2.3"><div style="color:var(--red)">▸ BBQ Plates</div><div>White Cheddar Mac &amp; Cheese</div><div>Family Size Portions</div><div>Sandwiches</div><div>Specialty Items</div><div>Specialty Beef Hot Dogs</div><div>Sides</div><div>Dessert</div></div>
+    </div>
+    <div>
+      <div class="ruled"><h2 style="font-size:34px">BBQ Plates</h2></div>
+      <p style="text-align:center;color:var(--slate);margin:10px 0 6px">All plates served with Mac &amp; Cheese, BBQ Beans, Coleslaw &amp; Cornbread.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:48px">
+        <div class="item"><span class="n">Pulled Chicken</span><span class="lead"></span><span class="p">$28</span></div>
+        <div class="item"><span class="n">Pulled Pork</span><span class="lead"></span><span class="p">$28</span></div>
+        <div class="item"><span class="n">Sliced Brisket</span><span class="lead"></span><span class="p">$30</span></div>
+        <div class="item"><span class="n">Three Meat</span><span class="lead"></span><span class="p">$35</span></div>
+      </div>
+      <div class="ruled" style="margin-top:26px"><h2 style="font-size:34px">Sandwiches</h2></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:48px;margin-top:6px">
+        <div class="item"><span class="n">BBQ Beef Brisket Sandwich</span><span class="lead"></span><span class="p">$17</span></div>
+        <div class="item"><span class="n">BBQ Pulled Chicken Sandwich</span><span class="lead"></span><span class="p">$14</span></div>
+        <div class="item"><span class="n">BBQ Pulled Pork Sandwich</span><span class="lead"></span><span class="p">$14</span></div>
+        <div class="item"><span class="n">Add Coleslaw to any Sandwich</span><span class="lead"></span><span class="p">$2</span></div>
+        <div class="item"><span class="n">Chicken Salad Sandwich</span><span class="lead"></span><span class="p">$9</span></div>
+        <div class="item"><span class="n">Chicken Salad Wrap</span><span class="lead"></span><span class="p">$9</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m B" id="B-menu" style="width:1280px;height:640px;padding:36px 60px;background:var(--plank)">
+  <div style="display:grid;grid-template-columns:220px 1fr;gap:48px">
+    <div>
+      <div class="seg" style="grid-template-columns:1fr;margin-bottom:18px;background:var(--navy)"><span class="on">Take Out</span><span>Catering</span></div>
+      <div style="font:600 15px Oswald;text-transform:uppercase;letter-spacing:.04em;line-height:2.3"><div style="background:var(--navy);color:#fff;padding:0 10px;border-radius:4px">BBQ Plates</div><div style="padding:0 10px">White Cheddar Mac &amp; Cheese</div><div style="padding:0 10px">Family Size Portions</div><div style="padding:0 10px">Sandwiches</div><div style="padding:0 10px">Specialty Items</div><div style="padding:0 10px">Specialty Beef Hot Dogs</div><div style="padding:0 10px">Sides</div><div style="padding:0 10px">Dessert</div></div>
+    </div>
+    <div style="background:var(--cream);border-radius:6px;padding:22px 28px">
+      <span class="ribbon">BBQ Plates</span>
+      <p style="color:var(--slate);margin:10px 0 6px">All plates served with Mac &amp; Cheese, BBQ Beans, Coleslaw &amp; Cornbread.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:48px">
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Pulled Chicken</span><span style="flex:1"></span><span class="p">$28</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Pulled Pork</span><span style="flex:1"></span><span class="p">$28</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Sliced Brisket</span><span style="flex:1"></span><span class="p">$30</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Three Meat</span><span style="flex:1"></span><span class="p">$35</span></div>
+      </div>
+      <span class="ribbon" style="margin-top:24px">Sandwiches</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:48px;margin-top:6px">
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">BBQ Beef Brisket Sandwich</span><span style="flex:1"></span><span class="p">$17</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">BBQ Pulled Chicken Sandwich</span><span style="flex:1"></span><span class="p">$14</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">BBQ Pulled Pork Sandwich</span><span style="flex:1"></span><span class="p">$14</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Add Coleslaw to any Sandwich</span><span style="flex:1"></span><span class="p">$2</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Chicken Salad Sandwich</span><span style="flex:1"></span><span class="p">$9</span></div>
+        <div class="item" style="border-bottom:1px solid var(--line)"><span class="n">Chicken Salad Wrap</span><span style="flex:1"></span><span class="p">$9</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Catering platters 1280x560 -->
+<div class="m A" id="A-catering" style="width:1280px;height:560px;padding:36px 60px">
+  <div class="ruled"><h2 style="font-size:34px">Party Platters, Boards, and Grazes</h2></div>
+  <p style="text-align:center;color:var(--slate);margin:10px 0 14px">Platters serve approximately 10–12 people.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:48px">
+    <div class="row"><div style="flex:1"><p class="n" style="font-weight:700">Charcuterie Board</p><p style="font-size:16px;color:var(--slate)">Assortment of fine meats and cheeses, dried and fresh fruits, nuts, olives, assorted crackers with jams or honey.</p></div><span class="add">+ Add</span></div>
+    <div class="row"><div style="flex:1"><p style="font-weight:700">Deli Platter</p><p style="font-size:16px;color:var(--slate)">Assorted deli meats with choice of ham, turkey, roast beef and Genoa salami, American and Swiss cheeses, with choice of breads.</p></div><span class="add">+ Add</span></div>
+    <div class="row"><div style="flex:1"><p style="font-weight:700">Sliders</p><p style="font-size:16px;color:var(--slate)">Sliced Brisket • BBQ Chicken • Pulled Pork • Cheeseburger</p></div><span class="add" style="background:var(--red);color:#fff">Added</span></div>
+    <div class="row"><div style="flex:1"><p style="font-weight:700">Shrimp Cocktail</p><p style="font-size:16px;color:var(--slate)">Large shrimp on a bed of lettuce with cocktail sauce and lemon slices.</p></div><span class="add">+ Add</span></div>
+  </div>
+  <div style="margin-top:22px;display:flex;align-items:center;gap:16px;border:2px solid var(--edge);border-radius:6px;padding:12px 16px;background:#fff"><span class="o" style="font-size:15px">Dishes</span><span style="flex:1">Sliders</span><span class="btn" style="background:var(--red);color:#fff">Catering Inquiries</span></div>
+</div>
+<div class="m B" id="B-catering" style="width:1280px;height:560px;padding:36px 60px;background:var(--plank)">
+  <span class="ribbon">Party Platters, Boards, and Grazes</span>
+  <p style="color:var(--slate);margin:10px 0 14px">Platters serve approximately 10–12 people.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="row" style="background:var(--cream);padding:14px 16px;border-radius:6px;border:0"><div style="flex:1"><p style="font-weight:700">Charcuterie Board</p><p style="font-size:16px;color:var(--slate)">Assortment of fine meats and cheeses, dried and fresh fruits, nuts, olives, assorted crackers with jams or honey.</p></div><span class="add">+ Add</span></div>
+    <div class="row" style="background:var(--cream);padding:14px 16px;border-radius:6px;border:0"><div style="flex:1"><p style="font-weight:700">Deli Platter</p><p style="font-size:16px;color:var(--slate)">Assorted deli meats with choice of ham, turkey, roast beef and Genoa salami, American and Swiss cheeses, with choice of breads.</p></div><span class="add">+ Add</span></div>
+    <div class="row" style="background:var(--cream);padding:14px 16px;border-radius:6px;border:0"><div style="flex:1"><p style="font-weight:700">Sliders</p><p style="font-size:16px;color:var(--slate)">Sliced Brisket • BBQ Chicken • Pulled Pork • Cheeseburger</p></div><span class="add" style="background:var(--red)">Added</span></div>
+    <div class="row" style="background:var(--cream);padding:14px 16px;border-radius:6px;border:0"><div style="flex:1"><p style="font-weight:700">Shrimp Cocktail</p><p style="font-size:16px;color:var(--slate)">Large shrimp on a bed of lettuce with cocktail sauce and lemon slices.</p></div><span class="add">+ Add</span></div>
+  </div>
+  <div style="margin-top:18px;display:flex;align-items:center;gap:16px;background:var(--navy);color:#fff;border-radius:6px;padding:12px 16px"><span class="o" style="font-size:15px;color:var(--gold)">Dishes</span><span style="flex:1">Sliders</span><span class="btn" style="background:var(--yellow);color:var(--navy)">Catering Inquiries</span></div>
+</div>
+
+<!-- 5. Link preview 1200x630 -->
+<div class="m A" id="A-share" style="width:1200px;height:630px;display:grid;grid-template-columns:1fr 1fr">
+  <div style="padding:60px;display:flex;flex-direction:column;justify-content:space-between"><img src="../../assets/img/logo-960.webp" style="width:420px"><div><h1 style="font-size:64px;line-height:.95">Smoked.<br>Homemade.<br>Maine.</h1><p class="o" style="font-size:22px;letter-spacing:.06em;margin-top:16px;color:var(--slate)">Casco, ME · (207)693-8840</p></div></div>
+  <img src="../../assets/img/brisket-900.webp" style="width:100%;height:630px;object-fit:cover">
+</div>
+<div class="m B" id="B-share" style="width:1200px;height:630px;background:var(--navy);display:grid;grid-template-columns:1fr 1fr">
+  <div style="padding:60px;display:flex;flex-direction:column;justify-content:space-between"><img src="../../assets/img/logo-960.webp" style="width:420px"><div><h1 style="font-size:64px;line-height:.95;color:var(--yellow)">Smoked.<br>Homemade.<br>Maine.</h1><span class="ribbon" style="margin-top:18px;font-size:18px">Casco, ME · (207)693-8840</span></div></div>
+  <img src="../../assets/img/brisket-900.webp" style="width:100%;height:630px;object-fit:cover">
+</div>
+
+<!-- 6. Instagram post 1080x1080, shown at 540 -->
+<div class="m A" id="A-post" style="width:540px;height:540px;padding:40px;display:flex;flex-direction:column">
+  <img src="../../assets/img/logo-480.webp" style="width:170px;align-self:center">
+  <div class="ruled" style="margin-top:18px"><h2 style="font-size:30px">Family Size Portions</h2></div>
+  <p style="text-align:center;color:var(--slate);margin:6px 0">(4 Servings each)</p>
+  <div class="item"><span class="n">Mac &amp; Cheese</span><span class="lead"></span><span class="p">$30</span></div>
+  <div class="item"><span class="n">Pulled Pork</span><span class="lead"></span><span class="p">$35</span></div>
+  <div class="item"><span class="n">Pulled Chicken</span><span class="lead"></span><span class="p">$35</span></div>
+  <div class="item"><span class="n">Brisket</span><span class="lead"></span><span class="p">$40</span></div>
+  <p class="o" style="margin-top:auto;text-align:center;font-size:15px;letter-spacing:.06em">Wednesday - Sunday · 11 am - 6pm</p>
+</div>
+<div class="m B" id="B-post" style="width:540px;height:540px;padding:40px;display:flex;flex-direction:column;background:var(--navy);color:#fff">
+  <img src="../../assets/img/logo-480.webp" style="width:170px;align-self:center">
+  <span class="ribbon" style="align-self:center;margin-top:18px;font-size:20px">Family Size Portions</span>
+  <p style="text-align:center;color:#dfe5f0;margin:8px 0">(4 Servings each)</p>
+  <div class="item" style="border-bottom:1px solid rgba(232,169,36,.45)"><span class="n">Mac &amp; Cheese</span><span style="flex:1"></span><span class="p" style="color:var(--yellow)">$30</span></div>
+  <div class="item" style="border-bottom:1px solid rgba(232,169,36,.45)"><span class="n">Pulled Pork</span><span style="flex:1"></span><span class="p" style="color:var(--yellow)">$35</span></div>
+  <div class="item" style="border-bottom:1px solid rgba(232,169,36,.45)"><span class="n">Pulled Chicken</span><span style="flex:1"></span><span class="p" style="color:var(--yellow)">$35</span></div>
+  <div class="item"><span class="n">Brisket</span><span style="flex:1"></span><span class="p" style="color:var(--yellow)">$40</span></div>
+  <p class="o" style="margin-top:auto;text-align:center;font-size:15px;letter-spacing:.06em;color:var(--gold)">Wednesday - Sunday · 11 am - 6pm</p>
+</div>
+
+<!-- 7. Avatar 110 and 32 -->
+<div class="m A" id="A-avatar" style="width:300px;height:150px;display:flex;gap:24px;align-items:center;padding:20px">
+  <div style="width:110px;height:110px;border-radius:50%;background:var(--cream);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden"><img src="../../assets/img/logo-480.webp" style="width:100px"></div>
+  <div style="width:32px;height:32px;border-radius:50%;background:var(--cream);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden"><img src="../../assets/img/logo-240.webp" style="width:30px"></div>
+</div>
+<div class="m B" id="B-avatar" style="width:300px;height:150px;display:flex;gap:24px;align-items:center;padding:20px">
+  <div style="width:110px;height:110px;border-radius:50%;background:var(--navy);display:grid;place-items:center;overflow:hidden"><img src="../../assets/img/logo-480.webp" style="width:100px"></div>
+  <div style="width:32px;height:32px;border-radius:50%;background:var(--navy);display:grid;place-items:center;overflow:hidden"><img src="../../assets/img/logo-240.webp" style="width:30px"></div>
+</div>
+</body></html>

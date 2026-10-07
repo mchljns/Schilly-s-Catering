@@ -15,6 +15,21 @@
     if (text != null) n.textContent = text;
     return n;
   }
+  // Capitals are reserved for Coustard headings (brand/06-hierarchy.md). Text that Schilly's typed
+  // in capitals but that sits at body size (rail links, platter names) is set in title case: same words.
+  var KEEP = { BBQ: 1, BLT: 1, GF: 1, "GF*": 1, OR: 0 };
+  var SMALL = { or: 1, and: 1, with: 1, of: 1, to: 1, a: 1, on: 1 };
+  function titleCase(t) {
+    // Treat as capitals when every word longer than three letters is in capitals ("BOARDS, and GRAZES").
+    var caps = t.split(/\s+/).every(function (w) { return w.replace(/[^A-Za-z]/g, "").length <= 3 || w === w.toUpperCase(); });
+    if (!caps) return t;
+    return t.split(" ").map(function (w, i) {
+      if (KEEP[w] === 1) return w;
+      var l = w.toLowerCase();
+      if (i > 0 && SMALL[l]) return l;
+      return l.replace(/(^|[(“"&-])([a-z])/g, function (m, a, b) { return a + b.toUpperCase(); });
+    }).join(" ");
+  }
   function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
   /* Open / closed, in Maine time */
@@ -51,6 +66,7 @@
     var catering = state.tab === "catering";
     listEl.textContent = "";
     jumpEl.textContent = "";
+    listEl.className = catering ? "is-catering" : "is-takeout";
 
     $("#menuSub").textContent = m.sub;
     var intro = $("#menuIntro");
@@ -60,10 +76,11 @@
     m.sections.forEach(function (sec) {
       var id = m.id + "-" + slug(sec.title);
       if (sec.group) listEl.appendChild(el("h3", { class: "menu-group" }, sec.group));
-      jumpEl.appendChild(el("a", { href: "#" + id }, sec.title));
+      jumpEl.appendChild(el("a", { href: "#" + id }, titleCase(sec.title)));
 
       var box = el("section", { class: "menu-sec", id: id, "aria-labelledby": id + "-h" });
-      box.appendChild(el("h3", { id: id + "-h" }, sec.title));
+      // Menu section titles are a capitals level: one case for the whole title.
+      box.appendChild(el("h3", { id: id + "-h", class: "ruled", tabindex: "-1" }, sec.title.toUpperCase()));
       if (sec.notes) {
         var notes = el("div", { class: "sec-notes" });
         sec.notes.forEach(function (n) { notes.appendChild(el("p", null, n)); });
@@ -75,10 +92,13 @@
         var li = el("li", { class: "item" });
         li.dataset.search = [name, detail, sec.title].join(" ").toLowerCase();
         var text = el("div", { class: "item-text" });
-        text.appendChild(el("p", { class: "item-name" }, name));
+        text.appendChild(el("p", { class: "item-name" }, titleCase(name)));
         if (detail) text.appendChild(el("p", { class: "item-detail" }, detail));
         li.appendChild(text);
-        if (price) li.appendChild(el("span", { class: "item-price" }, price));
+        if (price) {
+          li.appendChild(el("span", { class: "leader", "aria-hidden": "true" }));
+          li.appendChild(el("span", { class: "item-price" }, price));
+        }
         if (catering) {
           li.appendChild(el("button", { type: "button", class: "add", "data-dish": name, "aria-label": "+ Add: " + name }));
         }
@@ -124,25 +144,74 @@
   }
   searchEl.addEventListener("input", function () { state.query = searchEl.value.trim().toLowerCase(); filter(); });
 
-  var observer;
-  function watchSections() {
-    if (!("IntersectionObserver" in window)) return;
-    if (observer) observer.disconnect();
-    observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        $$("a", jumpEl).forEach(function (a) {
-          var on = a.getAttribute("href") === "#" + e.target.id;
-          a.classList.toggle("active", on);
-          if (on) jumpEl.scrollLeft = a.offsetLeft - 16;
-        });
-      });
-    }, { rootMargin: "-35% 0px -60% 0px" });
-    $$(".menu-sec", listEl).forEach(function (s) { observer.observe(s); });
+  /* Scroll spy, rebuilt from the 21st.dev Scroll Spy pattern (ddoemonn):
+     the active section is the last one whose top has passed a reading line.
+     The line slides toward the bottom as the page nears its end, so short
+     final sections still light up. A click holds its section until scrolling settles. */
+  var spyLock = null, spyLockTimer = 0, spyFrame = 0, spyActive = "";
+  function headerOffset() { return window.innerWidth >= 900 ? 136 : 64; }
+  function measureSpy() {
+    var secs = $$(".menu-sec", listEl).filter(function (s) { return !s.hidden; });
+    if (!secs.length) return "";
+    var offset = headerOffset();
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 1;
+    var line = offset + ratio * Math.max(0, window.innerHeight - offset - 1);
+    var panel = $("#menu-panel").getBoundingClientRect();
+    if (panel.bottom < offset) return secs[secs.length - 1].id;
+    var current = secs[0].id;
+    secs.forEach(function (s) { if (s.getBoundingClientRect().top <= line + 1) current = s.id; });
+    return current;
   }
+  function setSpy(id) {
+    if (id === spyActive) return;
+    spyActive = id;
+    $$("a", jumpEl).forEach(function (a) {
+      var on = a.getAttribute("href") === "#" + id;
+      if (on) {
+        a.setAttribute("aria-current", "location");
+        var left = a.offsetLeft - jumpEl.offsetLeft, right = left + a.offsetWidth;
+        if (left < jumpEl.scrollLeft) jumpEl.scrollLeft = left - 16;
+        else if (right > jumpEl.scrollLeft + jumpEl.clientWidth) jumpEl.scrollLeft = right - jumpEl.clientWidth + 16;
+      } else a.removeAttribute("aria-current");
+    });
+    clearTimeout(setSpy.t);
+    setSpy.t = setTimeout(function () {
+      var link = jumpEl.querySelector('a[aria-current]');
+      $("#spyAnnounce").textContent = link ? link.textContent : "";
+    }, 420);
+  }
+  function syncSpy() {
+    if (spyFrame) return;
+    spyFrame = requestAnimationFrame(function () {
+      spyFrame = 0;
+      var next = measureSpy();
+      if (!next) return;
+      if (spyLock) { if (spyLock === next) spyLock = null; return; }
+      setSpy(next);
+    });
+  }
+  window.addEventListener("scroll", syncSpy, { passive: true });
+  window.addEventListener("resize", syncSpy);
+  ["wheel", "touchstart"].forEach(function (t) { window.addEventListener(t, function () { spyLock = null; }, { passive: true }); });
+  jumpEl.addEventListener("click", function (e) {
+    var a = e.target.closest("a");
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var id = a.getAttribute("href").slice(1), target = document.getElementById(id);
+    if (!target) return;
+    spyLock = id;
+    setSpy(id);
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - headerOffset() + 8, behavior: reduce ? "auto" : "smooth" });
+    target.querySelector("h3").focus({ preventScroll: true });
+    clearTimeout(spyLockTimer);
+    spyLockTimer = setTimeout(function () { spyLock = null; syncSpy(); }, 900);
+  });
+  function watchSections() { spyActive = ""; syncSpy(); }
 
   /* Tabs */
-  var tabs = $$(".tab");
+  var tabs = $$(".seg-opt");
   function select(name, focus) {
     if (!menus[name] || name === state.tab && listEl.childNodes.length) return;
     state.tab = name;
@@ -158,9 +227,13 @@
   tabs.forEach(function (t) {
     t.addEventListener("click", function () { select(t.dataset.tab); });
     t.addEventListener("keydown", function (e) {
-      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      var keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+      var i;
+      if (e.key === "Home") i = 0;
+      else if (e.key === "End") i = tabs.length - 1;
+      else if (keys[e.key]) i = (tabs.indexOf(t) + keys[e.key] + tabs.length) % tabs.length;
+      else return;
       e.preventDefault();
-      var i = (tabs.indexOf(t) + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
       select(tabs[i].dataset.tab, true);
     });
   });
@@ -184,6 +257,9 @@
       list.appendChild(li);
     });
     $("#picked").hidden = !state.dishes.length;
+    var bar = $("#dishesBar");
+    bar.hidden = !(state.tab === "catering" && state.dishes.length);
+    $("#dishesBarList").textContent = state.dishes.join(" • ");
   }
   function toggle(d) {
     var i = state.dishes.indexOf(d);

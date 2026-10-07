@@ -95,6 +95,10 @@ const slop = [
   [/translateY|scale\(/, "lift/scale hover motion", ["assets/styles.css"]],
   [/border-left:\s*[3-9]px/, "shaded left-border callout", ["assets/styles.css"]],
   [/eyebrow|kicker/i, "hero eyebrow", ["index.html", "assets/styles.css"]],
+  [/Oswald|Anton|Roboto|Lato|Inter\b|Poppins|Montserrat|Space Grotesk|Fraunces|Instrument|Playfair|DM Sans|Manrope|Outfit/, "retired or AI-overused typeface", ["index.html", "assets/styles.css"]],
+  [/text-transform:\s*uppercase/, "tracked-capitals label (brand/06-hierarchy.md)", ["assets/styles.css"]],
+  [/letter-spacing:\s*\.(0[3-9]|[1-9])/, "letter-spacing over 0.02em", ["assets/styles.css"]],
+  [/<figcaption/, "photo caption", ["index.html"]],
   [/—/, "em dash in our own labels", ["brand/source/ui-labels.txt", "assets/app.js"]],
   [/lorem|placeholder text|TODO|\[CONFIRM/i, "unfinished placeholder", ["index.html", "assets/app.js"]],
 ];
@@ -103,10 +107,11 @@ for (const [re, what, files] of slop) for (const f of files) {
   lines.forEach((l, i) => { if (re.test(l) && !/^\s*(\/\/|\/\*|\*|<!--|#)/.test(l)) failures.push(`slop (${what}): ${f}:${i + 1}: ${l.trim().slice(0, 90)}`); });
 }
 
+if ((own["index.html"].match(/<h1[\s>]/g) || []).length !== 1) failures.push("hierarchy: the page must have exactly one <h1>");
 // Brand rules (brand/README.md): Ribbon Red is for actions and money; Sign Yellow sits on Navy only.
 const css = own["assets/styles.css"].replace(/\/\*[\s\S]*?\*\//g, "");
-const RED_OK = /^(a|a:hover|:focus-visible|\.btn-red(:hover)?|\.nav \.nav-cta(:hover)?|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.picked li button)$/;
-const YELLOW_OK = /^(\.site-footer :focus-visible|\.info :focus-visible|\.hero :focus-visible|\.hero h1|\.info-link|\.open-status\.is-open::before|\.btn-yellow|\.closer h2)$/;
+const RED_OK = /^(a|a:hover|:focus-visible|\.btn-red(:hover)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus)$/;
+const YELLOW_OK = /^(\.site-footer :focus-visible|\.btn-yellow|\.closer h2)$/;
 for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   const selectors = m[1].trim().split(/\s*,\s*/).filter((x) => x && !x.startsWith("@") && !x.startsWith(":root"));
   if (/var\(--red(-dark)?\)/.test(m[2])) selectors.filter((x) => !RED_OK.test(x)).forEach((x) => failures.push(`brand: Ribbon Red used on "${x}" (actions and money only)`));

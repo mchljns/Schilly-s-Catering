@@ -21,9 +21,9 @@
 
   <link rel="icon" href="assets/img/icon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
-  <link rel="preload" href="assets/fonts/oswald-variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/lato-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/img/brisket-640.webp" imagesrcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" imagesizes="(min-width: 900px) 45vw, 100vw">
+  <link rel="preload" href="assets/fonts/coustard-900.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/radio-canada-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/img/brisket-640.webp" imagesrcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" imagesizes="(min-width: 900px) 44vw, 100vw">
   <link rel="stylesheet" href="assets/styles.css">
 
   <script type="application/ld+json">
@@ -70,7 +70,7 @@
       <nav class="nav" aria-label="Main">
         <a href="#take-out-menu" data-tab-link="takeout">Take Out Menu</a>
         <a href="#catering-menu" data-tab-link="catering">Catering Menu</a>
-        <a href="#catering-inquiries" class="nav-cta">Catering Inquiries</a>
+        <a href="#catering-inquiries" class="btn btn-red nav-cta">Catering Inquiries</a>
       </nav>
     </div>
   </header>
@@ -80,33 +80,27 @@
       <div class="wrap hero-inner">
         <div class="hero-copy">
           <h1 id="hero-title">SMOKED. HOMEMADE. MAINE.</h1>
-          <p class="hero-services">Take Out • Family Meals • Catering</p>
-          <p class="hero-lede">Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
-          <a class="btn btn-red" href="#menus">View Our Menu</a>
+          <p class="hero-lede"><strong>Take Out • Family Meals • Catering</strong><br>Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
+
+          <dl class="facts">
+            <div class="fact">
+              <dt>Business Hours</dt>
+              <dd><span class="fact-main">Wednesday - Sunday · 11 am - 6pm</span><span class="open-status" id="openStatus" hidden></span></dd>
+            </div>
+            <div class="fact">
+              <dt>Location</dt>
+              <dd><span class="fact-main">224 Roosevelt Trail<br>Casco, ME 04015</span><a class="fact-action" href="https://www.google.com/maps/search/?api=1&amp;query=224+Roosevelt+Trail+Casco+ME+04015">Get directions</a></dd>
+            </div>
+            <div class="fact">
+              <dt>Store Phone #</dt>
+              <dd><a class="fact-main" href="tel:+12076938840">(207)693-8840</a><a class="fact-action" href="tel:+12076938840">Call</a></dd>
+            </div>
+          </dl>
+          <a class="btn btn-quiet hero-cta" href="#menus">View Our Menu</a>
         </div>
         <figure class="hero-photo">
-          <img src="assets/img/brisket-640.webp" srcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" sizes="(min-width: 900px) 45vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees" fetchpriority="high">
+          <img src="assets/img/brisket-640.webp" srcset="assets/img/brisket-640.webp 640w, assets/img/brisket-900.webp 900w, assets/img/brisket-1200.webp 1200w" sizes="(min-width: 900px) 44vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees" fetchpriority="high">
         </figure>
-      </div>
-    </section>
-
-    <section class="info">
-      <div class="wrap info-grid">
-        <div class="info-item">
-          <h2>Business Hours</h2>
-          <p class="info-main">Wednesday - Sunday<br>11 am - 6pm</p>
-          <p class="open-status" id="openStatus" hidden></p>
-        </div>
-        <div class="info-item">
-          <h2>Location</h2>
-          <p class="info-main">224 Roosevelt Trail<br>Casco, ME 04015</p>
-          <a class="info-link" href="https://www.google.com/maps/search/?api=1&amp;query=224+Roosevelt+Trail+Casco+ME+04015">Get directions</a>
-        </div>
-        <div class="info-item">
-          <h2>Store Phone #</h2>
-          <p class="info-main"><a href="tel:+12076938840">(207)693-8840</a></p>
-          <a class="info-link" href="tel:+12076938840">Call</a>
-        </div>
       </div>
     </section>
 
@@ -115,34 +109,37 @@
         <img class="print-logo" src="assets/img/logo-240.webp" srcset="assets/img/logo-240.webp 240w, assets/img/logo-480.webp 480w" sizes="(min-width: 900px) 200px, 150px" width="240" height="119" alt="">
         <header class="section-head">
           <h2 id="menus-title">OUR MENUS</h2>
-          <p>From take out favorites and family-size meals to full-service catering, there’s a little something for everyone at Schilly’s.</p>
+          <p class="lead">From take out favorites and family-size meals to full-service catering, there’s a little something for everyone at Schilly’s.</p>
         </header>
 
-        <div class="tabs" role="tablist" aria-label="OUR MENUS">
-          <button class="tab" role="tab" id="tab-takeout" aria-controls="menu-panel" aria-selected="true" data-tab="takeout">
-            <span class="tab-title">TAKE OUT &amp; FAMILY MEALS</span>
-          </button>
-          <button class="tab" role="tab" id="tab-catering" aria-controls="menu-panel" aria-selected="false" data-tab="catering" tabindex="-1">
-            <span class="tab-title">CATERING MENU</span>
-          </button>
-        </div>
-
-        <div class="menu-panel" id="menu-panel" role="tabpanel" aria-labelledby="tab-takeout">
-          <span class="anchor" id="take-out-menu"></span>
-          <span class="anchor" id="catering-menu"></span>
-          <p class="menu-sub" id="menuSub"></p>
-          <p class="menu-intro" id="menuIntro" hidden></p>
-          <div class="menu-bar">
+        <div class="menu-layout">
+          <aside class="menu-side">
+            <div class="seg" role="tablist" aria-label="OUR MENUS">
+              <button class="seg-opt" role="tab" id="tab-takeout" aria-controls="menu-panel" aria-selected="true" data-tab="takeout">Take Out &amp; Family Meals</button>
+              <button class="seg-opt" role="tab" id="tab-catering" aria-controls="menu-panel" aria-selected="false" data-tab="catering" tabindex="-1">Catering Menu</button>
+            </div>
+            <nav class="spy" id="menuJump" aria-label="OUR MENUS"></nav>
             <label class="search">
               <span class="visually-hidden">Search the menu</span>
               <input id="menuSearch" type="search" placeholder="Search the menu" autocomplete="off">
             </label>
-            <button class="btn btn-quiet" type="button" data-print>Print menu</button>
+            <button class="btn btn-quiet print-btn" type="button" data-print>Print menu</button>
+          </aside>
+
+          <div class="menu-panel" id="menu-panel" role="tabpanel" aria-labelledby="tab-takeout" tabindex="-1">
+            <span class="anchor" id="take-out-menu"></span>
+            <span class="anchor" id="catering-menu"></span>
+            <p class="menu-sub" id="menuSub"></p>
+            <p class="menu-intro" id="menuIntro" hidden></p>
+            <div id="menuList"></div>
+            <p class="menu-empty" id="menuEmpty" hidden>No matches</p>
+            <div class="dishes-bar" id="dishesBar" hidden>
+              <span class="dishes-label">Dishes</span>
+              <span class="dishes-list" id="dishesBarList"></span>
+              <a class="btn btn-red" href="#catering-inquiries">Catering Inquiries</a>
+            </div>
+            <div id="menuFoot"></div>
           </div>
-          <nav class="jump" id="menuJump" aria-label="OUR MENUS"></nav>
-          <div id="menuList"></div>
-          <p class="menu-empty" id="menuEmpty" hidden>No matches</p>
-          <div id="menuFoot"></div>
         </div>
       </div>
     </section>
@@ -151,7 +148,7 @@
       <div class="wrap">
         <header class="section-head">
           <h2 id="taste-title">A TASTE OF SCHILLY’S</h2>
-          <p>From Our Smoker to Your Celebration</p>
+          <p class="lead">From Our Smoker to Your Celebration</p>
         </header>
         <div class="photos">
           <img class="p-wide" loading="lazy" decoding="async" src="assets/img/rotisserie-1200.webp" srcset="assets/img/rotisserie-640.webp 640w, assets/img/rotisserie-1200.webp 1200w" sizes="(min-width: 900px) 66vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">
@@ -165,7 +162,7 @@
       <div class="wrap events-grid">
         <img loading="lazy" decoding="async" src="assets/img/wedding-chef-832.webp" srcset="assets/img/wedding-chef-640.webp 640w, assets/img/wedding-chef-832.webp 832w" sizes="(min-width: 900px) 45vw, 100vw" width="832" height="554" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">
         <div>
-          <h2 id="events-title"><span id="lobster-bakes">Lobster Bakes •</span> <span id="pig-roasts">Pig Roasts •</span> <span id="weddings">Weddings</span></h2>
+          <h2 id="events-title"><span id="lobster-bakes">LOBSTER BAKES •</span> <span id="pig-roasts">PIG ROASTS •</span> <span id="weddings">WEDDINGS</span></h2>
           <p>Interested in our Lobster Bakes, Pig Roasts, or Wedding Catering? We’d love to hear from you.</p>
           <p>Reach out today for menus, availability, and more information.</p>
           <a class="btn btn-red" href="#catering-inquiries">Catering Inquiries</a>
@@ -177,7 +174,7 @@
       <div class="wrap inquiry-grid">
         <header class="section-head">
           <h2 id="inquiry-title">LET’S PLAN YOUR EVENT</h2>
-          <p>Tell us a little about your event and we’ll be in touch to discuss menu options, availability, and the details that will make it special.</p>
+          <p class="lead">Tell us a little about your event and we’ll be in touch to discuss menu options, availability, and the details that will make it special.</p>
         </header>
 
         <!-- Set data-endpoint to the form handler (e.g. https://formsubmit.co/ajax/<email>) before launch. See README. -->
@@ -217,7 +214,6 @@
         <a class="btn btn-yellow" href="tel:+12076938840">(207)693-8840</a>
       </div>
       <div class="footer-grid">
-        <img loading="lazy" src="assets/img/logo-240.webp" srcset="assets/img/logo-240.webp 240w, assets/img/logo-480.webp 480w" sizes="200px" width="240" height="119" alt="Schilly’s Take Out &amp; Catering Kitchen">
         <div>
           <h3>Business Hours</h3>
           <p>Wednesday - Sunday<br>11 am - 6pm</p>
@@ -229,6 +225,8 @@
         <div>
           <h3>Store Phone #</h3>
           <p><a href="tel:+12076938840">(207)693-8840</a></p>
+        </div>
+        <div>
           <p class="social"><a href="https://www.instagram.com/schillyseats">Instagram</a> <a href="https://www.facebook.com/share/1DnxQNy3wD/">Facebook</a></p>
         </div>
       </div>
@@ -236,6 +234,7 @@
     </div>
   </footer>
 
+  <p class="visually-hidden" id="spyAnnounce" aria-live="polite"></p>
   <script src="assets/menu-data.js"></script>
   <script src="assets/app.js"></script>
 </body>

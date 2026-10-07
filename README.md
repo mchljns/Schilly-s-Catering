@@ -2,18 +2,17 @@
 
 A one-page static site for schillyscatering.com: plain HTML, CSS and JavaScript, no build step. Upload the folder to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages).
 
-Every sentence on the page comes from the current schillyscatering.com. The logo, the five photos and the two typefaces are Schilly’s own. The brand identity, with the reasons behind each choice, is in `brand/README.md`. `brand/guide.html` shows it visually.
+Every sentence on the page comes from the current schillyscatering.com. The logo and the five photos are Schilly’s own. Type is Coustard (a Clarendon that matches the logo’s ribbon lettering) and Radio Canada, chosen in a Google Fonts deep dive to avoid faces that AI-built sites overuse. The brand work follows the Generation Maine process; every stage and reason is in `brand/README.md`, and `brand/guide.html` shows the system on one page.
 
 ## What’s on the page
 
 1. Header: logo, Take Out Menu, Catering Menu, Catering Inquiries.
-2. Hero: SMOKED. HOMEMADE. MAINE., their line, View Our Menu, the brisket photo.
-3. Business Hours, Location and Store Phone #, with an open or closed indicator on Maine time, a directions link and tap to call.
-4. Our Menus: Take Out and Catering tabs, search, section links that stay on screen, print. Catering items have + Add, which carries dishes into the inquiry.
-5. A Taste of Schilly’s: three of their photos.
-6. Lobster Bakes, Pig Roasts, Weddings: their text and the wedding photo.
-7. Let’s Plan Your Event: their form, same fields.
-8. Footer: Hungry Yet?, hours, location, phone, Instagram, Facebook.
+2. Hero: SMOKED. HOMEMADE. MAINE., their services line and sentence, then Business Hours (with an open or closed status on Maine time), Location (Get directions) and Store Phone # (Call) as rows. The brisket photo.
+3. Our Menus: a Take Out and Catering switch, a section rail that tracks your place (chips on phones), search, print. Take-out prices on dotted leaders. Catering items have + Add, which carries dishes into the inquiry.
+4. A Taste of Schilly’s: three of their photos.
+5. Lobster Bakes, Pig Roasts, Weddings: their text and the wedding photo.
+6. Let’s Plan Your Event: their form, same fields.
+7. Footer: Hungry Yet?, hours, location, phone, Instagram, Facebook.
 
 ## Editing
 
@@ -32,8 +31,9 @@ npm run check
 
 Needs Node 18+ and Playwright with Chromium. Two gates:
 
-- `qa/check-content.mjs` opens the page in a browser, switches tabs, and fails if any visible text, alt text, label or meta tag is missing from `brand/source/` (the saved text of their site plus the approved labels). It also fails on emojis, gradients, lift animations, left-border callouts, hero eyebrows, placeholders, and on Ribbon Red or Sign Yellow outside their brand jobs.
-- `qa/check-layout.mjs` loads the page at 360, 390, 768 and 1280 px and fails on horizontal overflow, text under 14 px, contrast under WCAG AA, touch targets under 40 px, distorted or broken images, console errors, a first load over 600 KB, an hours band below the first screen on phones, or a missing header inquiry link.
+- `qa/check-content.mjs` opens the page, switches menus, and fails if any visible text, alt text, label or meta tag is missing from `brand/source/` (the saved text of their site plus the approved labels). It also fails on slop and hierarchy giveaways (emojis, gradients, lift animations, eyebrows, tracked capitals, letter-spacing over 0.02em, photo captions, more than one h1, retired or AI-overused typefaces), and on Ribbon Red or Sign Yellow outside their jobs.
+- `qa/check-layout.mjs` loads the page at 360, 390, 768 and 1280 px and fails on overflow, text under 14 px, text contrast under WCAG AA, control edges under 3:1 (WCAG 1.4.11), touch targets under 40 px, distorted or broken images, console errors, a first load over 600 KB, the hours below the first screen on phones, a ribbon on the web page, or a missing header inquiry link. It also checks the brand guide for overflow and stretched images.
+- `qa/colorlib.py` holds the OKLCH, contrast and colorblind-simulation functions behind `brand/color/README.md`.
 
 `brand/QA-LOG.md` records each review loop.
 

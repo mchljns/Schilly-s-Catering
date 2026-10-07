@@ -1,5 +1,7 @@
 # QA log
 
+Round one (loops 1 to 7) built the content-only site. Round two (loops 8 to 15, at the end) rebuilt it with the Generation Maine process: references, color audit, two directions, pressure test, font deep dive and hierarchy audit.
+
 Each loop ran `npm run check` and a visual review of screenshots at 360, 390, 768 and 1280 px. A loop ends when both gates pass and the screenshots show nothing to fix.
 
 ## Inputs
@@ -86,3 +88,39 @@ Rendered the print stylesheet to a Letter PDF in Chromium and reviewed the pages
 - Delivery of a real inquiry (needs their email and a FormSubmit activation).
 - Safari on a physical iPhone, including safe areas.
 - Printing from Safari and Firefox. The PDF check used Chromium.
+
+---
+
+# Round two
+
+## Loop 8: color audit
+Measured in OKLCH with colorblind simulation (`color/README.md`). Found the red button on the navy hero at 1.94:1 (fails WCAG 1.4.11, vibrates, turns olive under protanopia), a yellow and gold near-miss in the hero, and control borders at 1.44:1. Added Wood Edge `#8F7A55` for control borders, moved the yellow action to navy-only, and added a control-edge check to `check-layout`. Tested by reverting borders to the old color: 65 failures, then 0.
+
+## Loop 9: build of Concept A, first gate run
+Labels at 12.8 to 13.6 px, desktop rail links 36 px tall, a 26 px phone link target, and a `translateY` the lint flagged. All fixed.
+
+## Loop 10: scroll spy
+The rebuilt reading-line spy (21st.dev Scroll Spy pattern) lights the short last section. Tested: clicking DESSERT and scrolling to the end of the menu both mark DESSERT at 1280 and 390 px. The old IntersectionObserver version never did.
+
+## Loop 11: pressure test against Refero
+Every heading had the ruled frame, so the page read as a stack of banners. The centered OUR MENUS header didn't line up with the menu column. Rules are now on menu section titles only, and page headings are left-aligned (`03-pressure-test.md`).
+
+## Loop 12: client feedback, font deep dive
+Roboto Slab and Lato are among the most used web fonts. Screened all 1,908 Google families, excluded web-wide favorites, AI defaults and the faces our other clients use, then set 20 candidates (`04-type-study.md`). Chose Coustard 900 and Radio Canada.
+
+## Loop 13: hierarchy and AI giveaways
+Removed tracked uppercase micro-labels, the badge under the headline, and muted grey subheadings. Set a six-step scale. Added lints for uppercase transforms, letter-spacing, captions, eyebrows, more than one h1 and AI-overused faces (`06-hierarchy.md`). Coustard is wide, so "HOMEMADE." overflowed a 360 px phone. The display size now scales with screen width.
+
+## Loop 14: case and alignment
+Platter names and rail links in capitals at body size were noisy, so they're now title case (same words). "PARTY PLATTERS, BOARDS, and GRAZES" mixed case at display size, so menu section titles are now one case. "Get directions" dropped under the address, so actions now sit in a fixed right column. The address breaks after the street, as on their site. The events title was the only mixed-case title and now matches the rest.
+
+## Loop 15: print and guide
+Print renders 2 Letter pages in the new faces, with logo, ruled sections and leaders. The brand guide passes the overflow and stretched-image checks.
+
+## Final state, round two
+- `check-content`: 318 fragments traced, slop, hierarchy and brand lints clean.
+- `check-layout`: passes at 360, 390, 768 and 1280 px, including control edges. Hours rows start at 399 to 415 px on phones.
+
+## Still open
+- **Social photos.** Instagram and Facebook page hosts are refused by the network policy, though their image CDNs are allowed. Without the pages there's no list of photos to fetch.
+- Inquiry delivery, Safari on an iPhone, and printing from Safari and Firefox are unverified.
