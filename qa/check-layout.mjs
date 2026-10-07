@@ -71,7 +71,7 @@ for (const u of URLS) for (const [w, h] of widths) {
     });
     out.ribbons = document.querySelectorAll(".ribbon").length;
     const inView = (sel) => { const e = document.querySelector(sel); if (!e) return false; const b = e.getBoundingClientRect(); return b.top < innerHeight * 3 && b.bottom > 0; };
-    const facts = document.querySelector(".facts");
+    const facts = document.querySelector(".hero-hours, .facts");
     out.firstScreen = { hours: facts ? facts.getBoundingClientRect().top : -1, vh: innerHeight };
     out.inquiryInHeader = [...document.querySelectorAll('.site-header a[href*="catering-inquiries"]')].some(visible);
     return out;

@@ -81,3 +81,15 @@ Schilly’s own wording, saved in `source/`. Interface labels from `source/ui-la
 - **Second revision, same day.** Cream and Plank leave the web too (the client: "we're still using the cream color"); they remain print and social colors. The web ground is white, with navy type, gold and navy hairlines, red actions and one navy band mid-page. Display type is Newsreader 500 in sentence case (brand/04-type-study.md, round four); Solway is retired. The hero photo must be a wide frame: the rotisserie panorama, until Schilly's or a generated placeholder supplies a better wide shot.
 
 - **Third revision, same day.** Plank returns to the web as the second ground (hero band, page heads, the events block): it is the sign's wood, not the AI cream (lowest channel 196, clear of the detector). The footer carries the real logo, cropped by the page's bottom edge, instead of a typeset wordmark; its gold rim holds it off the navy. The hero is built around the brisket at 192°F: tall, bleeding to the right edge of the plank band, with the headline and the three facts on the left. Newsreader is the static 500 instance (24 KB) to keep the home page under the 600 KB budget.
+
+## World 1: The sign at night (October 7, 2026)
+
+Chosen after round-3 references (Side Street Cafe, Franklin, Hometown, Snow's, The Lost Kitchen; brand/references/README.md) and two mocked worlds (brand/directions/README-worlds.md). This replaces the editorial system above.
+
+- **Ground:** Frame Navy. The deeper navy (#031A3A) for the menu board and the footer. Cream (#FFF6E6) is paper: the owner's-voice band, the menus, the forms. Plank is print, social and a hover wash.
+- **Type:** Big Shoulders Display 800 in capitals for every heading, menu section title, price and the badge; Radio Canada 400/700 for everything else, in the case Schilly's wrote. Capitals belong to the display face (the sign) and to the nav; tracked small-caps labels stay banned.
+- **Yellow** on navy only, as a small accent: the one primary button, section heads on navy, the badge, the hero's services line, focus rings. Never a headline, never on cream.
+- **Red** on cream only: actions, prices, error text. **Gold:** labels on navy. **Mist** (#C9D6EA, 10.3:1 on navy): secondary text on navy.
+- **Photos** run large and plain: a full-height panel beside the headline, a two-up on navy over a screened crop of their own smoker photo, one wide frame behind the events panel. Type never sits on a photo; it sits on navy beside or over it.
+- **Handmade marks:** the round "Smoked in Casco · Maine" badge (SVG, the logo's frame colours) and the sign itself in the footer.
+- **Voice:** one paragraph on the home page written as the owner would say it, tagged draft until they approve it.

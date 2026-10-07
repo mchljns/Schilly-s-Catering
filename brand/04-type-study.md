@@ -92,3 +92,7 @@ The client's verdict on Solway 800 in capitals: juvenile. A slab in all caps rea
 | Source Serif 4 600 | Reads as documentation |
 
 **Rules now.** Newsreader 500 for headlines, section titles, menu section titles, prices and the footer wordmark, in sentence or title case, never capitals. Letter-spacing −0.01 em (−0.02 em on the headline). Radio Canada 400 and 700 for everything else, unchanged. Solway leaves the site.
+
+## Round five: the sign, not the magazine (October 7)
+
+Round-3 references (Side Street Cafe, Franklin, Hometown, Snow's) all set display type in bold condensed capitals; none use an editorial serif. Newsreader read as a Portland magazine, not a Casco BBQ kitchen. Tested on the World 1 mockup: **Big Shoulders Display 800** (chosen: condensed, confident, shares its bones with the sign's "TAKE OUT & CATERING" ribbon; variable, OFL, 35 KB), League Gothic (used for World 2; thinner, more Texas), Sofia Sans Extra Condensed (anonymous). Oswald, Bebas and Anton stay excluded. Body stays Radio Canada.

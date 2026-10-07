@@ -9,7 +9,7 @@ npm run check     # builds, then runs both QA gates on every page
 
 Deploy the `dist/` folder to any static host (Netlify, Cloudflare Pages, Vercel, GitHub Pages). `dist/_redirects` covers Netlify and Cloudflare Pages.
 
-Every sentence on the site comes from the current schillyscatering.com, cut but never reworded (`brand/07-copy.md`). The logo and photos are Schilly’s own. Type is Newsreader and Radio Canada (`brand/04-type-study.md`). The brand process, every decision and the reasons are in `brand/README.md`. The page structure for search and answer engines is in `brand/09-site-structure.md`.
+Every sentence on the site comes from the current schillyscatering.com, cut but never reworded (`brand/07-copy.md`). The logo and photos are Schilly’s own. Type is Big Shoulders and Radio Canada (`brand/04-type-study.md`). The brand process, every decision and the reasons are in `brand/README.md`. The page structure for search and answer engines is in `brand/09-site-structure.md`.
 
 ## Pages
 

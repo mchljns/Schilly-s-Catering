@@ -52,6 +52,13 @@ const DRAFT = {
   ],
   cateringDesc: "Catering menu for weddings, backyard BBQs, corporate events and private parties from Schilly’s in Casco, Maine: boxed lunches, salads, soups, desserts and party platters.",
   takeoutDesc: "Take out menu for Schilly’s in Casco, Maine: BBQ plates, White Cheddar Mac & Cheese, family size portions, sandwiches, hot dogs, sides and dessert. Prices include Maine State Sales Tax.",
+  voice: "We’re a small kitchen on Roosevelt Trail in Casco. We smoke brisket, pulled pork and chicken, make the sides from scratch, and pack it up to go or bring it to your party. Wednesday through Sunday, 11 to 6. Call ahead and we’ll have it ready.",
+  props: [
+    ["Take Out", "Smoked favorites and homemade sides, packed to go. Wednesday – Sunday, 11 am – 6 pm."],
+    ["Family Meals", "Family size portions, four servings each. Mac & cheese, pulled pork, brisket, beans and slaw."],
+    ["Catering", "Weddings, backyard BBQs, corporate events and private parties. Tell us the date and the headcount."],
+  ],
+  badge: "Smoked in Casco",
   cateringWhere: "Schilly’s caters events from its kitchen at 224 Roosevelt Trail, Casco, Maine.",
   faq: [
     ["How far ahead should I book?", "Two to four weeks is usually enough for a party or an office lunch. For summer weekends and weddings, book as early as you can."],
@@ -130,7 +137,7 @@ function header(c) {
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="nav" id="site-nav" aria-label="Main">
           ${links}
-          <a class="btn btn-quiet nav-cta" href="${c.link("inquiry")}"${cur("inquiry")}>Catering Inquiries</a>
+          <a class="btn btn-yellow nav-cta" href="${c.link("inquiry")}"${cur("inquiry")}>Catering Inquiries</a>
       </nav>
       <div class="quick" aria-label="Main">
         <a href="${c.link("takeout")}"${cur("takeout")}>Take Out Menu</a>
@@ -155,20 +162,18 @@ const facts = (c, opts = {}) => `<dl class="facts${opts.compact ? " facts-compac
             </div>
           </dl>`;
 
+const badge = (c) => `<svg class="badge" viewBox="0 0 200 200" role="img" aria-label="${esc(DRAFT.badge)} · Maine"><defs><path id="badge-path" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1"/><text class="badge-ring" data-draft><textPath href="#badge-path">${esc(DRAFT.badge)} · Maine · Take Out · Catering · </textPath></text><text class="badge-big" x="100" y="110" text-anchor="middle">Casco</text><text class="badge-small" x="100" y="132" text-anchor="middle">Maine</text></svg>`;
+
 function footer(c) {
   return `<footer class="site-footer">
     <div class="wrap">
-      ${c.page.key !== "home" ? "" : `<div class="closer">
-        <h2>Hungry yet?</h2>
-        <p>Let Schilly’s do the cooking.</p>
-        <a class="btn btn-cream" href="tel:${SITE.tel}">${SITE.phone}</a>
-      </div>`}
       <div class="footer-grid">
         <dl class="footer-facts">
           <div><dt>Business Hours</dt><dd>${SITE.days} · ${SITE.time}</dd></div>
           <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town}</dd></div>
           <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
         </dl>
+        ${badge(c)}
         <nav class="footer-nav" aria-label="Footer">
           ${NAV.map((k) => `<a href="${c.link(k)}">${byKey[k].label}</a>`).join("\n          ")}
           <a href="${c.link("inquiry")}">Catering Inquiries</a>
@@ -176,9 +181,9 @@ function footer(c) {
           <a href="${SITE.facebook}">Facebook</a>
         </nav>
       </div>
+      <img class="footer-logo" src="${c.asset("img/logo-480.webp")}" width="480" height="239" alt="" loading="lazy" decoding="async">
       <p class="copyright">© <span class="year">2026</span> ${SITE.name}.</p>
     </div>
-    <div class="footer-sign" aria-hidden="true"><img src="${c.asset("img/logo-960.webp")}" width="960" height="477" alt="" loading="lazy" decoding="async"></div>
   </footer>`;
 }
 
@@ -225,7 +230,7 @@ ${spy}
             <div id="menuList" class="${catering ? "is-catering" : "is-takeout"}">
 ${menu.sections.map((s) => menuSection(menu, s, catering)).join("\n")}
             </div>
-            <p class="menu-empty" id="menuEmpty" hidden>No matches</p>
+            <p class="menu-empty" id="menuEmpty" role="status" hidden>No matches</p>
             <div class="menu-foot">${foot.join("")}</div>
           </div>
         </div>`;
@@ -316,73 +321,73 @@ function placeholder(c, key, extra = "") {
 }
 
 function home(c) {
-  const bbq = MENUS.takeout.sections[0];
-  const fam = MENUS.takeout.sections[2];
-  const priceRow = ([name, p]) => `<li><span class="pl-name">${esc(titleCase(name))}</span><span class="pl-price"><sup>$</sup>${esc(p.replace("$", ""))}</span></li>`;
+  const bbq = MENUS.takeout.sections[0], fam = MENUS.takeout.sections[2], sand = MENUS.takeout.sections[3], sides = MENUS.takeout.sections[6];
+  const rows = (sec, n) => sec.items.slice(0, n).map(([name, p]) => `<li><span>${esc(titleCase(name))}</span><b>${esc(p)}</b></li>`).join("");
   return `<section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <h1 id="hero-title">Smoked. Homemade. Maine.</h1>
+          <h1 id="hero-title">Smoked.<br>Homemade.<br>Maine.</h1>
           <p class="hero-lede">Take Out • Family Meals • Catering</p>
-          <a class="btn btn-red hero-cta" href="${c.link("takeout")}">Take Out Menu</a>
-          <dl class="facts-line">
-            <div><dt>Business Hours</dt><dd>${SITE.days} · ${SITE.time} <span class="open-status" hidden></span></dd></div>
-            <div><dt>Location</dt><dd>${SITE.street}, ${SITE.town} <a href="${esc(SITE.maps)}">Get directions</a></dd></div>
-            <div><dt>Store Phone #</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div>
-          </dl>
+          <p class="hero-hours"><span>${SITE.days} · ${SITE.time}</span> <span class="open-status" hidden></span></p>
+          <a class="btn btn-yellow hero-cta" href="${c.link("takeout")}">Take Out Menu</a>
         </div>
         <figure class="hero-photo">${PHOTO.brisket(c, ' fetchpriority="high"')}</figure>
       </div>
     </section>
 
-    <section class="menus-home" aria-labelledby="menus-title">
-      <div class="wrap menus-grid">
-        <div class="menus-takeout">
-          <h2 id="menus-title">Take Out Kitchen Menu</h2>
-          <p class="menus-sub">Smoked favorites • Homemade sides • Family-size portions</p>
-          <h3>${esc(titleCase(bbq.title))}</h3>
-          <p class="menus-note">${esc(bbq.notes[0])}</p>
-          <ul class="price-list">${bbq.items.map(priceRow).join("")}</ul>
-          <h3>${esc(titleCase(fam.title))} <span class="menus-note-inline">${esc(fam.notes[0])}</span></h3>
-          <ul class="price-list">${fam.items.map(priceRow).join("")}</ul>
+    <section class="props" aria-label="Take Out • Family Meals • Catering">
+      <div class="wrap props-grid">
+        ${DRAFT.props.map(([h, t], i) => `<div><h2>${esc(h)}</h2>${draft(t)}</div>`).join("\n        ")}
+      </div>
+    </section>
+
+    <section class="band" aria-label="A Taste of Schilly’s">
+      <img class="band-texture" src="${c.asset("img/smoker-800.webp")}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <div class="wrap band-grid">
+        <figure>${PHOTO.rotisserie(c)}</figure>
+        <figure>${PHOTO.grazing(c)}</figure>
+      </div>
+    </section>
+
+    <section class="voice" aria-labelledby="voice-title">
+      <div class="wrap voice-grid">
+        <div>
+          <h2 id="voice-title">Hungry yet?</h2>
+          ${draft(DRAFT.voice, "p", "voice-text")}
           <a class="btn btn-red" href="${c.link("takeout")}">Take Out Menu</a>
         </div>
-        <div class="menus-catering">
-          <h2>Catering Menu</h2>
-          <p class="menus-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
-          <ol class="cat-list">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ol>
-          <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
-        </div>
+        ${facts(c, { compact: true })}
       </div>
     </section>
 
-    <section class="statement" aria-label="Slow smoked favorites">
+    <section class="board" aria-labelledby="board-title">
       <div class="wrap">
-        <p>Slow smoked favorites, homemade comfort food &amp; Maine hospitality.</p>
-      </div>
-    </section>
-
-    <section class="collage-wrap" aria-labelledby="taste-title">
-      <div class="wrap">
-        <h2 id="taste-title">A Taste of Schilly’s</h2>
-        <div class="collage">
-          <figure class="col-a">${PHOTO.rotisserie(c)}</figure>
-          <figure class="col-d">${PHOTO.smoker(c, "(min-width: 700px) 58vw, 100vw")}</figure>
-          <figure class="col-b">${PHOTO.grazing(c)}</figure>
+        <h2 id="board-title">Our Menus</h2>
+        <p class="board-sub">${esc(MENUS.takeout.footnotes[0])}</p>
+        <div class="board-grid">
+          <div>
+            <h3>${esc(titleCase(bbq.title))}</h3><p class="board-note">${esc(bbq.notes[0])}</p><ul class="board-list">${rows(bbq, 4)}</ul>
+            <h3>${esc(titleCase(sand.title))}</h3><ul class="board-list">${rows(sand, 3)}</ul>
+          </div>
+          <div>
+            <h3>${esc(titleCase(fam.title))}</h3><p class="board-note">${esc(fam.notes[0])}</p><ul class="board-list">${rows(fam, 4)}</ul>
+            <h3>${esc(titleCase(sides.title))}</h3><ul class="board-list">${rows(sides, 4)}</ul>
+          </div>
         </div>
+        <p class="board-cta"><a class="btn btn-yellow" href="${c.link("takeout")}">Take Out Menu</a> <a class="btn btn-ghost" href="${c.link("catering")}">Catering Menu</a></p>
       </div>
     </section>
 
     <section class="events" aria-labelledby="events-title">
-      <div class="wrap events-grid">
-        <figure class="ev-photo ev-photo-a">${PHOTO.wedding(c)}</figure>
-        <div class="ev-text">
+      <figure class="events-photo">${PHOTO.wedding(c)}</figure>
+      <div class="wrap">
+        <div class="events-panel">
           <h2 id="events-title" class="visually-hidden">Lobster Bakes • Pig Roasts • Weddings</h2>
           <ul class="event-rows">
             ${EVENTS.map((k) => `<li><a href="${c.link(k)}">${byKey[k].label}</a></li>`).join("\n            ")}
           </ul>
           ${draft(DRAFT.events, "p", "events-note")}
-          <a class="btn btn-red" href="${c.link("inquiry")}">Catering Inquiries</a>
+          <a class="btn btn-yellow" href="${c.link("inquiry")}">Catering Inquiries</a>
         </div>
       </div>
     </section>`;
@@ -450,7 +455,7 @@ function weddings(c) {
         <h2 id="wed-menu">Catering Menu</h2>
         <p class="menus-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
         <ol class="cat-list cols">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ol>
-        <a class="btn btn-quiet" href="${c.link("catering")}">Catering Menu</a>
+        <a class="btn btn-ghost" href="${c.link("catering")}">Catering Menu</a>
       </div>
     </section>`,
   });
@@ -460,19 +465,19 @@ const inquiryForm = (c, event = "") => `<!-- Set data-endpoint to the form handl
         <form id="inquiryForm" class="form" novalidate data-endpoint="">${event ? `
           <input type="hidden" name="Event type" value="${esc(event)}">` : ""}
           <div class="row">
-            <label>First name*<input name="First name" required autocomplete="given-name"></label>
-            <label>Last name*<input name="Last name" required autocomplete="family-name"></label>
+            <label>First name<span aria-hidden="true">*</span><input name="First name" required autocomplete="given-name"></label>
+            <label>Last name<span aria-hidden="true">*</span><input name="Last name" required autocomplete="family-name"></label>
           </div>
           <div class="row">
-            <label>Email address*<input name="Email address" type="email" required autocomplete="email"></label>
-            <label>Phone number*<input name="Phone number" type="tel" required minlength="10" autocomplete="tel"></label>
+            <label>Email address<span aria-hidden="true">*</span><input name="Email address" type="email" required autocomplete="email"></label>
+            <label>Phone number<span aria-hidden="true">*</span><input name="Phone number" type="tel" required minlength="10" autocomplete="tel"></label>
           </div>
-          <label>Event Location*<input name="Event Location" required></label>
+          <label>Event Location<span aria-hidden="true">*</span><input name="Event Location" required></label>
           <div class="row">
-            <label>Event Date*<input name="Event Date" type="date" required></label>
-            <label>Estimated Guest Count*<input name="Estimated Guest Count" type="number" min="1" inputmode="numeric" required></label>
+            <label>Event Date<span aria-hidden="true">*</span><input name="Event Date" type="date" required></label>
+            <label>Estimated Guest Count<span aria-hidden="true">*</span><input name="Estimated Guest Count" type="number" min="1" inputmode="numeric" required></label>
           </div>
-          <label>Message*<textarea name="Message" rows="5" required></textarea></label>
+          <label>Message<span aria-hidden="true">*</span><textarea name="Message" rows="5" required></textarea></label>
           <p class="form-req">* Required</p>
           <div class="form-foot">
             <button class="btn btn-red" type="submit" id="sendBtn">Send</button>
@@ -526,7 +531,7 @@ function doc(c) {
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="${c.asset("img/icon-32.png")}" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="${c.asset("img/icon-180.png")}">
-  <link rel="preload" href="${c.asset("fonts/newsreader-500.woff2")}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="${c.asset("fonts/big-shoulders-display.woff2")}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="${c.asset("fonts/radio-canada-400.woff2")}" as="font" type="font/woff2" crossorigin>
   ${preloadHero}
   <link rel="stylesheet" href="${c.asset("styles.css")}">

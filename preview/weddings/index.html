@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../dist/assets/img/icon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../../dist/assets/img/icon-180.png">
-  <link rel="preload" href="../../dist/assets/fonts/newsreader-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../dist/assets/fonts/big-shoulders-display.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../../dist/assets/fonts/radio-canada-400.woff2" as="font" type="font/woff2" crossorigin>
   
   <link rel="stylesheet" href="../../dist/assets/styles.css">
@@ -77,7 +77,7 @@
           <a href="../weddings/index.html" aria-current="page">Weddings</a>
           <a href="../lobster-bakes/index.html">Lobster Bakes</a>
           <a href="../pig-roasts/index.html">Pig Roasts</a>
-          <a class="btn btn-quiet nav-cta" href="../catering-inquiries/index.html">Catering Inquiries</a>
+          <a class="btn btn-yellow nav-cta" href="../catering-inquiries/index.html">Catering Inquiries</a>
       </nav>
       <div class="quick" aria-label="Main">
         <a href="../take-out-menu/index.html">Take Out Menu</a>
@@ -120,7 +120,7 @@
         <h2 id="wed-menu">Catering Menu</h2>
         <p class="menus-sub">Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
         <ol class="cat-list cols"><li><a href="../catering-menu/index.html#catering-menu-boxed-lunch">Boxed Lunch</a></li><li><a href="../catering-menu/index.html#catering-menu-elevated-boxed-lunches">Elevated Boxed Lunches</a></li><li><a href="../catering-menu/index.html#catering-menu-boxed-salads">Boxed Salads</a></li><li><a href="../catering-menu/index.html#catering-menu-soups-crock-favorites">Soups &amp; Crock Favorites</a></li><li><a href="../catering-menu/index.html#catering-menu-desserts">Desserts</a></li><li><a href="../catering-menu/index.html#catering-menu-party-platters-boards-grazes">Party Platters, Boards &amp; Grazes</a></li></ol>
-        <a class="btn btn-quiet" href="../catering-menu/index.html">Catering Menu</a>
+        <a class="btn btn-ghost" href="../catering-menu/index.html">Catering Menu</a>
       </div>
     </section>
     <section class="inquiry" aria-labelledby="ev-form">
@@ -132,19 +132,19 @@
         <form id="inquiryForm" class="form" novalidate data-endpoint="">
           <input type="hidden" name="Event type" value="Weddings">
           <div class="row">
-            <label>First name*<input name="First name" required autocomplete="given-name"></label>
-            <label>Last name*<input name="Last name" required autocomplete="family-name"></label>
+            <label>First name<span aria-hidden="true">*</span><input name="First name" required autocomplete="given-name"></label>
+            <label>Last name<span aria-hidden="true">*</span><input name="Last name" required autocomplete="family-name"></label>
           </div>
           <div class="row">
-            <label>Email address*<input name="Email address" type="email" required autocomplete="email"></label>
-            <label>Phone number*<input name="Phone number" type="tel" required minlength="10" autocomplete="tel"></label>
+            <label>Email address<span aria-hidden="true">*</span><input name="Email address" type="email" required autocomplete="email"></label>
+            <label>Phone number<span aria-hidden="true">*</span><input name="Phone number" type="tel" required minlength="10" autocomplete="tel"></label>
           </div>
-          <label>Event Location*<input name="Event Location" required></label>
+          <label>Event Location<span aria-hidden="true">*</span><input name="Event Location" required></label>
           <div class="row">
-            <label>Event Date*<input name="Event Date" type="date" required></label>
-            <label>Estimated Guest Count*<input name="Estimated Guest Count" type="number" min="1" inputmode="numeric" required></label>
+            <label>Event Date<span aria-hidden="true">*</span><input name="Event Date" type="date" required></label>
+            <label>Estimated Guest Count<span aria-hidden="true">*</span><input name="Estimated Guest Count" type="number" min="1" inputmode="numeric" required></label>
           </div>
-          <label>Message*<textarea name="Message" rows="5" required></textarea></label>
+          <label>Message<span aria-hidden="true">*</span><textarea name="Message" rows="5" required></textarea></label>
           <p class="form-req">* Required</p>
           <div class="form-foot">
             <button class="btn btn-red" type="submit" id="sendBtn">Send</button>
@@ -158,13 +158,13 @@
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      
       <div class="footer-grid">
         <dl class="footer-facts">
           <div><dt>Business Hours</dt><dd>Wednesday – Sunday · 11 am – 6 pm</dd></div>
           <div><dt>Location</dt><dd>224 Roosevelt Trail, Casco, ME 04015</dd></div>
           <div><dt>Store Phone #</dt><dd><a href="tel:+12076938840">(207) 693-8840</a></dd></div>
         </dl>
+        <svg class="badge" viewBox="0 0 200 200" role="img" aria-label="Smoked in Casco · Maine"><defs><path id="badge-path" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1"/><text class="badge-ring" data-draft><textPath href="#badge-path">Smoked in Casco · Maine · Take Out · Catering · </textPath></text><text class="badge-big" x="100" y="110" text-anchor="middle">Casco</text><text class="badge-small" x="100" y="132" text-anchor="middle">Maine</text></svg>
         <nav class="footer-nav" aria-label="Footer">
           <a href="../take-out-menu/index.html">Take Out Menu</a>
           <a href="../catering-menu/index.html">Catering Menu</a>
@@ -176,9 +176,9 @@
           <a href="https://www.facebook.com/share/1DnxQNy3wD/">Facebook</a>
         </nav>
       </div>
+      <img class="footer-logo" src="../../dist/assets/img/logo-480.webp" width="480" height="239" alt="" loading="lazy" decoding="async">
       <p class="copyright">© <span class="year">2026</span> Schilly’s Take Out & Catering Kitchen.</p>
     </div>
-    <div class="footer-sign" aria-hidden="true"><img src="../../dist/assets/img/logo-960.webp" width="960" height="477" alt="" loading="lazy" decoding="async"></div>
   </footer>
   <p class="visually-hidden" id="spyAnnounce" aria-live="polite"></p>
   <script src="../../dist/assets/app.js"></script>

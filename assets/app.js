@@ -132,6 +132,17 @@
       clearTimeout(spyLockTimer);
       spyLockTimer = setTimeout(function () { spyLock = null; syncSpy(); }, "onscrollend" in window ? 2500 : 900);
     });
+    jumpEl.addEventListener("keydown", function (e) {
+      var keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home: "first", End: "last" };
+      if (!(e.key in keys)) return;
+      var links = $$("a", jumpEl).filter(function (a) { return !a.hidden; });
+      var i = links.indexOf(document.activeElement);
+      if (i === -1) return;
+      e.preventDefault();
+      var k = keys[e.key];
+      var next = k === "first" ? 0 : k === "last" ? links.length - 1 : (i + k + links.length) % links.length;
+      links[next].focus();
+    });
     syncSpy();
   }
 
@@ -145,9 +156,8 @@
     fields.forEach(function (i, n) {
       var msg = document.createElement("p");
       msg.className = "field-error"; msg.id = "err-" + n;
-      i.setAttribute("aria-describedby", msg.id);
       i.parentNode.appendChild(msg);
-      i.addEventListener("input", function () { if (i.getAttribute("aria-invalid") === "true" && i.value.trim() && i.checkValidity()) { i.setAttribute("aria-invalid", "false"); msg.textContent = ""; } });
+      i.addEventListener("input", function () { if (i.getAttribute("aria-invalid") === "true" && i.value.trim() && i.checkValidity()) { i.removeAttribute("aria-invalid"); i.removeAttribute("aria-describedby"); msg.textContent = ""; } });
     });
     function problem(i) {
       if (!i.value.trim()) return "Required";
@@ -159,20 +169,23 @@
     }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var bad = fields.filter(function (i) {
-        var p = problem(i);
-        i.setAttribute("aria-invalid", String(!!p));
-        document.getElementById(i.getAttribute("aria-describedby")).textContent = p;
+      if (sendBtn.getAttribute("aria-disabled") === "true") return;
+      var bad = fields.filter(function (i, n) {
+        var p = problem(i), msg = document.getElementById("err-" + n);
+        msg.textContent = p;
+        if (p) { i.setAttribute("aria-invalid", "true"); i.setAttribute("aria-describedby", msg.id); }
+        else { i.removeAttribute("aria-invalid"); i.removeAttribute("aria-describedby"); }
         return !!p;
       });
       statusEl.classList.toggle("is-error", !!bad.length);
+      statusEl.setAttribute("role", bad.length ? "alert" : "status");
       if (bad.length) { statusEl.textContent = "Fill in the marked fields"; bad[0].focus(); return; }
       var data = {};
       $$("input, textarea", form).forEach(function (i) { if (i.name) data[i.name] = i.value.trim(); });
       data._subject = "Catering Inquiries";
       var endpoint = form.dataset.endpoint;
       if (!endpoint) { statusEl.innerHTML = "Not sent · " + PHONE_HTML; return; }
-      sendBtn.disabled = true;
+      sendBtn.setAttribute("aria-disabled", "true");
       statusEl.textContent = "Sending";
       fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) })
         .then(function (r) { return r.json().then(function (j) { return r.ok && String(j.success) !== "false"; }); })
@@ -182,7 +195,7 @@
           form.reset();
         })
         .catch(function () { statusEl.innerHTML = "Not sent · " + PHONE_HTML; })
-        .then(function () { sendBtn.disabled = false; });
+        .then(function () { sendBtn.removeAttribute("aria-disabled"); });
     });
   }
 

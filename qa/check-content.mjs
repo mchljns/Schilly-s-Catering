@@ -127,7 +127,8 @@ const slop = [
   [/border-left:\s*[3-9]px/, "shaded left-border callout", ["assets/styles.css"]],
   [/eyebrow|kicker/i, "hero eyebrow", ["build.mjs", "assets/styles.css"]],
   [/Oswald|Anton|Roboto|Lato|Inter\b|Poppins|Montserrat|Space Grotesk|Fraunces|Instrument|Playfair|DM Sans|Manrope|Outfit/, "retired or AI-overused typeface", ["build.mjs", "assets/styles.css"]],
-  [/text-transform:\s*uppercase/, "tracked-capitals label (brand/06-hierarchy.md)", ["assets/styles.css"]],
+  // World 1: capitals belong to the display face (the sign) and to the nav and badge. Tracked small-caps labels stay banned.
+  [/^(?!.*(var\(--display\)|\.nav a|\.quick a|\.badge|h1, h2, h3)).*text-transform:\s*uppercase/, "tracked-capitals label (brand/06-hierarchy.md)", ["assets/styles.css"]],
   [/letter-spacing:\s*\.(0[3-9]|[1-9])/, "letter-spacing over 0.02em", ["assets/styles.css"]],
   [/<figcaption/, "photo caption", ["build.mjs"]],
   [/—/, "em dash in our own labels", ["brand/source/ui-labels.txt", "assets/app.js"]],
@@ -140,8 +141,8 @@ for (const [re, what, files] of slop) for (const f of files) {
 
 // Brand rules (brand/README.md): Ribbon Red is for actions and money; Sign Yellow sits on Navy only.
 const css = own["assets/styles.css"].replace(/\/\*[\s\S]*?\*\//g, "");
-const RED_OK = /^(a|a:hover|.* a:hover|:focus-visible|\.btn-red(:hover)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.pl-price|\.facts-line dd a|\.field-error|\.form-status\.is-error|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus|\.nav a\[aria-current="page"\]:not\(\.btn\))$/;
-const YELLOW_OK = /^(\.btn-yellow)$/;
+const RED_OK = /^(a|a:hover|.* a:hover|:focus-visible|\.btn-red(:hover|:active)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.pl-price|\.facts-line dd a|\.field-error|\.form-status\.is-error|\.fact-action|\.event-side \.event-rows a:hover|\.on-cream :focus-visible|\.cream :focus-visible|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus|\.nav a\[aria-current="page"\]:not\(\.btn\))$/;
+const YELLOW_OK = /^(\.btn-yellow|:focus-visible|\.skip-link|\.skip-link:focus, \.skip-link:hover|::selection|\.hero-lede|\.props h2|\.board h3|\.badge|\.badge-big|\.event-rows a:hover|\.cat-list a:hover|\.footer-nav a:hover|\.nav a\[aria-current="page"\]:not\(\.btn\)|\.events-panel)$/;
 for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   const selectors = m[1].trim().split(/\s*,\s*/).filter((x) => x && !x.startsWith("@") && !x.startsWith(":root"));
   if (/var\(--red(-dark)?\)/.test(m[2])) selectors.filter((x) => !RED_OK.test(x)).forEach((x) => failures.push(`brand: Ribbon Red used on "${x}" (actions and money only)`));
