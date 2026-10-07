@@ -6,16 +6,9 @@
   var TZ = "America/New_York";
   var HOURS = { days: [0, 3, 4, 5, 6], open: 11, close: 18 }; // 0 = Sunday. Keep in sync with SITE in build.mjs.
   var PHONE_HTML = '<a href="tel:+12076938840">(207)693-8840</a>';
-  var STORE_KEY = "schillys-dishes";
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  function el(tag, attrs, text) {
-    var n = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
-    if (text != null) n.textContent = text;
-    return n;
-  }
 
   /* Phone and tablet navigation: the menu opens in the page flow, not over it. */
   var toggle = $(".nav-toggle"), nav = $("#site-nav");
@@ -142,42 +135,6 @@
     syncSpy();
   }
 
-  /* Dishes: catering items saved in this browser and carried to the inquiry form.
-     Nothing leaves the browser until the form is sent. */
-  var dishes = load();
-  function load() { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch (e) { return []; } }
-  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(dishes)); } catch (e) { /* private mode */ } }
-  function syncDishes() {
-    $$(".add").forEach(function (b) {
-      var on = dishes.indexOf(b.dataset.dish) !== -1;
-      b.setAttribute("aria-pressed", String(on));
-      b.textContent = on ? "Added" : "+ Add";
-    });
-    var bar = $("#dishesBar");
-    if (bar) { bar.hidden = !dishes.length; $("#dishesBarList").textContent = dishes.join(" • "); }
-    var list = $("#pickedList");
-    if (list) {
-      list.textContent = "";
-      dishes.forEach(function (d) {
-        var li = el("li", null, d);
-        li.appendChild(el("button", { type: "button", "data-dish": d, "aria-label": "Remove: " + d }, "×"));
-        list.appendChild(li);
-      });
-      $("#picked").hidden = !dishes.length;
-    }
-  }
-  function toggleDish(d) {
-    var i = dishes.indexOf(d);
-    if (i === -1) dishes.push(d); else dishes.splice(i, 1);
-    save();
-    syncDishes();
-  }
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest(".add, #pickedList button");
-    if (b) toggleDish(b.dataset.dish);
-  });
-  syncDishes();
-
   /* Inquiry form: same fields as the current site. Sends JSON to data-endpoint. */
   var form = $("#inquiryForm");
   if (form) {
@@ -192,7 +149,6 @@
       if (bad.length) { statusEl.textContent = ""; bad[0].focus(); return; }
       var data = {};
       $$("input, textarea", form).forEach(function (i) { if (i.name) data[i.name] = i.value.trim(); });
-      if (dishes.length) data.Dishes = dishes.join(", ");
       data._subject = "Catering Inquiries";
       var endpoint = form.dataset.endpoint;
       if (!endpoint) { statusEl.innerHTML = "Not sent · " + PHONE_HTML; return; }
@@ -204,9 +160,6 @@
           if (!ok) throw new Error("rejected");
           statusEl.textContent = "Sent";
           form.reset();
-          dishes = [];
-          save();
-          syncDishes();
         })
         .catch(function () { statusEl.innerHTML = "Not sent · " + PHONE_HTML; })
         .then(function () { sendBtn.disabled = false; });

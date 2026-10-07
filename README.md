@@ -17,7 +17,7 @@ Every sentence on the site comes from the current schillyscatering.com, cut but 
 | --- | --- |
 | `/` | Headline, services, hours with open or closed status, location, phone, the BBQ Plates section, links to both menus, photos, events |
 | `/take-out-menu/` | The full take-out menu with prices, section rail, search, print |
-| `/catering-menu/` | The full catering menu with + Add (saves dishes in the browser for the inquiry form) |
+| `/catering-menu/` | The full catering menu |
 | `/weddings/` | Wedding photo, catering platters and desserts, inquiry |
 | `/lobster-bakes/`, `/pig-roasts/` | Their one line and the way to ask. Not indexed until Schilly’s sends menus |
 | `/catering-inquiries/` | Their form, same fields |

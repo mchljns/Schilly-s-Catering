@@ -160,11 +160,8 @@ function menuSection(menu, sec, catering) {
   const notes = sec.notes ? `<div class="sec-notes">${sec.notes.map((n) => `<p>${esc(n)}</p>`).join("")}</div>` : "";
   const items = sec.items.map(([name, p, detail]) => {
     const search = esc([name, detail, sec.title].filter(Boolean).join(" ").toLowerCase());
-    const right = catering
-      ? `<button type="button" class="add" data-dish="${esc(name)}" aria-pressed="false" aria-label="+ Add: ${esc(name)}">+ Add</button>`
-      : "";
     const priceHtml = p ? `<span class="leader" aria-hidden="true"></span><span class="item-price">${esc(p)}</span>` : "";
-    return `<li class="item" data-search="${search}"><div class="item-text"><p class="item-name">${esc(titleCase(name))}</p>${detail ? `<p class="item-detail">${esc(detail)}</p>` : ""}</div>${priceHtml}${right}</li>`;
+    return `<li class="item" data-search="${search}"><div class="item-text"><p class="item-name">${esc(titleCase(name))}</p>${detail ? `<p class="item-detail">${esc(detail)}</p>` : ""}</div>${priceHtml}</li>`;
   }).join("\n");
   const group = sec.group ? `<p class="menu-group">${esc(sec.group)}</p>` : "";
   return `${group}<section class="menu-sec" id="${id}" aria-labelledby="${id}-h">
@@ -200,11 +197,6 @@ ${spy}
 ${menu.sections.map((s) => menuSection(menu, s, catering)).join("\n")}
             </div>
             <p class="menu-empty" id="menuEmpty" hidden>No matches</p>
-            ${catering ? `<div class="dishes-bar" id="dishesBar" hidden>
-              <span class="dishes-label">Dishes</span>
-              <span class="dishes-list" id="dishesBarList"></span>
-              <a class="btn btn-red" href="${c.link("inquiry")}">Catering Inquiries</a>
-            </div>` : ""}
             <div class="menu-foot">${foot.join("")}</div>
           </div>
         </div>`;
@@ -258,6 +250,8 @@ function ld(c) {
 
 /* ---------- page bodies ---------- */
 const PHOTO = {
+  salmon: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/salmon-platter-640.webp")}" srcset="${c.asset("img/salmon-platter-640.webp")} 640w, ${c.asset("img/salmon-platter-1200.webp")} 1200w" sizes="(min-width: 900px) 55vw, 100vw" width="1200" height="1600" alt="Smoked salmon platter on a ring of sliced cucumber">`,
+  rotisserie: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/rotisserie-1200.webp")}" srcset="${c.asset("img/rotisserie-640.webp")} 640w, ${c.asset("img/rotisserie-1200.webp")} 1200w" sizes="(min-width: 900px) 55vw, 100vw" width="1200" height="481" alt="Whole chickens turning on a rotisserie spit">`,
   brisket: (c, attrs = "") => `<img src="${c.asset("img/brisket-640.webp")}" srcset="${c.asset("img/brisket-640.webp")} 640w, ${c.asset("img/brisket-900.webp")} 900w, ${c.asset("img/brisket-1200.webp")} 1200w" sizes="(min-width: 900px) 44vw, 100vw" width="1200" height="1600" alt="Smoked brisket in a pan with a thermometer reading 192 degrees"${attrs}>`,
   wedding: (c) => `<img loading="lazy" decoding="async" src="${c.asset("img/wedding-chef-832.webp")}" srcset="${c.asset("img/wedding-chef-640.webp")} 640w, ${c.asset("img/wedding-chef-832.webp")} 832w" sizes="(min-width: 900px) 45vw, 100vw" width="832" height="554" alt="Schilly’s chef in an apron with a bride, holding a plate at a wedding">`,
   taste: (c) => `<div class="photos">
@@ -344,21 +338,40 @@ const menuPage = (c, menu, catering) => `${pageHead(c, esc(menu.sub))}
       </div>
     </section>`;
 
+const EVENTS = ["lobster", "pig", "weddings"];
+
+/* Lobster Bakes, Pig Roasts and Weddings. The live site has no menus for these yet ("Reach out today
+   for menus"), so each page is built around the inquiry form instead of invented detail. */
 function eventPage(c, extra) {
+  const others = EVENTS.filter((k) => k !== c.page.key).map((k) => `<li><a href="${c.link(k)}">${byKey[k].label}</a></li>`).join("");
   return `${pageHead(c, "Reach out today for menus.")}
     <section class="event-body">
       <div class="wrap event-grid">
-        <div class="event-main">
-          ${extra.photo || ""}
-          <div class="event-actions">
-            <a class="btn btn-red" href="${c.link("inquiry")}">Catering Inquiries</a>
-            <a class="btn btn-quiet" href="tel:${SITE.tel}">${SITE.phone}</a>
-          </div>
-        </div>
-        <aside class="event-side">${facts(c, { compact: true })}</aside>
+        <div class="event-main">${extra.photo}</div>
+        <aside class="event-side">
+          ${facts(c, { compact: true })}
+          <ul class="plain-list">${others}</ul>
+        </aside>
       </div>
     </section>
-    ${extra.after || ""}`;
+    ${extra.after || ""}
+    <section class="inquiry" aria-labelledby="ev-form">
+      <div class="wrap inquiry-grid">
+        <div>
+          <h2 id="ev-form">LET’S PLAN YOUR EVENT</h2>
+          <p class="lead">Tell us a little about your event and we’ll be in touch.</p>
+          ${inquiryForm(c, byKey[c.page.key].label)}
+        </div>
+      </div>
+    </section>
+    ${extra.after ? "" : `<section class="menus-home" aria-labelledby="ev-menu">
+      <div class="wrap">
+        <h2 id="ev-menu">CATERING MENU</h2>
+        <p>Weddings • Backyard BBQs • Corporate Events • Private Parties</p>
+        <ul class="plain-list cols">${MENUS.catering.sections.map((s) => `<li><a href="${c.link("catering", "#" + MENUS.catering.id + "-" + slug(s.title))}">${esc(titleCase(s.title))}</a></li>`).join("")}</ul>
+        <a class="btn btn-quiet" href="${c.link("catering")}">View Catering Menu</a>
+      </div>
+    </section>`}`;
 }
 
 function weddings(c) {
@@ -376,12 +389,9 @@ function weddings(c) {
   });
 }
 
-function inquiry(c) {
-  return `${pageHead(c, "Tell us a little about your event and we’ll be in touch.")}
-    <section class="inquiry">
-      <div class="wrap inquiry-grid">
-        <!-- Set data-endpoint to the form handler (e.g. https://formsubmit.co/ajax/<email>) before launch. See README. -->
-        <form id="inquiryForm" class="form" novalidate data-endpoint="">
+const inquiryForm = (c, event = "") => `<!-- Set data-endpoint to the form handler (e.g. https://formsubmit.co/ajax/<email>) before launch. See README. -->
+        <form id="inquiryForm" class="form" novalidate data-endpoint="">${event ? `
+          <input type="hidden" name="Event type" value="${esc(event)}">` : ""}
           <div class="row">
             <label>First name*<input name="First name" required autocomplete="given-name"></label>
             <label>Last name*<input name="Last name" required autocomplete="family-name"></label>
@@ -395,16 +405,18 @@ function inquiry(c) {
             <label>Event Date*<input name="Event Date" type="date" required></label>
             <label>Estimated Guest Count*<input name="Estimated Guest Count" type="number" min="1" inputmode="numeric" required></label>
           </div>
-          <div class="picked" id="picked" hidden>
-            <p class="picked-label">Dishes</p>
-            <ul id="pickedList"></ul>
-          </div>
           <label>Message*<textarea name="Message" rows="5" required></textarea></label>
           <div class="form-foot">
             <button class="btn btn-red" type="submit" id="sendBtn">Send</button>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </div>
-        </form>
+        </form>`;
+
+function inquiry(c) {
+  return `${pageHead(c, "Tell us a little about your event and we’ll be in touch.")}
+    <section class="inquiry">
+      <div class="wrap inquiry-grid">
+        ${inquiryForm(c)}
         <aside>${facts(c, { compact: true })}</aside>
       </div>
     </section>`;
@@ -414,8 +426,8 @@ const BODY = {
   home, inquiry, weddings,
   takeout: (c) => menuPage(c, MENUS.takeout, false),
   catering: (c) => menuPage(c, MENUS.catering, true),
-  lobster: (c) => eventPage(c, {}),
-  pig: (c) => eventPage(c, {}),
+  lobster: (c) => eventPage(c, { photo: PHOTO.salmon(c) }),
+  pig: (c) => eventPage(c, { photo: PHOTO.rotisserie(c) }),
 };
 
 /* ---------- document ---------- */
