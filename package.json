@@ -1,9 +1,10 @@
 {
   "name": "schillys-site",
   "private": true,
-  "description": "Static site for Schilly's Take Out & Catering Kitchen. No build step.",
+  "description": "Static multi-page site for Schilly's Take Out & Catering Kitchen. Build with `npm run build`; deploy dist/.",
   "scripts": {
-    "check": "node qa/check-content.mjs && node qa/check-layout.mjs",
+    "build": "node build.mjs",
+    "check": "node build.mjs && node qa/check-content.mjs && node qa/check-layout.mjs",
     "check:content": "node qa/check-content.mjs",
     "check:layout": "node qa/check-layout.mjs"
   }

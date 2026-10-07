@@ -15,6 +15,7 @@ How Schilly’s Take Out & Catering Kitchen looks and reads, built with the Gene
 | 06 Hierarchy and AI giveaways | `06-hierarchy.md` |
 | 07 Copy: removing the AI feel | `07-copy.md` |
 | 08 Hero construction | `08-hero.md` |
+| 09 Site structure for SEO and AEO | `09-site-structure.md` |
 | QA log | `QA-LOG.md` |
 | Live-site text (the only allowed copy) | `source/` |
 | Logo files | `logo/` |

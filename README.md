@@ -1,26 +1,47 @@
 # Schilly’s Take Out & Catering Kitchen website
 
-A one-page static site for schillyscatering.com: plain HTML, CSS and JavaScript, no build step. Upload the folder to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages).
+A static, multi-page site for schillyscatering.com. Plain HTML, CSS and JavaScript, built by one script with no dependencies.
 
-Every sentence on the page comes from the current schillyscatering.com. The logo and the five photos are Schilly’s own. Type is Solway (a friendly slab that echoes the logo’s ribbon lettering, chosen by the client) and Radio Canada, chosen in a Google Fonts deep dive to avoid faces that AI-built sites overuse. The brand work follows the Generation Maine process; every stage and reason is in `brand/README.md`, and `brand/guide.html` shows the system on one page.
+```bash
+npm run build     # writes dist/ (production) and preview/ (for opening from GitHub)
+npm run check     # builds, then runs both QA gates on every page
+```
 
-## What’s on the page
+Deploy the `dist/` folder to any static host (Netlify, Cloudflare Pages, Vercel, GitHub Pages). `dist/_redirects` covers Netlify and Cloudflare Pages.
 
-1. Header: logo, Take Out Menu, Catering Menu, Catering Inquiries.
-2. Hero: SMOKED. HOMEMADE. MAINE., their services line, then Business Hours (with an open or closed status on Maine time), Location (Get directions) and Store Phone # (Call) as rows. The brisket photo.
-3. Our Menus: a Take Out and Catering switch, a section rail that tracks your place (chips on phones), search, print. Take-out prices on dotted leaders. Catering items have + Add, which carries dishes into the inquiry.
-4. A Taste of Schilly’s: three of their photos.
-5. Lobster Bakes, Pig Roasts, Weddings: their text and the wedding photo.
-6. Let’s Plan Your Event: their form, same fields.
-7. Footer: Hungry Yet?, hours, location, phone, Instagram, Facebook.
+Every sentence on the site comes from the current schillyscatering.com, cut but never reworded (`brand/07-copy.md`). The logo and photos are Schilly’s own. Type is Solway and Radio Canada (`brand/04-type-study.md`). The brand process, every decision and the reasons are in `brand/README.md`. The page structure for search and answer engines is in `brand/09-site-structure.md`.
+
+## Pages
+
+| URL | What’s on it |
+| --- | --- |
+| `/` | Headline, services, hours with open or closed status, location, phone, the BBQ Plates section, links to both menus, photos, events |
+| `/take-out-menu/` | The full take-out menu with prices, section rail, search, print |
+| `/catering-menu/` | The full catering menu with + Add (saves dishes in the browser for the inquiry form) |
+| `/weddings/` | Wedding photo, catering platters and desserts, inquiry |
+| `/lobster-bakes/`, `/pig-roasts/` | Their one line and the way to ask. Not indexed until Schilly’s sends menus |
+| `/catering-inquiries/` | Their form, same fields |
+
+## Files
+
+| Path | What it is |
+| --- | --- |
+| `build.mjs` | Pages, layout, structured data, sitemap, robots, llms files, redirects |
+| `src/data/menus.mjs` | Both menus. Paste Schilly’s wording here, never rewrite it |
+| `assets/` | Styles, the browser script, fonts, images |
+| `dist/` | Built site to deploy (committed) |
+| `preview/` | The same pages linking with `index.html`, for opening from GitHub via raw.githack (committed) |
+| `qa/` | The two gates and the color tools |
+| `brand/` | Brand process, identity system, saved source text, logo files |
 
 ## Editing
 
 | Change | File |
 | --- | --- |
-| Menu items or prices | `assets/menu-data.js` (paste their wording, don’t rewrite it) |
-| Hours | `index.html` (two places), `HOURS` in `assets/app.js`, JSON-LD in `index.html` |
-| Colors, type, spacing | `assets/styles.css` tokens, matching `brand/README.md` |
+| Menu items or prices | `src/data/menus.mjs`, then `npm run build` |
+| Hours, address, phone | `SITE` in `build.mjs`, and `HOURS` in `assets/app.js` |
+| Colors, type, spacing | `assets/styles.css` tokens, matching `brand/05-identity-system.md` |
+| Index Lobster Bakes or Pig Roasts | add content, set `index: true` in `PAGES` in `build.mjs` |
 | New interface label | add it to `brand/source/ui-labels.txt` first |
 
 ## Checks
@@ -39,7 +60,7 @@ Needs Node 18+ and Playwright with Chromium. Two gates:
 
 ## Before launch
 
-1. **Connect the form.** Their current form sends through the site builder, and the site doesn’t show an email address. Set `data-endpoint` on `<form id="inquiryForm">` in `index.html`. For FormSubmit, the form Green Falls uses: `https://formsubmit.co/ajax/<their email>`, then confirm the activation email FormSubmit sends. Until it’s set, Send shows “Not sent” with the store phone number.
+1. **Connect the form.** Their current form sends through the site builder, and the site doesn’t show an email address. Set `data-endpoint` on the form in the `inquiry` function in `build.mjs`. For FormSubmit, the form Green Falls uses: `https://formsubmit.co/ajax/<their email>`, then confirm the activation email FormSubmit sends. Until it’s set, Send shows “Not sent” with the store phone number.
 2. **Send one real test inquiry** after connecting it, and confirm it arrives.
 3. **Point the domain** at the new host. The page keeps their current section names as anchors (`#take-out-menu`, `#catering-menu`, `#catering-inquiries`, `#lobster-bakes`, `#pig-roasts`, `#weddings`). The old paths (`/take-out-menu`, `/catering-menu` and so on) need redirects to those anchors on the host.
 4. **Test on a real iPhone.** QA ran in Chromium, not Safari on a device.

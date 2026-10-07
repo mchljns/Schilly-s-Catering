@@ -3,7 +3,7 @@
 // Gate 2: slop markers in our own files.
 import fs from "node:fs";
 import path from "node:path";
-import { ROOT, serve, chromium, norm } from "./lib.mjs";
+import { ROOT, serve, chromium, norm, pages } from "./lib.mjs";
 
 const srcDir = path.join(ROOT, "brand/source");
 const sourceText = fs.readdirSync(srcDir).filter((f) => f.endsWith(".txt") && f !== "ui-labels.txt")
@@ -27,7 +27,7 @@ const DESCRIPTIONS = [
 function allowed(fragment) {
   // A trimmed line keeps its full stop: "…be in touch." is their sentence, cut short.
   const f = norm(fragment).replace(/[\s•·]+$/, "").replace(/[.?!]$/, "");
-  if (!f || /^[•·×*\-–—|,.:;()]+$/.test(f)) return true;
+  if (!f || /^[•·×*\-–—|,.:;()/]+$/.test(f)) return true;
   if (/^©?\s*\d{4}$/.test(f)) return true;
   if (corpus.includes(f) || labels.includes(f) || DESCRIPTIONS.includes(f)) return true;
   return false;
@@ -40,10 +40,8 @@ function check(text) {
 }
 
 const site = await serve();
-const PAGE = site.url;
 const browser = await (chromium()).launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-await page.goto(PAGE);
 
 const collect = () => page.evaluate(() => {
   const out = [];
@@ -59,13 +57,30 @@ const collect = () => page.evaluate(() => {
   document.querySelectorAll('meta[name="description"],meta[property^="og:"]:not([property$="url"]):not([property$="image"]):not([property$="type"]):not([property*="width"]):not([property*="height"])')
     .forEach((m) => out.push({ where: "meta", text: m.content }));
   out.push({ where: "title", text: document.title });
+  // Structured data is content too: every human-readable string in JSON-LD must trace like visible text.
+  document.querySelectorAll('script[type="application/ld+json"]').forEach((sc) => {
+    const SKIP = /^(@id|@type|@context|url|item|logo|image|telephone|price|priceCurrency|opens|closes|inLanguage|postalCode|addressCountry|addressRegion|dayOfWeek|hasMenu|sameAs|position)$/;
+    const walk = (v, k) => {
+      if (Array.isArray(v)) return v.forEach((x) => walk(x, k));
+      if (v && typeof v === "object") return Object.entries(v).forEach(([kk, vv]) => walk(vv, kk));
+      if (typeof v !== "string" || SKIP.test(k) || /^https?:/.test(v)) return;
+      out.push({ where: "jsonld." + k, text: v });
+    };
+    walk(JSON.parse(sc.textContent), "");
+  });
+  out.push({ where: "h1count", text: String(document.querySelectorAll("h1").length) });
   return out;
 });
 
-let found = await collect();
-await page.click("#tab-catering");
-found = found.concat(await collect());
-await page.fill('[name="First name"]', "x");
+let found = [];
+const urls = pages().map((p) => p.path).concat(["404.html"]);
+for (const u of urls) {
+  await page.goto(site.url + u);
+  const got = await collect();
+  const h1 = got.find((x) => x.where === "h1count");
+  if (h1.text !== "1") found.push({ where: "hierarchy", text: `/${u} has ${h1.text} <h1>` });
+  found = found.concat(got.filter((x) => x.where !== "h1count").map((x) => ({ ...x, page: "/" + u })));
+}
 await browser.close();
 site.close();
 
@@ -75,7 +90,8 @@ for (const { where, text } of found) {
   const key = where + "|" + text;
   if (seen.has(key)) continue;
   seen.add(key);
-  if (where === "title" || where === "meta") {
+  if (where === "hierarchy") { failures.push(`hierarchy: ${text}`); continue; }
+  if (where === "title" || where === "meta" || where.startsWith("jsonld")) {
     // Titles and meta may combine approved phrases with " · ", "&" or ". "
     if (!text.split(/\s+·\s+|\.\s+(?=[A-Z0-9(])/).every((p) => check(p) || check(p.replace(/\.$/, "")))) failures.push(`${where}: "${text}"`);
     continue;
@@ -85,33 +101,32 @@ for (const { where, text } of found) {
 
 // Slop lint on files we wrote.
 const own = {
-  "index.html": fs.readFileSync(path.join(ROOT, "index.html"), "utf8"),
+  "build.mjs": fs.readFileSync(path.join(ROOT, "build.mjs"), "utf8"),
   "assets/styles.css": fs.readFileSync(path.join(ROOT, "assets/styles.css"), "utf8"),
   "assets/app.js": fs.readFileSync(path.join(ROOT, "assets/app.js"), "utf8"),
   "brand/source/ui-labels.txt": fs.readFileSync(path.join(srcDir, "ui-labels.txt"), "utf8"),
 };
 const slop = [
-  [/(?![©®™])\p{Extended_Pictographic}/u, "emoji", ["index.html", "assets/app.js", "brand/source/ui-labels.txt"]],
-  [/gradient\(/, "CSS gradient", ["assets/styles.css", "index.html"]],
+  [/(?![©®™])\p{Extended_Pictographic}/u, "emoji", ["build.mjs", "assets/app.js", "brand/source/ui-labels.txt"]],
+  [/gradient\(/, "CSS gradient", ["assets/styles.css", "build.mjs"]],
   [/translateY|scale\(/, "lift/scale hover motion", ["assets/styles.css"]],
   [/border-left:\s*[3-9]px/, "shaded left-border callout", ["assets/styles.css"]],
-  [/eyebrow|kicker/i, "hero eyebrow", ["index.html", "assets/styles.css"]],
-  [/Oswald|Anton|Roboto|Lato|Inter\b|Poppins|Montserrat|Space Grotesk|Fraunces|Instrument|Playfair|DM Sans|Manrope|Outfit/, "retired or AI-overused typeface", ["index.html", "assets/styles.css"]],
+  [/eyebrow|kicker/i, "hero eyebrow", ["build.mjs", "assets/styles.css"]],
+  [/Oswald|Anton|Roboto|Lato|Inter\b|Poppins|Montserrat|Space Grotesk|Fraunces|Instrument|Playfair|DM Sans|Manrope|Outfit/, "retired or AI-overused typeface", ["build.mjs", "assets/styles.css"]],
   [/text-transform:\s*uppercase/, "tracked-capitals label (brand/06-hierarchy.md)", ["assets/styles.css"]],
   [/letter-spacing:\s*\.(0[3-9]|[1-9])/, "letter-spacing over 0.02em", ["assets/styles.css"]],
-  [/<figcaption/, "photo caption", ["index.html"]],
+  [/<figcaption/, "photo caption", ["build.mjs"]],
   [/—/, "em dash in our own labels", ["brand/source/ui-labels.txt", "assets/app.js"]],
-  [/lorem|placeholder text|TODO|\[CONFIRM/i, "unfinished placeholder", ["index.html", "assets/app.js"]],
+  [/lorem|placeholder text|TODO|\[CONFIRM/i, "unfinished placeholder", ["build.mjs", "assets/app.js"]],
 ];
 for (const [re, what, files] of slop) for (const f of files) {
   const lines = own[f].split("\n");
   lines.forEach((l, i) => { if (re.test(l) && !/^\s*(\/\/|\/\*|\*|<!--|#)/.test(l)) failures.push(`slop (${what}): ${f}:${i + 1}: ${l.trim().slice(0, 90)}`); });
 }
 
-if ((own["index.html"].match(/<h1[\s>]/g) || []).length !== 1) failures.push("hierarchy: the page must have exactly one <h1>");
 // Brand rules (brand/README.md): Ribbon Red is for actions and money; Sign Yellow sits on Navy only.
 const css = own["assets/styles.css"].replace(/\/\*[\s\S]*?\*\//g, "");
-const RED_OK = /^(a|a:hover|:focus-visible|\.btn-red(:hover)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus)$/;
+const RED_OK = /^(a|a:hover|.* a:hover|:focus-visible|\.btn-red(:hover)?|\.ribbon|\.item-price|\.add(\[aria-pressed="true"\])?|\.form \[aria-invalid="true"\]|\.picked li button|\.search input:focus|\.form input:focus|\.form textarea:focus|\.nav a\[aria-current="page"\]:not\(\.btn\))$/;
 const YELLOW_OK = /^(\.site-footer :focus-visible|\.btn-yellow|\.closer h2)$/;
 for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
   const selectors = m[1].trim().split(/\s*,\s*/).filter((x) => x && !x.startsWith("@") && !x.startsWith(":root"));

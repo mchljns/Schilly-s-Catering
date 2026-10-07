@@ -1,0 +1,37 @@
+[
+ {
+  "key": "home",
+  "path": "",
+  "index": true
+ },
+ {
+  "key": "takeout",
+  "path": "take-out-menu/",
+  "index": true
+ },
+ {
+  "key": "catering",
+  "path": "catering-menu/",
+  "index": true
+ },
+ {
+  "key": "weddings",
+  "path": "weddings/",
+  "index": true
+ },
+ {
+  "key": "lobster",
+  "path": "lobster-bakes/",
+  "index": false
+ },
+ {
+  "key": "pig",
+  "path": "pig-roasts/",
+  "index": false
+ },
+ {
+  "key": "inquiry",
+  "path": "catering-inquiries/",
+  "index": true
+ }
+]

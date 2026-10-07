@@ -1,16 +1,16 @@
 /*
  * Schilly's Take Out & Catering Kitchen: menu data.
  *
- * Every word here is copied from schillyscatering.com (/take-out-menu and
- * /catering-menu, October 2026). Keep it that way: when the menu changes,
- * paste the new wording, don't rewrite it. `npm run check` (qa/check-content.mjs)
- * fails if any text here is missing from brand/source/.
+ * Every word here comes from schillyscatering.com (/take-out-menu and /catering-menu,
+ * October 2026), cut but never reworded (brand/07-copy.md). When the menu changes, paste the
+ * new wording here and run `npm run build`. `npm run check` fails if any text is missing
+ * from brand/source/.
  *
  *   title  section heading, as printed on the menu
  *   notes  lines printed under the heading
  *   items  [name, price?, detail?]  price and detail are optional
  */
-window.MENUS = {
+export const MENUS = {
   takeout: {
     id: "take-out-menu",
     label: "TAKE OUT & FAMILY MEALS",

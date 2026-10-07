@@ -31,3 +31,9 @@ Sending
 Sent
 Not sent
 Copy
+Home
+Menu
+Main
+Footer
+Breadcrumb
+Page not found

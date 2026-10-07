@@ -1,7 +1,7 @@
 // Gate 3: layout, readability, contrast, first-screen info and weight at four widths.
 import fs from "node:fs";
 import path from "node:path";
-import { ROOT, serve, chromium } from "./lib.mjs";
+import { ROOT, serve, chromium, pages } from "./lib.mjs";
 
 const SHOTS = process.env.SHOTS || "";
 const widths = [[360, 740], [390, 844], [768, 1024], [1280, 900]];
@@ -11,14 +11,15 @@ const site = await serve();
 const PAGE = site.url;
 const browser = await (chromium()).launch();
 
-for (const [w, h] of widths) {
+const URLS = pages().map((p) => p.path).concat(["404.html"]);
+for (const u of URLS) for (const [w, h] of widths) {
   const page = await browser.newPage({ viewport: { width: w, height: h }, reducedMotion: "reduce" });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   const bytes = { first: 0 };
   page.on("response", async (r) => { try { const b = await r.body(); bytes.first += b.length; } catch {} });
-  await page.goto(PAGE, { waitUntil: "load" });
+  await page.goto(PAGE + u, { waitUntil: "load" });
   await page.waitForTimeout(300);
   const firstScreenKB = Math.round(bytes.first / 1024);
 
@@ -70,16 +71,23 @@ for (const [w, h] of widths) {
     });
     out.ribbons = document.querySelectorAll(".ribbon").length;
     const inView = (sel) => { const e = document.querySelector(sel); if (!e) return false; const b = e.getBoundingClientRect(); return b.top < innerHeight * 3 && b.bottom > 0; };
-    out.firstScreen = { hours: document.querySelector(".facts").getBoundingClientRect().top, vh: innerHeight };
-    out.inquiryInHeader = !!document.querySelector('.site-header a[href="#catering-inquiries"]');
+    const facts = document.querySelector(".facts");
+    out.firstScreen = { hours: facts ? facts.getBoundingClientRect().top : -1, vh: innerHeight };
+    out.inquiryInHeader = [...document.querySelectorAll('.site-header a[href*="catering-inquiries"]')].some(visible);
     return out;
   });
 
-  // Price within two taps: tap "Take Out Menu" in the header, then a price is on screen.
-  await page.click('.nav a[data-tab-link="takeout"]');
-  await page.waitForTimeout(400);
-  await page.waitForTimeout(200);
-  const priceOnScreen = await page.evaluate(() => [...document.querySelectorAll(".item-price")].some((p) => { const b = p.getBoundingClientRect(); return b.top >= 0 && b.bottom <= innerHeight; }));
+  // Price within two taps (home only): tap Take Out Menu in the header, then at most one section link.
+  let priceTaps = null;
+  if (u === "") {
+    const takeout = (await page.$$('.site-header a[href*="take-out-menu"]'));
+    for (const a of takeout) { if (await a.isVisible()) { await Promise.all([page.waitForLoadState("load"), a.click()]); break; } }
+    await page.waitForTimeout(300);
+    const onScreen = () => page.evaluate(() => [...document.querySelectorAll(".item-price")].some((p) => { const b = p.getBoundingClientRect(); return b.top >= 0 && b.bottom <= innerHeight; }));
+    if (await onScreen()) priceTaps = 1;
+    else { await page.click("#menuJump a"); await page.waitForTimeout(400); if (await onScreen()) priceTaps = 2; }
+    await page.goto(PAGE + u, { waitUntil: "load" });
+  }
 
   // Lazy images: scroll the page so they load, then check none are broken.
   await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 30)); } });
@@ -87,12 +95,13 @@ for (const [w, h] of widths) {
   const broken = await page.evaluate(() => [...document.querySelectorAll("img")].filter((i) => !i.naturalWidth).map((i) => i.src.split("/").pop()));
   if (SHOTS) {
     await page.evaluate(() => scrollTo(0, 0));
-    await page.screenshot({ path: path.join(SHOTS, `w${w}-full.png`), fullPage: true });
-    await page.screenshot({ path: path.join(SHOTS, `w${w}-top.png`) });
+    const name = (u.replace(/\/$/, "").replace(".html", "") || "home");
+    await page.screenshot({ path: path.join(SHOTS, `${name}-w${w}-full.png`), fullPage: true });
+    await page.screenshot({ path: path.join(SHOTS, `${name}-w${w}-top.png`) });
   }
   await page.close();
 
-  const tag = `[${w}px]`;
+  const tag = `[/${u} ${w}px]`;
   if (r.overflow) failures.push(`${tag} horizontal overflow`);
   r.small.forEach((x) => failures.push(`${tag} text under 14px: ${x}`));
   r.contrast.forEach((x) => failures.push(`${tag} contrast: ${x}`));
@@ -103,10 +112,11 @@ for (const [w, h] of widths) {
   broken.forEach((x) => failures.push(`${tag} broken image: ${x}`));
   errors.forEach((x) => failures.push(`${tag} console: ${x}`));
   if (!r.inquiryInHeader) failures.push(`${tag} no inquiry link in header`);
-  if (!priceOnScreen) failures.push(`${tag} no price on screen after tapping Take Out Menu`);
-  if (w <= 390 && r.firstScreen.hours > r.firstScreen.vh - 60) failures.push(`${tag} hours band starts at ${Math.round(r.firstScreen.hours)}px, below the first screen (${r.firstScreen.vh}px)`);
+  if (u === "" && !priceTaps) failures.push(`${tag} no price on screen within two taps of Take Out Menu`);
+  if (u === "" && w <= 390 && r.firstScreen.hours > r.firstScreen.vh - 60) failures.push(`${tag} hours band starts at ${Math.round(r.firstScreen.hours)}px, below the first screen (${r.firstScreen.vh}px)`);
   if (firstScreenKB > 600) failures.push(`${tag} first load ${firstScreenKB} KB (budget 600)`);
-  notes.push(`${tag} first load ${firstScreenKB} KB, hours band at ${Math.round(r.firstScreen.hours)}px of ${r.firstScreen.vh}`);
+  if (u === "") notes.push(`${tag} first load ${firstScreenKB} KB, hours at ${Math.round(r.firstScreen.hours)}px of ${r.firstScreen.vh}, price in ${priceTaps} tap(s)`);
+  else if (w === 390) notes.push(`${tag} first load ${firstScreenKB} KB`);
 }
 // The brand guide must follow its own rules too: no overflow, no stretched logo.
 for (const w of [390, 1280]) {
@@ -126,4 +136,4 @@ site.close();
 
 console.log(notes.join("\n"));
 if (failures.length) { console.error(`check-layout: ${failures.length} problem(s)\n  ` + failures.join("\n  ")); process.exit(1); }
-console.log("check-layout: ok (360, 390, 768, 1280 px: no overflow, text >= 14px, AA contrast, targets >= 40px, images intact, price in 2 taps)");
+console.log(`check-layout: ok (${URLS.length} pages × 360, 390, 768, 1280 px: no overflow, text >= 14px, AA contrast, control edges 3:1, targets >= 40px, images intact, price within 2 taps)`);

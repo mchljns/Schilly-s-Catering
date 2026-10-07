@@ -134,3 +134,10 @@ Print renders 2 Letter pages in the new faces, with logo, ruled sections and lea
 - Copy edited by cutting only (`07-copy.md`). The four "From X to Y" openers, stock warmth lines, a rhetorical question and a stale "coming soon" are gone. The content gate accepts a trimmed sentence that keeps its full stop: 312 fragments, all traced.
 - Hero checked against best practice (`08-hero.md`). One primary action: View Our Menu is solid red, and the header's Catering Inquiries became an outline. View Our Menu now shows on phones too.
 - Gates pass at all four widths. Hours rows start at 344 px (360 × 740) and 356 px (390 × 844).
+
+## Loop 17: multi-page site
+- Split into seven pages on the current site's URLs, built by `build.mjs`. Menus are rendered to HTML with Menu structured data (41 priced take-out items, 59 catering items).
+- `check-content` now crawls all pages plus the 404, and traces JSON-LD strings too. It caught "Barbecue" (now "BBQ", their word) and an unapproved "/" separator. 518 fragments traced.
+- `check-layout` now runs 8 pages × 4 widths. It caught 34 px event links inside a heading (now a list of 44 px links), a 19 px breadcrumb link, and a 404 page that overflowed on phones (missing the header script). Price is within one tap of the header at 390 px and wider, and two taps at 360.
+- Visual review: the menu pages repeated the sub line. Removed.
+- Link check: no broken internal links in `dist/` or `preview/`. Fonts load in both.
